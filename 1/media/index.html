@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Before and After Images</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 20px;
+        }
+        .image-box {
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .label {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Before Image -->
+        <div class="image-box">
+            <img src="before.jpg" alt="Before Image">
+            <div class="label">Before</div>
+        </div>
+
+        <!-- After Image -->
+        <div class="image-box">
+            <img src="after.jpg" alt="After Image">
+            <div class="label">After</div>
+        </div>
+    </div>
+
+</body>
+</html>
