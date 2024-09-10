@@ -98,8 +98,8 @@ Note that this allows us to explore a wider range of displacements while saving 
                 <h3> Bells and Whistles: Contrast Normalization and Cropping </h3>
 
                 I also tried using contrast normalization and cropping to improve the aesthetic view of the images. For contrast normalization, the formula used was 
-                \[ \text{image}_{ij} \rightarrow \text{image}_{ij} - \min(\text{image}) \]
-                \[ \text{image}_{ij} \rightarrow \frac{\text{image}_{ij}}{\max(\text{image})} \]
+                \[ \text{image}_{ij} \leftarrow \text{image}_{ij} - \min(\text{image}) \]
+                \[ \text{image}_{ij} \leftarrow \frac{\text{image}_{ij}}{\max(\text{image})} \]
                 While this produced slightly more natural colors for the images, the result is barely noticeable. In the future, I think stronger contrast normalization techniques need to be used for a more discernable impact. 
                 <br>
                 For cropping, I used a straightforward approach of removing 5 percent of the image from all sides. This 
