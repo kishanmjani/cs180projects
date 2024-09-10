@@ -40,7 +40,7 @@
             <section id="section-1">
                 <h2>Section 1: Methods Used </h2>
 
-                <h3>(i) Single-Scale Alignment for low-resolution images: </h3>
+                <h3> Single-Scale Alignment for low-resolution images: </h3>
                 <p>
                     For smaller images (stored in .jpg format: cathedral.jpg, monastery.jpg, tobolsk.jpg), a simple 'single scale' implementation was used. Using the BLUE frame as a base, we exhaustively search for the optimal displacement (judged by a similarity metric) within a specified search space. The RED/GREEN frames are then displaced accordingly to produce the desirable alignment for all 3 frames. 
 <br>
@@ -58,7 +58,7 @@ displacement is not misjudged as a whole due to outlier behavior towards the bor
                     <img src="media/images/out_monastery.jpg" alt="monastery.jpg" />
                 </div>
 
-                <h3>(ii) Image Pyramid Alignment for high-resolution images: </h3>
+                <h3> Image Pyramid Alignment for high-resolution images: </h3>
                 For larger images (stored in .tif format), a naive single-scale approach is not practical for two primary reasons: 
 <br>
 1. The pixel array has larger shape, which makes our exhaustive search take longer. 
