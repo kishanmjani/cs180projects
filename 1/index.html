@@ -89,6 +89,7 @@ of \( 2 \) chosen) until the pixel array is of reasonably small dimensions.
 
 Note that this allows us to explore a wider range of displacements while saving on computational cost, due to the weighting by doubling factor \( 2^i \). Empirically, L=6 was the maximum depth of doubling chosen. 
 <br>
+Additionally, a Sobel filter was used for edge detection to improve the alignment, focusing on salient features of the image (the edge borders of major objects) to align first.
                 <div class="gallery">
                     <img src="media/images/out_emir.jpg" alt="emir.jpg" />
                     <p> Example of Image Pyramid alignment for emir.jpg. </p>
