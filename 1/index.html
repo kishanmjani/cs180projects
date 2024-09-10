@@ -98,7 +98,7 @@ Note that this allows us to explore a wider range of displacements while saving 
                 <h3> Bells and Whistles: Contrast Normalization and Cropping </h3>
 
                 I also tried using contrast normalization and cropping to improve the aesthetic view of the images. For contrast normalization, the formula used was 
-                \[ \text{image}_{ij} \rightarrow \frac{\text{image}_{ij} - \min(\text{image})} \]
+                \[ \text{image}_{ij} \rightarrow \text{image}_{ij} - \min(\text{image}) \]
                 \[ \text{image}_{ij} \rightarrow \frac{\text{image}_{ij}}{\max(\text{image})} \]
                 While this produced slightly more natural colors for the images, the result is barely noticeable. In the future, I think stronger contrast normalization techniques need to be used for a more discernable impact. 
                 <br>
@@ -121,7 +121,11 @@ Note that this allows us to explore a wider range of displacements while saving 
                     <br>
                     3. Additional .tif photos taken from the Library of Congress, from the Prokudin-Gorskii photo collection
                     <br>
+                    <p> Click on the following link to view the images </p>
                     <a href="./media/index.html">Images</a>
+                    <br>
+                    <p> For the contrast-normalized and cropped images (compared to outputs above), click the next link </p>
+                    <a href="./cropped_media/index.html">Cropped Images</a>
                 </p>
 
                 <h3>Data</h3>
@@ -245,6 +249,10 @@ Note that this allows us to explore a wider range of displacements while saving 
                     seems to remain fairly blurry is cathedral.jpg, for which advanced techniques might be more helpful. I think 
                     the image can be made significantly sharper by using more careful edge detection. Specifically, accentuating 
                     the edge of the cathedral would likely produce good results. 
+                    <br>
+                    Additionally, it would be great to implement a more efficient contrast normalization, or explore other techniques, 
+                    which would produce a more natural coloration for some of the images. Along similar lines, automatic edge detection
+                    and cropping would be a great plus for images of more varying sizes. 
                 </p>
             </section>
         </main>
