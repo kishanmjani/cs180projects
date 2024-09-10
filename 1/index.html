@@ -171,18 +171,6 @@
         </main>
     </div>
 
-    <script>
-        const dataTable = document.getElementById('data-table');
-        for (let item of projectData.items) {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>${item.name}</td>
-                <td>${item.value1}</td>
-                <td>${item.value2}</td>
-            `;
-            dataTable.appendChild(tr);
-        };
-    </script>
 </body>
 
 </html>
