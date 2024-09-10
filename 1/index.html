@@ -73,10 +73,10 @@ of \( 2 \) chosen) until the pixel array is of reasonably small dimensions.
 (i) First, at level \(i\) of scaling (that is, image is scaled by \( 2^i \) ), we find the optimal displacement \( d_i \)
     for the scaled versions using a smaller search space, starting from \( i=L\) (maximum scaling) all the way to \(i=0\)
                 <br>
-    (ii) For the original image, the corresponding displacement we implement is \( D_i = 2^(i)\cdot d_i \).
+    (ii) For the original image, the corresponding displacement we implement is \( D_i = 2^{i}\cdot d_i \).
                 <br>
     (iii) We add the optimal displacements to generate the best displacement for the original image: 
-                \[ \text{best displacement} = \sum_{i=0}^L D_i = \sum_{i=0}^L 2^(i) \cdot d_i \]
+                \[ \text{best displacement} = \sum_{i=0}^L D_i = \sum_{i=0}^L 2^i \cdot d_i \]
     (iv) The final step is to translate the original RED/GREEN frame by the best displacement to generate our aligned frame.
 
 Note that this allows us to explore a wider range of displacements while saving on computational cost, due to the weighting by doubling factor \( 2^i \). Empirically, L=6 was the maximum depth of doubling chosen. 
@@ -104,104 +104,104 @@ Note that this allows us to explore a wider range of displacements while saving 
                     
                     <tr>
                         <th scope = 'row'> cathedral.jpg </th>
-                        <th score = 'row'> (1,0) </th>
-                        <th score = 'row'> (8,-1) </th>
+                        <th score = 'row'> \( (1,0) \) </th>
+                        <th score = 'row'> \( (8,-1) \) </th>
                         <th score = 'row'> Single-Scale Exhaustive search </th>
                     </tr>
                     <tr>
                         <th scope = 'row'> monastery.jpg </th>
-                        <th score = 'row'> (-3,1) </th>
-                        <th score = 'row'> (3,2) </th>
+                        <th score = 'row'> \( (-3,1) \) </th>
+                        <th score = 'row'> \( (3,2) \) </th>
                         <th score = 'row'> Single-Scale Exhaustive search </th>
                     </tr>
                     <tr>
                         <th scope = 'row'> tobolsk.jpg </th>
-                        <th score = 'row'> (3,2) </th>
-                        <th score = 'row'> (6,3) </th>
+                        <th score = 'row'> \( (3,2) \) </th>
+                        <th score = 'row'> \( (6,3) \) </th>
                         <th score = 'row'> Single-Scale Exhaustive search </th>
                     </tr>
                     <tr>
                         <th scope = 'row'> church.tif </th>
-                        <th score = 'row'> (25,3) </th>
-                        <th score = 'row'> (58,-4) </th>
+                        <th score = 'row'> \( (25,3) \) </th>
+                        <th score = 'row'> \( (58,-4) \) </th>
                         <th score = 'row'> Image Pyramid </th>
                     </tr>
                     <tr>
                         <th scope = 'row'> emir.tif </th>
-                        <th score = 'row'> (50,23) </th>
-                        <th score = 'row'> (107,40) </th>
+                        <th score = 'row'> \( (50,23) \) </th>
+                        <th score = 'row'> \( (107,40) \) </th>
                         <th score = 'row'> Image Pyramid </th>
                     </tr>
                     <tr>
                         <th scope = 'row'> harvesters.tif </th>
-                        <th score = 'row'> (60,17) </th>
-                        <th score = 'row'> (124,11) </th>
+                        <th score = 'row'> \( (60,17) \) </th>
+                        <th score = 'row'> \( (124,11) \) </th>
                         <th score = 'row'> Image Pyramid </th>
                     </tr>
                     <tr>
                         <th scope = 'row'> icon.tif </th>
-                        <th score = 'row'> (41,16) </th>
-                        <th score = 'row'> (90,23) </th>
+                        <th score = 'row'> \( (41,16) \) </th>
+                        <th score = 'row'> \( (90,23) \) </th>
                         <th score = 'row'> Image Pyramid </th>
                     </tr>
                     <tr>
                         <th scope = 'row'> lady.tif </th>
-                        <th score = 'row'> (59,-10) </th>
-                        <th score = 'row'> (123,-21) </th>
+                        <th score = 'row'> \( (59,-10) \) </th>
+                        <th score = 'row'> \( (123,-21) \) </th>
                         <th score = 'row'> Image Pyramid </th>
                     </tr>
                     <tr>
                         <th scope = 'row'> melons.tif </th>
-                        <th score = 'row'> (80,10) </th>
-                        <th score = 'row'> (177,12) </th>
+                        <th score = 'row'> \( (80,10) \) </th>
+                        <th score = 'row'> \( (177,12) \) </th>
                         <th score = 'row'> Image Pyramid </th>
                     </tr>
                     <tr>
                         <th scope = 'row'> onion_church.tif </th>
-                        <th score = 'row'> (52,24) </th>
-                        <th score = 'row'> (107,35) </th>
+                        <th score = 'row'> \( (52,24) \) </th>
+                        <th score = 'row'> \( (107,35) \) </th>
                         <th score = 'row'> Image Pyramid </th>
                     </tr>
                     <tr>
                         <th scope = 'row'> sculpture.tif </th>
-                        <th score = 'row'> (33,-11) </th>
-                        <th score = 'row'> (140,-26) </th>
+                        <th score = 'row'> \( (33,-11) \) </th>
+                        <th score = 'row'> \( (140,-26) \) </th>
                         <th score = 'row'> Image Pyramid </th>
                     </tr>
                     <tr>
                         <th scope = 'row'> self_portrait.tif </th>
-                        <th score = 'row'> (78,29) </th>
-                        <th score = 'row'> (176,37) </th>
+                        <th score = 'row'> \( (78,29) \) </th>
+                        <th score = 'row'> \( (176,37) \) </th>
                         <th score = 'row'> Image Pyramid </th>
                     </tr>
                     <tr>
                         <th scope = 'row'> three_generations.tif </th>
-                        <th score = 'row'> (55,12) </th>
-                        <th score = 'row'> (111,8) </th>
+                        <th score = 'row'> \( (55,12) \) </th>
+                        <th score = 'row'> \( (111,8) \) </th>
                         <th score = 'row'> Image Pyramid </th>
                     </tr>
                     <tr>
                         <th scope = 'row'> train.tif </th>
-                        <th score = 'row'> (41,1) </th>
-                        <th score = 'row'> (85,29) </th>
+                        <th score = 'row'> \( (41,1) \) </th>
+                        <th score = 'row'> \( (85,29) \) </th>
                         <th score = 'row'> Image Pyramid </th>
                     </tr>
                     <tr>
                         <th scope = 'row'> camel.tif </th>
-                        <th score = 'row'> (22,15) </th>
-                        <th score = 'row'> (81,39) </th>
+                        <th score = 'row'> \( (22,15) \) </th>
+                        <th score = 'row'> \( (81,39) \) </th>
                         <th score = 'row'> Image Pyramid </th>
                     </tr>
                     <tr>
                         <th scope = 'row'> creepy_nun.tif </th>
-                        <th score = 'row'> (48,19) </th>
-                        <th score = 'row'> (109,34) </th>
+                        <th score = 'row'> \( (48,19) \) </th>
+                        <th score = 'row'> \( (109,34) \) </th>
                         <th score = 'row'> Image Pyramid </th>
                     </tr>
                     <tr>
                         <th scope = 'row'> view.tif </th>
-                        <th score = 'row'> (34,-14) </th>
-                        <th score = 'row'> (78,-25) </th>
+                        <th score = 'row'> \( (34,-14) \) </th>
+                        <th score = 'row'> \( (78,-25) \) </th>
                         <th score = 'row'> Image Pyramid </th>
                     </tr>
                 </table>
@@ -210,8 +210,10 @@ Note that this allows us to explore a wider range of displacements while saving 
             <section id="conclusion">
                 <h2>Conclusion</h2>
                 <p>
-                    Summarize your findings, discuss the implications of your results, and
-                    suggest potential areas for future work or improvement.
+                    Using these simple techniques, most of the generated images are sufficiently clear. The only image which 
+                    seems to remain fairly blurry is cathedral.jpg, for which advanced techniques might be more helpful. I think 
+                    the image can be made significantly sharper by using more careful edge detection. Specifically, accentuating 
+                    the edge of the cathedral would likely produce good results. 
                 </p>
             </section>
         </main>
