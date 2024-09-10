@@ -1,30 +1,111 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Project 1: Colorizing the Prokudin-Gorskii photo collection</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 12px;
-        }
-    </style>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
+        integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP"
+        crossorigin="anonymous"></script>
+    <script src="project-data.js"></script>
 </head>
+
 <body>
-    <h2> Project 1: Colorizing the Prokudin-Gorskii photo collection </h2>
-    
-    <br>
-      The goal of this assignment is to take the digitized Prokudin-Gorskii glass 
-      plate images and, using image processing techniques, automatically produce a
-      color image with as few visual artifacts as possible. In order to do this, you
-      will need to extract the three color channel images, place them on top of
-      each other, and align them so that they form a single RGB color image.
-    <br>
-    <br>
-    
-    <a href="./media/index.html">Images</a>
-    <br>
-    <a href="./desc/index.html">Methods Used</a>
-    
-    
+    <header>
+        <h1>Project 1: Colorizing the Prokudin-Gorskii photo collection</h1>
+        <p>Kishan Jani</p>
+    </header>
+
+    <div class="container">
+
+        <!-- Contents -->
+        <main>
+            <section id="intro">
+                <h2>Introduction</h2>
+                <p>
+                    The goal of this assignment is to take the digitized Prokudin-Gorskii glass 
+                    plate images and, using image processing techniques, automatically produce a
+                    color image with as few visual artifacts as possible. In order to do this, you
+                    will need to extract the three color channel images, place them on top of
+                    each other, and align them so that they form a single RGB color image.
+                </p>
+            </section>
+
+            <section id="section-1">
+                <h2>Section 1: Methods Used </h2>
+
+                <h3>Approach</h3>
+                <p>
+                    Describe your approach to addressing the main topic of this section. Include
+                    any relevant methodologies, algorithms, or techniques you used.
+                </p>
+
+                <h3>Results</h3>
+                <div class="gallery">
+                    <img src="images/out_emir.jpg" alt="emir.jpg" />
+                    <img src="images/out_cathedral.jpg" alt="cathedral.jpg" />
+                    <img src="images/out_view.jpg" alt="view.jpg" />
+                </div>
+            </section>
+
+            <section id="section-2">
+                <h2>Section 2: Images</h2>
+
+                <h3>Approach</h3>
+                <p>
+                    Here we present all generated images. 
+                    <br>
+                    <a href="./media/index.html">Images</a>
+                </p>
+
+                <h3>Results</h3>
+                <div class="gallery">
+                    <img src="images/result4.jpg" alt="Result 4" />
+                    <img src="images/result5.jpg" alt="Result 5" />
+                </div>
+
+                <h3>Data</h3>
+                <table id="data-table" class="comparison">
+                    <tr>
+                        <th scope = 'col'>Image </th>
+                        <th scope = 'col'>RED Displacement</th>
+                        <th scope = 'col'>GREEN Displacement</th>
+                    </tr>
+                    
+                    <tr>
+                        <th scope = 'row'> Item </th>
+                    </tr>
+                </table>
+            </section>
+
+            <section id="conclusion">
+                <h2>Conclusion</h2>
+                <p>
+                    Summarize your findings, discuss the implications of your results, and
+                    suggest potential areas for future work or improvement.
+                </p>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const dataTable = document.getElementById('data-table');
+        for (let item of projectData.items) {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${item.name}</td>
+                <td>${item.value1}</td>
+                <td>${item.value2}</td>
+            `;
+            dataTable.appendChild(tr);
+        };
+    </script>
 </body>
+
 </html>
