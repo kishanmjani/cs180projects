@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Your Project Title</title>
+    <title>Images</title>
 
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
@@ -18,8 +18,7 @@
 
 <body>
     <header>
-        <h1>Your Project Title: Subtitle</h1>
-        <p>By Your Name</p>
+        <h1>Images from the collection</h1>
     </header>
 
     <div class="container">
@@ -36,49 +35,32 @@
             </section>
 
             <section id="section-1">
-                <h2>Section 1: Methods Used </h2>
+                <h2>Section 1: .jpg images </h2>
 
-                <h3>Approach</h3>
-                <p>
-                    Describe your approach to addressing the main topic of this section. Include
-                    any relevant methodologies, algorithms, or techniques you used.
-                </p>
-
-                <h3>Results</h3>
+                <h3>Images</h3>
                 <div class="gallery">
-                    <img src="images/emir.jpg" alt="Result 1" />
-                    <img src="images/emir.jpg" alt="Result 2" />
-                    <img src="images/emir.jpg" alt="Result 3" />
+                    <img src="images/initial_cathedral.jpg" alt="cathedral.jpg before alignment" />
+                    <img src="images/out_cathedral.jpg" alt="cathedral.jpg after alignment" />
+                </div>
+                <div class="gallery">
+                    <img src="images/initial_monastery.jpg" alt="monastery.jpg before alignment" />
+                    <img src="images/out_monastery.jpg" alt="monastery.jpg after alignment" />
+                </div>
+                <div class="gallery">
+                    <img src="images/initial_tobolsk.jpg" alt="tobolsk.jpg before alignment" />
+                    <img src="images/out_tobolsk.jpg" alt="tobolsk.jpg after alignment" />
                 </div>
             </section>
 
             <section id="section-2">
-                <h2>Section 2: Results</h2>
+                <h2>Section 2: .tif images</h2>
 
-                <h3>Approach</h3>
-                <p>
-                    Explain your approach for this section, highlighting any differences or
-                    improvements from the previous section.
-                </p>
-
-                <h3>Results</h3>
+                <h3>Images</h3>
                 <div class="gallery">
-                    <img src="images/result4.jpg" alt="Result 4" />
-                    <img src="images/result5.jpg" alt="Result 5" />
+                    <img src="images/initial_camel.jpg" alt="camel.tif before alignment" />
+                    <img src="images/out_camel.jpg" alt="camel.tif after alignment" />
                 </div>
 
-                <h3>Data</h3>
-                <table id="data-table" class="comparison">
-                    <tr>
-                        <th scope = 'col'>Image </th>
-                        <th scope = 'col'>RED Displacement</th>
-                        <th scope = 'col'>GREEN Displacement</th>
-                    </tr>
-                    
-                    <tr>
-                        <th scope = 'row'> Item </th>
-                    </tr>
-                </table>
             </section>
 
             <section id="conclusion">
@@ -91,18 +73,6 @@
         </main>
     </div>
 
-    <script>
-        const dataTable = document.getElementById('data-table');
-        for (let item of projectData.items) {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>${item.name}</td>
-                <td>${item.value1}</td>
-                <td>${item.value2}</td>
-            `;
-            dataTable.appendChild(tr);
-        };
-    </script>
 </body>
 
 </html>
