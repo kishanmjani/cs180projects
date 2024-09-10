@@ -42,13 +42,11 @@
 
                 <h3>(i) Single-Scale Alignment for low-resolution images: </h3>
                 <p>
-                    For smaller images (stored in .jpg format: cathedral.jpg, monastery.jpg, tobolsk.jpg), a simple 'single-scale'
-implementation was used, which involved searching for the optimal displacement (judged by a similarity metric)
-within a search space. 
+                    For smaller images (stored in .jpg format: cathedral.jpg, monastery.jpg, tobolsk.jpg), a simple 'single scale' implementation was used, which involved searching for the optimal displacement (judged by a similarity metric) within a search space. 
 <br>
  1. Search space used was [-15,15]
                     <br>
- 2. Similarity metric: tried $$L^2$$ norm, L1 norm, and normalized cross-correlation. The one that worked best was 
+ 2. Similarity metric: tried /(\ell^2/) norm, /(\ell^1/) norm, and normalized cross-correlation. The one that worked best was 
 the L1 norm. Why? The L2 norm penalizes outlying pixels a lot more than the L1 norm. This ensures that a certain
 displacement is not misjudged due to outlier behavior towards the borders of the image. 
                     <br>
