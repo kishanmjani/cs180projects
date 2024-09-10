@@ -1,32 +1,108 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Single Image Display</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 20px;
-        }
-        img {
-            max-width: 100%;
-            height: auto;
-            border: 1px solid #ccc;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-        }
-    </style>
+
+    <title>Your Project Title</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
+        integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP"
+        crossorigin="anonymous"></script>
+    <script src="project-data.js"></script>
 </head>
+
 <body>
+    <header>
+        <h1>Your Project Title: Subtitle</h1>
+        <p>By Your Name</p>
+    </header>
 
-    <h1>My Image on GitHub Pages</h1>
+    <div class="container">
 
-    <!-- Image Source -->
-    <img src="images/emir.jpg" alt="Description of the image">
+        <!-- Contents -->
+        <main>
+            <section id="intro">
+                <h2>Introduction</h2>
+                <p>
+                    Write your project introduction here. Explain the purpose of your project,
+                    its goals, and any background information that's necessary for understanding
+                    your work.
+                </p>
+            </section>
 
-    <p>This is an image hosted on GitHub Pages.</p>
+            <section id="section-1">
+                <h2>Section 1: Methods Used </h2>
 
+                <h3>Approach</h3>
+                <p>
+                    Describe your approach to addressing the main topic of this section. Include
+                    any relevant methodologies, algorithms, or techniques you used.
+                </p>
+
+                <h3>Results</h3>
+                <div class="gallery">
+                    <img src="images/result1.jpg" alt="Result 1" />
+                    <img src="images/result2.jpg" alt="Result 2" />
+                    <img src="images/result3.jpg" alt="Result 3" />
+                </div>
+            </section>
+
+            <section id="section-2">
+                <h2>Section 2: Results</h2>
+
+                <h3>Approach</h3>
+                <p>
+                    Explain your approach for this section, highlighting any differences or
+                    improvements from the previous section.
+                </p>
+
+                <h3>Results</h3>
+                <div class="gallery">
+                    <img src="images/result4.jpg" alt="Result 4" />
+                    <img src="images/result5.jpg" alt="Result 5" />
+                </div>
+
+                <h3>Data</h3>
+                <table id="data-table" class="comparison">
+                    <tr>
+                        <th scope = 'col'>Image </th>
+                        <th scope = 'col'>RED Displacement</th>
+                        <th scope = 'col'>GREEN Displacement</th>
+                    </tr>
+                    
+                    <tr>
+                        <th scope = 'row'> Item </th>
+                    </tr>
+                </table>
+            </section>
+
+            <section id="conclusion">
+                <h2>Conclusion</h2>
+                <p>
+                    Summarize your findings, discuss the implications of your results, and
+                    suggest potential areas for future work or improvement.
+                </p>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const dataTable = document.getElementById('data-table');
+        for (let item of projectData.items) {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${item.name}</td>
+                <td>${item.value1}</td>
+                <td>${item.value2}</td>
+            `;
+            dataTable.appendChild(tr);
+        };
+    </script>
 </body>
+
 </html>
