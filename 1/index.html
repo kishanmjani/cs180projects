@@ -40,9 +40,6 @@
             <section id="section-1">
                 <h2>Section 1: Methods Used </h2>
 
-
- 3. Tried using a Sobel filter in this situation, produced worse images for some reason. 
-
                 <h3>(i) Single-Scale Alignment for low-resolution images: </h3>
                 <p>
                     For smaller images (stored in .jpg format: cathedral.jpg, monastery.jpg, tobolsk.jpg), a simple 'single-scale'
@@ -55,14 +52,30 @@ within a search space.
 the L1 norm. Why? The L2 norm penalizes outlying pixels a lot more than the L1 norm. This ensures that a certain
 displacement is not misjudged due to outlier behavior towards the borders of the image. 
                     <br>
+ 3. Tried using a Sobel filter in this situation, produced worse images for some reason. 
+                    <br>
                 </p>
-
-                <h3>Results</h3>
                 <div class="gallery">
-                    <img src="media/images/out_emir.jpg" alt="emir.jpg" />
                     <img src="media/images/out_cathedral.jpg" alt="cathedral.jpg" />
-                    <img src="media/images/out_view.jpg" alt="view.jpg" />
                 </div>
+
+                <h3>(ii) Image Pyramid Alignment for high-resolution images: </h3>
+                For larger images (stored in .tif format), a naive single-scale approach is  not efficient for two primary reasons: 
+<br>
+1. The pixel array has larger shape, which makes our exhaustive search take longer. 
+                <br>
+2. The optimal displacement is likely larger than what the initial search space [-15,15] explores; for instance, 
+(50,23) for RED and (107,40) for GREEN works well for emir.tif. Thus we would need to expand our search space to 
+something of the order [-100,100] to produce a sharp image with exhaustive search, which blows up the runtime. 
+<br>
+The remedy to these issues comes from using an image pyramid. The idea is to repeatedly scale the image (factor 
+of 2 chosen) until the pixel array is of reasonably small dimensions. Then, we find the optimal displacement (d)
+for the scaled versions using a smaller search space. For the original image, the corresponding displacement we
+implement is D = 2**(doubling_factor)*d. This is done using all doubling factors 0,1,2,..., L, with the optimal
+displacements added from each step. This allows us to explore a wider range of displacements while saving on 
+computational cost. 
+<br>
+Empirically, L=6 was the maximum depth of doubling chosen. 
             </section>
 
             <section id="section-2">
