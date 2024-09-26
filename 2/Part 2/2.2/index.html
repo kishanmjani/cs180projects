@@ -1,1 +1,58 @@
+<!doctype html>
+<html lang="en">
 
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>2.1</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
+        integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP"
+        crossorigin="anonymous"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Part 2.1</h1>
+    </header>
+
+    <div class="container">
+
+        <!-- Contents -->
+        <main>
+
+            <section id="jpg">
+                <h2> Sharpening Images </h2>
+            <h3> Approach Used and Results</h3>
+            <br>
+          Taj Mahal \( (\alpha = 0.85, \sigma = 1.5, \text{ window size } k = 9) \)
+                     <div class="gallery">
+                <img src="../../results/taj.jpg" />
+                <img src="../../results/sharp_taj.jpg" />
+                </div> 
+          Monastery from Project 1 \( (\alpha = 0.75, \sigma = 1.5, \text{ window size } k = 9) \)
+                     <div class="gallery">
+                <img src="../../results/monastery.jpg" />
+                <img src="../../results/sharp_monastery.jpg" />
+                </div> 
+            Mount Everest \( (\alpha = 4, \sigma = 2.5, \text{ window size } k = 15) \)
+                                 <div class="gallery">
+                <img src="../../results/blurry_everest.jpg" />
+                <img src="../../results/everest.jpg" />
+                <img src="../../results/sharp_everest.jpg" />
+                </div> 
+
+            <h3>Observations</h3>
+                For the image <code>everest.jpg</code>, notice that while sharpening the image brings back some contrast and a large number of the mountains features, there is still an element of blur (a net loss of information) from the blurring. The edges are not as sharp as before, and the color contrast is a bit off. Thus we see that sharpening does not really create any new information/details, but only rephrases the existing information in a way that produces an apparently "sharper" image. 
+            </section>
+        </main>
+    </div>
+
+</body>
+
+</html>
