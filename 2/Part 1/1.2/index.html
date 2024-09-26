@@ -79,9 +79,31 @@
 
             <h3>Comparison with Part 1.1: Removal of Noise</h3>
 
+            One of the most significant features in comparing images from Part 1.1 and Part 1.2 is that there is virtually no noise near the bottom of the binarized images in Part 1.2 images as compared to Part 1.1 images. Furthermore, we have much thicker edges in this case, so DoG filters seem to be visually functioning a lot better than standard finite difference operators. 
+          <div class="gallery">
+                <img src="../../results/bin_cameraman_grad.jpg"  />
+                <img src="../../results/bin_cameraman_second_grad.jpg"  />
+                </div>
+            Note that a Gaussian filter has these properties because as a smooth function, convolution smoothens out the images and removes the effect of outliers (the binarizer ensures now lower-value outliers are removed). However, it is also important to note that blurring decreases the value of all pixels, so our threshold choice <code> thresh = 0.07</code> is also much lower to actually detect edges. Specifically, while at the same thresh finite difference operators detect more edges, the edges detected by DoG filters are thicker and more immune to noise. 
 
             <h3>Commutativity of Convolution</h3>
-                When we binarize an image, the function of <code>0<=thresh<=1</code> is to promote all values \(x\ge \texttt{thresh} \) to \(1\) and send the remaining values to \(0\). The advantage with choosing lower <code>thresh</code> is that we get better-defined, thicker edges. However, pushing this too far can lead to the emergence of non-existent edges and noise in the image, so a balance point needs to be found empirically. As stated before, <code>thresh=0.17</code> was used here. 
+                Notice that DoG filtering vs. Blurring and then using finite difference operators produces virtually the same output, barring minor differences due to noise: 
+                Gradient comparison
+                <div class="gallery">
+                <img src="../../results/cameraman_first_grad.jpg"  />
+                <img src="../../results/bin_cameraman_second_grad.jpg"  />
+                </div>
+                Dx comparison
+                              <div class="gallery">
+                <img src="../../results/cameraman_first_Dx.jpg"  />
+                <img src="../../results/bin_cameraman_second_Dx.jpg"  />
+                </div>
+                Dy comparison
+                              <div class="gallery">
+                <img src="../../results/cameraman_first_Dy.jpg"  />
+                <img src="../../results/bin_cameraman_second_Dy.jpg"  />
+                </div>
+                This simply reflects the facts that \(f\star(g\star h) = (f\star g) \star h\) and \(f\star g = g\star f\) for convolutions, so we can do convolution operations in an order that is most convenient. 
             </section>
         </main>
     </div>
