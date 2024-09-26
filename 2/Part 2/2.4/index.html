@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>2.1</title>
+    <title>2.4</title>
 
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
@@ -18,7 +18,7 @@
 
 <body>
     <header>
-        <h1>Part 2.1</h1>
+        <h1>Part 2.4</h1>
     </header>
 
     <div class="container">
@@ -27,24 +27,50 @@
         <main>
 
             <section id="jpg">
-                <h2> Sharpening Images </h2>
+                <h2> Multi-Resolution Blending </h2>
             <h3> Approach Used and Results</h3>
+            The extra feature introduced, that is of interest, is <code> skip</code>, a parameter which enables us to skip the first 
+                few images in the Gaussian stack for the mask. This way, we can avoid the mask edges with rougher cutoffs, which were 
+                seen to give rougher transitions between the orange and apple in the actual image. Other than that, with an approach as explained,
             <br>
-          Taj Mahal \( (\alpha = 0.85, \sigma = 1.5, \text{ window size } k = 9) \)
+          <b>Orange + Apple = Orapple.</b> With depth \(7\), deviation \(4\) for the initial Gaussian, and first \(2\) mask blurs skipped. 
+                <br> Candidate Orapple compared with Real Orapple
                      <div class="gallery">
-                <img src="../../results/taj.jpg" />
-                <img src="../../results/sharp_taj.jpg" />
+                <img src="../../results/orapple_candidate.jpg" />
+                <img src="../../images/orapple.jpg" />
                 </div> 
-          Monastery from Project 1 \( (\alpha = 0.75, \sigma = 1.5, \text{ window size } k = 9) \)
+                <br> Original
                      <div class="gallery">
-                <img src="../../results/monastery.jpg" />
-                <img src="../../results/sharp_monastery.jpg" />
+                <img src="../../images/orange.jpg" />
+                <img src="../../images/apple.jpg" />
                 </div> 
-            Mount Everest \( (\alpha = 4, \sigma = 2.5, \text{ window size } k = 15) \)
-                                 <div class="gallery">
-                <img src="../../results/blurry_everest.jpg" />
-                <img src="../../results/everest.jpg" />
-                <img src="../../results/sharp_everest.jpg" />
+          <b>Third Eye.</b> 
+                                <br> Original
+                     <div class="gallery">
+                <img src="../../images/god.jpg" />
+                <img src="../../images/eye.jpg" />
+                </div> 
+
+                                <br> Original
+                     <div class="gallery">
+                <img src="../../images/third_eye.jpg" />
+                </div> 
+                                     <div class="gallery">
+                <img src="../../images/third_eye_laplace.jpg" />
+                </div> 
+
+                
+          <b>Idiot Sandwich</b>
+
+                                               <br> Original
+                     <div class="gallery">
+                <img src="../../images/gordon.jpg" />
+                <img src="../../images/sandwich.jpg" />
+                </div> 
+
+                                <br> Original
+                     <div class="gallery">
+                <img src="../../images/idiot_sandwich.jpg" />
                 </div> 
 
             <h3>Observations</h3>
