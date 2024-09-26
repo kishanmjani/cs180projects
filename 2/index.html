@@ -40,7 +40,11 @@
                 </p>
                 <h3> Part 1.1: Finite Difference Operator</h3>
 
-                Our goal here is to visually see what the convolutions \(f\star D_x\) and \(f\star D_y \) do to an image \(f\), where \(D_x = \begin{bmatrix} 1 & -1 \end{bmatrix} \) and \( D_y = \begin{bmatrix} 1 \\ -1 \end{bmatrix} \) are finite difference operators. 
+                Our goal here is to visually see what the convolutions \(f\star D_x\) and \(f\star D_y \) do to an image \(f\), where \(D_x = \begin{bmatrix} 1 & -1 \end{bmatrix} \) and \( D_y = \begin{bmatrix} 1 \\ -1 \end{bmatrix} \) are finite difference operators. This is done with the cameraman image 
+                <div class="gallery">
+                    <img src="kishanmjani.github.io/2/images/cameraman.png" alt="monastery.jpg" />
+                    <p> Example of single-scale alignment for monastery.jpg. </p>
+                </div>
                 
             </section>
 
@@ -48,25 +52,10 @@
                 <h2>Part 2: </h2>
 
                 <h3> Part 2.1 </h3>
-                <p>
-                    For smaller images (stored in .jpg format: cathedral.jpg, monastery.jpg, tobolsk.jpg), a simple 'single scale' implementation was used. Using the BLUE frame as a base, we exhaustively search for the optimal displacement (judged by a similarity metric) within a specified search space. The RED/GREEN frames are then displaced accordingly to produce the desirable alignment for all 3 frames. 
-<br>
- 1. Search space used was \([-15,15]\). I experimented with larger and smaller search spaces, but for the given low-res images, most displacements were \(\le 10\), making the search range above sufficient. 
-                    <br>
- 2. Similarity metric: We need to use some kind of metric to evaluate how `well-aligned` the RED frame is on top of the BLUE frame (resp. GREEN). I tried using an \(\ell^2\) norm, an \(\ell^1\) norm, normalized cross-correlation, and SSIM as metrics. Out of these, the metric that consistently produced good images was the \(\ell^1\) norm.
-              <br>      
-This leads to the natural question of why that is the case. The \(\ell^2\) norm penalizes pixels with high values a lot more (due to squaring) than the \(\ell^1\) norm. As a result, using \(\ell^1\) ensures that a certain
-displacement is not misjudged as a whole due to outlier behavior towards the borders of the image. 
-                    <br>
- 3. I tried using a Sobel filter for edge detection to improve the alignment (focusing on salient features of the image to align first), however, the resulting images were more blurry than before. I suspect this is because the images are low-res enough that we cannot form distinguished edges well-enough, causing the aforementioned bad images.  
-                    <br>
-                </p>
-                <div class="gallery">
-                    <img src="media/images/out_monastery.jpg" alt="monastery.jpg" />
-                    <p> Example of single-scale alignment for monastery.jpg. </p>
-                </div>
+                    
+    
 
-                <h3> Image Pyramid Alignment for high-resolution images: </h3>
+                <h3> Part 2.2 </h3>
                 For larger images (stored in .tif format), a naive single-scale approach is not practical for two primary reasons: 
 <br>
 1. The pixel array has larger shape, which makes our exhaustive search take longer. 
