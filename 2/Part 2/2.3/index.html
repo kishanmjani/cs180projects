@@ -28,7 +28,26 @@
 
             <section id="jpg">
                 <h2> Gaussian and Laplacian Stacks </h2>
-            <h3> Recreating the outcomes of Figure 3.42 in Szelski (Ed 2) page 167,</h3>
+            We implement Gaussian and Laplacian Stacks for the orange and the apple shown below with 
+                \( d = 6, \sigma = 3\) for the depth of the stack and standard deviation of the first 
+                Gaussian, respectively. 
+                Gaussian Stack of Orange
+                <div class="gallery">
+                <img src="../../results/orange_gauss.png" />
+                </div> 
+                Laplacian Stack of Orange
+                <div class="gallery">
+                <img src="../../results/orange_laplace.png" />
+                </div> 
+                Gaussian Stack of Apple
+                <div class="gallery">
+                <img src="../../results/apple_gauss.png" />
+                </div> 
+                Laplacian Stack of Apple
+                <div class="gallery">
+                <img src="../../results/apple_laplace.png" />
+                </div> 
+            <h2> Recreating the outcomes of Figure 3.42 in Szelski (Ed 2) page 167,</h2>
             <br>
           We use \( d = 7, \sigma = 4\) for the depth of the stack and standard deviation of the first Gaussian, respectively. The window size for the Gaussian 
                 kernel was once again taken to be \( k = 6[\sigma] + 1 \). Furthermore, for better results, we skip the first two masks in order to have smoother transition
@@ -37,8 +56,6 @@
                 <img src="../../results/orapple_laplace.png" />
                 </div> 
 
-            <h3>Observations</h3>
-                For the image <code>everest.jpg</code>, notice that while sharpening the image brings back some contrast and a large number of the mountains features, there is still an element of blur (a net loss of information) from the blurring. The edges are not as sharp as before, and the color contrast is a bit off. Thus we see that sharpening does not really create any new information/details, but only rephrases the existing information in a way that produces an apparently "sharper" image. 
             </section>
         </main>
     </div>
