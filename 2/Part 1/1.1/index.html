@@ -26,13 +26,26 @@
         <main>
 
             <section id="jpg">
-                <h2> Convolutions of cameraman.jpg with \(D_x\), \(D_y\), and gradient magnitude filters </h2>
+                <h2> Convolutions of cameraman.jpg with Dx, Dy, and gradient magnitude filters </h2>
             </section>
+            Images to the left are original copies, the ones to the right are binarized with threshold \(h=0.17\).
+            We are working with the first channel of cameraman.png. 
+            <br>
           Original image 
           <div class="gallery">
                 <img src="../../images/cameraman.png" alt="cameraman.png" />
-                <p> cameraman.png </p>
+                <p> \(f\) = cameraman.png </p>
                 </div>
+          Dx filter
+                     <div class="gallery">
+                <img src="../../results/cameraman_Dx.png" />
+                <p>  \( f\star D_x\)</p>
+                </div> 
+          Dy filter
+                     <div class="gallery">
+                <img src="../../results/cameraman_Dy.png" />
+                <p>  \( f\star D_y\)</p>
+                </div> 
         </main>
     </div>
 
