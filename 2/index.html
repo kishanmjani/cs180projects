@@ -75,7 +75,13 @@
                 <a href="./Part 2/2.1/index.html">Part 2.1 Results</a>
     
 
-                <h3> Part 2.2 </h3>
+                <h3> Part 2.2: Hybrid Images </h3>
+
+                We take as input images <code> im1</code> and <code>im2 </code>, and wish to construct a combined image <code>im</code> that looks like <code>im1</code> at high frequencies and <code>im2</code> at low frequencies. This can be accomplished by taking Gaussian filters \( g_1 := g_1(\sigma_1,k) \) and \(g_2 := g_2(\sigma_2,k) \) based on empirically chosen deviations and window size \( [6\sigma] + 1\), chosen to be sufficient to fit three standard deviations (most of the variation of a Gaussian) inside the Gaussian kernel. We generate low frequency <code>im1</code> by convolution with Gaussian \( g_1\). We generate high frequency <code>im2</code> via \(\texttt{im2} \gets \texttt{im2} - \texttt{im2} \star g_2 \). Summing these images and normalizing, we have our desired hybrid image. From nearby, it should look like the high frequency image, and from further away it looks like the low frequency image. 
+                <br>
+                To see results, click on the following link: 
+                <br>
+                <a href="./Part 2/2.2/index.html">Part 2.2 Results</a>
 
             <section id="conclusion">
                 <h2>Conclusion</h2>
