@@ -63,188 +63,19 @@
 
             <section id="part 2">
                 <h2>Part 2: </h2>
+                We will be able to create various interesting images (sharper images from blurred ones, hybrid images, blended images) using tricks with frequency and the Gaussian. 
 
-                <h3> Part 2.1 </h3>
-                    
+                <h3> Part 2.1: Image Sharpening </h3>
+                Let \(G\)  be a Gaussian Filter and let \(I\) be the identity filter. If \(f\star G\) blurs an image, then for \(\alpha > 0\) we can use the formula \( f - f\star g\) to construct an image of "details". Then 
+                \[ f_s = f + \alpha(f-f\star g) = f\star[ (1+\alpha) e - \alpha g ] \] 
+                is a sharpened image i.e. an image with more details. 
+<br>
+                To see results, click on the following link: 
+                <br>
+                <a href="./Part 1/2.1/index.html">Part 2.1 Results</a>
     
 
                 <h3> Part 2.2 </h3>
-                For larger images (stored in .tif format), a naive single-scale approach is not practical for two primary reasons: 
-<br>
-1. The pixel array has larger shape, which makes our exhaustive search take longer. 
-                <br>
-2. The optimal displacement is likely larger than what the initial search space \( [-15,15] \) explores; for instance, 
-\( (50,23) \) for RED and \( (107,40) \) for GREEN works well for emir.tif. We would need to expand our search space to 
-something of the order \( [-100,100] \) to produce a sharp image with exhaustive search, which blows up the runtime. 
-<br>
-The remedy to these issues comes from using an image pyramid. The idea is to repeatedly scale the image (factor 
-of \( 2 \) chosen) until the pixel array is of reasonably small dimensions. 
-                <br>
-(i) First, at level \(i\) of scaling (that is, image is scaled by \( 2^i \) ), we find the optimal displacement \( d_i \)
-    for the scaled versions using a smaller search space, starting from \( i=L\) (maximum scaling) all the way to \(i=0\).
-                Specifically, the smaller search space used was \([-4,4]\)
-                <br>
-    (ii) For the original image, the corresponding displacement we implement is \( D_i = 2^{i}\cdot d_i \).
-                <br>
-    (iii) We add the optimal displacements to generate the best displacement for the original image: 
-                \[ \text{best displacement} = \sum_{i=0}^L D_i = \sum_{i=0}^L 2^i \cdot d_i \]
-    (iv) The final step is to translate the original RED/GREEN frame by the best displacement to generate our aligned frame.
-
-Note that this allows us to explore a wider range of displacements while saving on computational cost, due to the weighting by doubling factor \( 2^i \). Empirically, L=6 was the maximum depth of doubling chosen. 
-<br>
-Additionally, a Sobel filter was used for edge detection to improve the alignment, focusing on salient features of the image (the edge borders of major objects) to align first.
-                <div class="gallery">
-                    <img src="media/images/out_emir.jpg" alt="emir.jpg" />
-                    <p> Example of Image Pyramid alignment for emir.jpg. </p>
-                </div>
-
-                
-                <h3> Bells and Whistles: Contrast Normalization and Cropping </h3>
-
-                I also tried using contrast normalization and cropping to improve the aesthetic view of the images. For contrast normalization, the formula used was 
-                \[ \text{image}_{ij} \leftarrow \text{image}_{ij} - \min(\text{image}) \]
-                \[ \text{image}_{ij} \leftarrow \frac{\text{image}_{ij}}{\max(\text{image})} \]
-                While this produced slightly more natural colors for the images, the result is barely noticeable. In the future, I think stronger contrast normalization techniques need to be used for a more discernable impact. 
-                <br>
-                For cropping, I used a straightforward approach of removing 5 percent of the image from all sides. This 
-                was pretty comprehensive in removing the borders, producing cleaner images. 
-                <br>
-                The results are available to view in the Cropped Images section of Results below.   
-            </section>
-
-            <section id="section-2">
-                <h2>Section 2: Results</h2>
-
-                <h3>Images</h3>
-                <p>
-                    Here we present all generated images. Images are divided into three sections: 
-                    <br>
-                    1. Low resolution .jpg files
-                    <br>
-                    2. High resolution .tif files 
-                    <br>
-                    3. Additional .tif photos taken from the Library of Congress, from the Prokudin-Gorskii photo collection
-                    <br>
-                    <p> Click on the following link to view the images </p>
-                    <a href="./media/index.html">Images</a>
-                    <br>
-                    <p> For the contrast-normalized and cropped images (compared to outputs above), click the next link </p>
-                    <a href="./cropped_media/index.html">Cropped Images</a>
-                </p>
-
-                <h3>Data</h3>
-                <table id="data-table" class="comparison">
-                    <tr>
-                        <th scope = 'col'>Image </th>
-                        <th scope = 'col'>GREEN Displacement</th>
-                        <th scope = 'col'>RED Displacement</th>
-                        <th scope = 'col'>Approach Used</th>
-                    </tr>
-                    
-                    <tr>
-                        <th scope = 'row'> cathedral.jpg </th>
-                        <th score = 'row'> \( (1,0) \) </th>
-                        <th score = 'row'> \( (8,-1) \) </th>
-                        <th score = 'row'> Single-Scale Exhaustive search </th>
-                    </tr>
-                    <tr>
-                        <th scope = 'row'> monastery.jpg </th>
-                        <th score = 'row'> \( (-3,1) \) </th>
-                        <th score = 'row'> \( (3,2) \) </th>
-                        <th score = 'row'> Single-Scale Exhaustive search </th>
-                    </tr>
-                    <tr>
-                        <th scope = 'row'> tobolsk.jpg </th>
-                        <th score = 'row'> \( (3,2) \) </th>
-                        <th score = 'row'> \( (6,3) \) </th>
-                        <th score = 'row'> Single-Scale Exhaustive search </th>
-                    </tr>
-                    <tr>
-                        <th scope = 'row'> church.tif </th>
-                        <th score = 'row'> \( (25,3) \) </th>
-                        <th score = 'row'> \( (58,-4) \) </th>
-                        <th score = 'row'> Image Pyramid </th>
-                    </tr>
-                    <tr>
-                        <th scope = 'row'> emir.tif </th>
-                        <th score = 'row'> \( (50,23) \) </th>
-                        <th score = 'row'> \( (107,40) \) </th>
-                        <th score = 'row'> Image Pyramid </th>
-                    </tr>
-                    <tr>
-                        <th scope = 'row'> harvesters.tif </th>
-                        <th score = 'row'> \( (60,17) \) </th>
-                        <th score = 'row'> \( (124,11) \) </th>
-                        <th score = 'row'> Image Pyramid </th>
-                    </tr>
-                    <tr>
-                        <th scope = 'row'> icon.tif </th>
-                        <th score = 'row'> \( (41,16) \) </th>
-                        <th score = 'row'> \( (90,23) \) </th>
-                        <th score = 'row'> Image Pyramid </th>
-                    </tr>
-                    <tr>
-                        <th scope = 'row'> lady.tif </th>
-                        <th score = 'row'> \( (59,-10) \) </th>
-                        <th score = 'row'> \( (123,-21) \) </th>
-                        <th score = 'row'> Image Pyramid </th>
-                    </tr>
-                    <tr>
-                        <th scope = 'row'> melons.tif </th>
-                        <th score = 'row'> \( (80,10) \) </th>
-                        <th score = 'row'> \( (177,12) \) </th>
-                        <th score = 'row'> Image Pyramid </th>
-                    </tr>
-                    <tr>
-                        <th scope = 'row'> onion_church.tif </th>
-                        <th score = 'row'> \( (52,24) \) </th>
-                        <th score = 'row'> \( (107,35) \) </th>
-                        <th score = 'row'> Image Pyramid </th>
-                    </tr>
-                    <tr>
-                        <th scope = 'row'> sculpture.tif </th>
-                        <th score = 'row'> \( (33,-11) \) </th>
-                        <th score = 'row'> \( (140,-26) \) </th>
-                        <th score = 'row'> Image Pyramid </th>
-                    </tr>
-                    <tr>
-                        <th scope = 'row'> self_portrait.tif </th>
-                        <th score = 'row'> \( (78,29) \) </th>
-                        <th score = 'row'> \( (176,37) \) </th>
-                        <th score = 'row'> Image Pyramid </th>
-                    </tr>
-                    <tr>
-                        <th scope = 'row'> three_generations.tif </th>
-                        <th score = 'row'> \( (55,12) \) </th>
-                        <th score = 'row'> \( (111,8) \) </th>
-                        <th score = 'row'> Image Pyramid </th>
-                    </tr>
-                    <tr>
-                        <th scope = 'row'> train.tif </th>
-                        <th score = 'row'> \( (41,1) \) </th>
-                        <th score = 'row'> \( (85,29) \) </th>
-                        <th score = 'row'> Image Pyramid </th>
-                    </tr>
-                    <tr>
-                        <th scope = 'row'> camel.tif </th>
-                        <th score = 'row'> \( (22,15) \) </th>
-                        <th score = 'row'> \( (81,39) \) </th>
-                        <th score = 'row'> Image Pyramid </th>
-                    </tr>
-                    <tr>
-                        <th scope = 'row'> creepy_nun.tif </th>
-                        <th score = 'row'> \( (48,19) \) </th>
-                        <th score = 'row'> \( (109,34) \) </th>
-                        <th score = 'row'> Image Pyramid </th>
-                    </tr>
-                    <tr>
-                        <th scope = 'row'> view.tif </th>
-                        <th score = 'row'> \( (34,-14) \) </th>
-                        <th score = 'row'> \( (78,-25) \) </th>
-                        <th score = 'row'> Image Pyramid </th>
-                    </tr>
-                </table>
-            </section>
 
             <section id="conclusion">
                 <h2>Conclusion</h2>
