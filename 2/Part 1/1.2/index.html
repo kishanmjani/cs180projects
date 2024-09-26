@@ -88,19 +88,20 @@
 
             <h3>Commutativity of Convolution</h3>
                 Notice that DoG filtering vs. Blurring and then using finite difference operators produces virtually the same output, barring minor differences due to noise: 
+                <br>
                 Gradient comparison
                 <div class="gallery">
-                <img src="../../results/cameraman_first_grad.jpg"  />
+                <img src="../../results/bin_cameraman_first_grad.jpg"  />
                 <img src="../../results/bin_cameraman_second_grad.jpg"  />
                 </div>
                 Dx comparison
                               <div class="gallery">
-                <img src="../../results/cameraman_first_Dx.jpg"  />
+                <img src="../../results/bin_cameraman_first_Dx.jpg"  />
                 <img src="../../results/bin_cameraman_second_Dx.jpg"  />
                 </div>
                 Dy comparison
                               <div class="gallery">
-                <img src="../../results/cameraman_first_Dy.jpg"  />
+                <img src="../../results/bin_cameraman_first_Dy.jpg"  />
                 <img src="../../results/bin_cameraman_second_Dy.jpg"  />
                 </div>
                 This simply reflects the facts that \(f\star(g\star h) = (f\star g) \star h\) and \(f\star g = g\star f\) for convolutions, so we can do convolution operations in an order that is most convenient. 
