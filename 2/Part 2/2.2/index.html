@@ -46,10 +46,57 @@
                 <div class="gallery">
                 <img src="../../results/derek_nutmeg_hybrid.jpg" />
                 </div> 
+        <b>Earth is Cake.</b> Like most other things, the Earth is cake. Same approach as before, but with parameters \( \sigma_1 = 1.25, \sigma_2 = 3\) for standard deviation, \( k = [6\sigma] + 1\) for window size, and \( h_ 1 = 0.15, h_2 = 0.8\) as the lower and upper threshold, respectively. Some padding was added to make the images align for the desired effect of high frequency cake inside low frequency earth. We also give the log Magnitude Fourier Transform plots for this hybrid 
+                <br>
+                Before
+                     <div class="gallery">
+                <img src="../../images/earth.jpg" />
+                <img src="../../images/cake.jpg" />
                 </div> 
-
+                Aligned
+                <div class="gallery">
+                <img src="../../results/aligned_earth.jpg" />
+                <img src="../../results/aligned_cake.jpg" />
+                </div> 
+                Hybrid
+                <div class="gallery">
+                <img src="../../results/earth_cake_hybrid.jpg" />
+                </div> 
+                log FFT plot for Earth before and after the Low-Pass Gaussian Filter
+                <div class="gallery">
+                <img src="../../results/fft_earth.jpg" />
+                <img src="../../results/fft_high_earth.jpg" />
+                </div> 
+                log FFT plot for Cake before and after the High-Pass Gaussian Filter
+                <div class="gallery">
+                <img src="../../results/fft_cake.jpg" />
+                <img src="../../results/fft_high_cake.jpg" />
+                </div> 
+                log FFT plot for Hybrid Image 
+                <div class="gallery">
+                <img src="../../results/fft_hybrid.jpg" />
+                </div>
+            <b>Squaring the Circle, Fails Again.</b> Approach as explained on the main page, with parameters \( \sigma_1 = 1, \sigma_2 = 6\) for standard deviation, \( k = [6\sigma] + 1\) for window size, and \( h_ 1 = 0.01, h_2 = 0.9\) as the lower and upper threshold, respectively. 
+                <br>
+                Before
+                     <div class="gallery">
+                <img src="../../images/square.jpg" />
+                <img src="../../results/circle.jpg" />
+                </div> 
+                Aligned
+                <div class="gallery">
+                <img src="../../results/aligned_square.jpg" />
+                <img src="../../results/aligned_circle.jpg" />
+                </div> 
+                Hybrid
+                <div class="gallery">
+                <img src="../../results/square_circle_hybrid" />
+                </div> 
+            We will note here that on increasing \( \sigma_1, \sigma_2 \) or decreasing the threshold range (in the sense of allowing fewer values to pass), the image would not improve in hybridization and then gray out after a certain value, producing nothing of use. We are showing only a sample of parameters which illustrates the issue well.  
             <h3>Observations</h3>
-                So many
+                It is interesting to note that the log FFT plot for the low frequencies of Earth looks like a periodic function. This may be due to the Gradients of water on Earth being flattened out by the Gaussian blur, producing a region on which the image is a step function. 
+                <br>
+                Additionally, observe that the third hybrid image of the series fails miserable, with the low-frequency square still visible, while it is hard to extract details from the high-frequency circle. The reason is simply that these shapes have only one really strong edge. From the perspective of blurring, with several frequencies peaking at \(1\) and the rest being \(0\), the Gaussian has a harder time flattening the values via convolution. From a Fourier transforms perspective, we have the square and circle as two delta functions defined on curves on the image grid, so their Fourier transform forms periodic functions on the grid. This function oscillates between \(0\) and \(1\) for both, so removing low or high frequencies from any threshold does not prove effective in blurring (values/frequencies are uniformly distributed). 
             </section>
         </main>
     </div>
