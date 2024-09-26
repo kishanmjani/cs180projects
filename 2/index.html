@@ -1,1 +1,264 @@
+<!doctype html>
+<html lang="en">
 
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Project 1: Colorizing the Prokudin-Gorskii photo collection</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
+        integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP"
+        crossorigin="anonymous"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Project 1: Colorizing the Prokudin-Gorskii photo collection</h1>
+        <p>Kishan Jani</p>
+    </header>
+
+    <div class="container">
+
+        <!-- Contents -->
+        <main>
+            <section id="intro">
+                <h2>Introduction</h2>
+                <p>
+                    The goal of this assignment is to take the digitized Prokudin-Gorskii glass 
+                    plate images and, using image processing techniques, automatically produce a
+                    color image with as few visual artifacts as possible. In order to do this, we
+                    extract the three color channel images, place them on top of
+                    each other, and align them so that they form a single RGB color image.
+<br>
+                    IMPORTANT NOTE: For clarity, this webpage contains a link where images before and after alignment are 
+                    displayed. For the webpage pdf, this other page has been attached at the bottom for convenience of viewing. 
+                    Clicking links to Images and Cropped Images below will lead to the aforementioned pages.
+<br>
+                    Less Important Note: For this exposition, we use notation \([-3,3]\) to denote the set \(\{-3,-2,-1,0,1,2\}\).
+                </p>
+            </section>
+
+            <section id="section-1">
+                <h2>Section 1: Methods Used </h2>
+
+                <h3> Single-Scale Alignment for low-resolution images: </h3>
+                <p>
+                    For smaller images (stored in .jpg format: cathedral.jpg, monastery.jpg, tobolsk.jpg), a simple 'single scale' implementation was used. Using the BLUE frame as a base, we exhaustively search for the optimal displacement (judged by a similarity metric) within a specified search space. The RED/GREEN frames are then displaced accordingly to produce the desirable alignment for all 3 frames. 
+<br>
+ 1. Search space used was \([-15,15]\). I experimented with larger and smaller search spaces, but for the given low-res images, most displacements were \(\le 10\), making the search range above sufficient. 
+                    <br>
+ 2. Similarity metric: We need to use some kind of metric to evaluate how `well-aligned` the RED frame is on top of the BLUE frame (resp. GREEN). I tried using an \(\ell^2\) norm, an \(\ell^1\) norm, normalized cross-correlation, and SSIM as metrics. Out of these, the metric that consistently produced good images was the \(\ell^1\) norm.
+              <br>      
+This leads to the natural question of why that is the case. The \(\ell^2\) norm penalizes pixels with high values a lot more (due to squaring) than the \(\ell^1\) norm. As a result, using \(\ell^1\) ensures that a certain
+displacement is not misjudged as a whole due to outlier behavior towards the borders of the image. 
+                    <br>
+ 3. I tried using a Sobel filter for edge detection to improve the alignment (focusing on salient features of the image to align first), however, the resulting images were more blurry than before. I suspect this is because the images are low-res enough that we cannot form distinguished edges well-enough, causing the aforementioned bad images.  
+                    <br>
+                </p>
+                <div class="gallery">
+                    <img src="media/images/out_monastery.jpg" alt="monastery.jpg" />
+                    <p> Example of single-scale alignment for monastery.jpg. </p>
+                </div>
+
+                <h3> Image Pyramid Alignment for high-resolution images: </h3>
+                For larger images (stored in .tif format), a naive single-scale approach is not practical for two primary reasons: 
+<br>
+1. The pixel array has larger shape, which makes our exhaustive search take longer. 
+                <br>
+2. The optimal displacement is likely larger than what the initial search space \( [-15,15] \) explores; for instance, 
+\( (50,23) \) for RED and \( (107,40) \) for GREEN works well for emir.tif. We would need to expand our search space to 
+something of the order \( [-100,100] \) to produce a sharp image with exhaustive search, which blows up the runtime. 
+<br>
+The remedy to these issues comes from using an image pyramid. The idea is to repeatedly scale the image (factor 
+of \( 2 \) chosen) until the pixel array is of reasonably small dimensions. 
+                <br>
+(i) First, at level \(i\) of scaling (that is, image is scaled by \( 2^i \) ), we find the optimal displacement \( d_i \)
+    for the scaled versions using a smaller search space, starting from \( i=L\) (maximum scaling) all the way to \(i=0\).
+                Specifically, the smaller search space used was \([-4,4]\)
+                <br>
+    (ii) For the original image, the corresponding displacement we implement is \( D_i = 2^{i}\cdot d_i \).
+                <br>
+    (iii) We add the optimal displacements to generate the best displacement for the original image: 
+                \[ \text{best displacement} = \sum_{i=0}^L D_i = \sum_{i=0}^L 2^i \cdot d_i \]
+    (iv) The final step is to translate the original RED/GREEN frame by the best displacement to generate our aligned frame.
+
+Note that this allows us to explore a wider range of displacements while saving on computational cost, due to the weighting by doubling factor \( 2^i \). Empirically, L=6 was the maximum depth of doubling chosen. 
+<br>
+Additionally, a Sobel filter was used for edge detection to improve the alignment, focusing on salient features of the image (the edge borders of major objects) to align first.
+                <div class="gallery">
+                    <img src="media/images/out_emir.jpg" alt="emir.jpg" />
+                    <p> Example of Image Pyramid alignment for emir.jpg. </p>
+                </div>
+
+                
+                <h3> Bells and Whistles: Contrast Normalization and Cropping </h3>
+
+                I also tried using contrast normalization and cropping to improve the aesthetic view of the images. For contrast normalization, the formula used was 
+                \[ \text{image}_{ij} \leftarrow \text{image}_{ij} - \min(\text{image}) \]
+                \[ \text{image}_{ij} \leftarrow \frac{\text{image}_{ij}}{\max(\text{image})} \]
+                While this produced slightly more natural colors for the images, the result is barely noticeable. In the future, I think stronger contrast normalization techniques need to be used for a more discernable impact. 
+                <br>
+                For cropping, I used a straightforward approach of removing 5 percent of the image from all sides. This 
+                was pretty comprehensive in removing the borders, producing cleaner images. 
+                <br>
+                The results are available to view in the Cropped Images section of Results below.   
+            </section>
+
+            <section id="section-2">
+                <h2>Section 2: Results</h2>
+
+                <h3>Images</h3>
+                <p>
+                    Here we present all generated images. Images are divided into three sections: 
+                    <br>
+                    1. Low resolution .jpg files
+                    <br>
+                    2. High resolution .tif files 
+                    <br>
+                    3. Additional .tif photos taken from the Library of Congress, from the Prokudin-Gorskii photo collection
+                    <br>
+                    <p> Click on the following link to view the images </p>
+                    <a href="./media/index.html">Images</a>
+                    <br>
+                    <p> For the contrast-normalized and cropped images (compared to outputs above), click the next link </p>
+                    <a href="./cropped_media/index.html">Cropped Images</a>
+                </p>
+
+                <h3>Data</h3>
+                <table id="data-table" class="comparison">
+                    <tr>
+                        <th scope = 'col'>Image </th>
+                        <th scope = 'col'>GREEN Displacement</th>
+                        <th scope = 'col'>RED Displacement</th>
+                        <th scope = 'col'>Approach Used</th>
+                    </tr>
+                    
+                    <tr>
+                        <th scope = 'row'> cathedral.jpg </th>
+                        <th score = 'row'> \( (1,0) \) </th>
+                        <th score = 'row'> \( (8,-1) \) </th>
+                        <th score = 'row'> Single-Scale Exhaustive search </th>
+                    </tr>
+                    <tr>
+                        <th scope = 'row'> monastery.jpg </th>
+                        <th score = 'row'> \( (-3,1) \) </th>
+                        <th score = 'row'> \( (3,2) \) </th>
+                        <th score = 'row'> Single-Scale Exhaustive search </th>
+                    </tr>
+                    <tr>
+                        <th scope = 'row'> tobolsk.jpg </th>
+                        <th score = 'row'> \( (3,2) \) </th>
+                        <th score = 'row'> \( (6,3) \) </th>
+                        <th score = 'row'> Single-Scale Exhaustive search </th>
+                    </tr>
+                    <tr>
+                        <th scope = 'row'> church.tif </th>
+                        <th score = 'row'> \( (25,3) \) </th>
+                        <th score = 'row'> \( (58,-4) \) </th>
+                        <th score = 'row'> Image Pyramid </th>
+                    </tr>
+                    <tr>
+                        <th scope = 'row'> emir.tif </th>
+                        <th score = 'row'> \( (50,23) \) </th>
+                        <th score = 'row'> \( (107,40) \) </th>
+                        <th score = 'row'> Image Pyramid </th>
+                    </tr>
+                    <tr>
+                        <th scope = 'row'> harvesters.tif </th>
+                        <th score = 'row'> \( (60,17) \) </th>
+                        <th score = 'row'> \( (124,11) \) </th>
+                        <th score = 'row'> Image Pyramid </th>
+                    </tr>
+                    <tr>
+                        <th scope = 'row'> icon.tif </th>
+                        <th score = 'row'> \( (41,16) \) </th>
+                        <th score = 'row'> \( (90,23) \) </th>
+                        <th score = 'row'> Image Pyramid </th>
+                    </tr>
+                    <tr>
+                        <th scope = 'row'> lady.tif </th>
+                        <th score = 'row'> \( (59,-10) \) </th>
+                        <th score = 'row'> \( (123,-21) \) </th>
+                        <th score = 'row'> Image Pyramid </th>
+                    </tr>
+                    <tr>
+                        <th scope = 'row'> melons.tif </th>
+                        <th score = 'row'> \( (80,10) \) </th>
+                        <th score = 'row'> \( (177,12) \) </th>
+                        <th score = 'row'> Image Pyramid </th>
+                    </tr>
+                    <tr>
+                        <th scope = 'row'> onion_church.tif </th>
+                        <th score = 'row'> \( (52,24) \) </th>
+                        <th score = 'row'> \( (107,35) \) </th>
+                        <th score = 'row'> Image Pyramid </th>
+                    </tr>
+                    <tr>
+                        <th scope = 'row'> sculpture.tif </th>
+                        <th score = 'row'> \( (33,-11) \) </th>
+                        <th score = 'row'> \( (140,-26) \) </th>
+                        <th score = 'row'> Image Pyramid </th>
+                    </tr>
+                    <tr>
+                        <th scope = 'row'> self_portrait.tif </th>
+                        <th score = 'row'> \( (78,29) \) </th>
+                        <th score = 'row'> \( (176,37) \) </th>
+                        <th score = 'row'> Image Pyramid </th>
+                    </tr>
+                    <tr>
+                        <th scope = 'row'> three_generations.tif </th>
+                        <th score = 'row'> \( (55,12) \) </th>
+                        <th score = 'row'> \( (111,8) \) </th>
+                        <th score = 'row'> Image Pyramid </th>
+                    </tr>
+                    <tr>
+                        <th scope = 'row'> train.tif </th>
+                        <th score = 'row'> \( (41,1) \) </th>
+                        <th score = 'row'> \( (85,29) \) </th>
+                        <th score = 'row'> Image Pyramid </th>
+                    </tr>
+                    <tr>
+                        <th scope = 'row'> camel.tif </th>
+                        <th score = 'row'> \( (22,15) \) </th>
+                        <th score = 'row'> \( (81,39) \) </th>
+                        <th score = 'row'> Image Pyramid </th>
+                    </tr>
+                    <tr>
+                        <th scope = 'row'> creepy_nun.tif </th>
+                        <th score = 'row'> \( (48,19) \) </th>
+                        <th score = 'row'> \( (109,34) \) </th>
+                        <th score = 'row'> Image Pyramid </th>
+                    </tr>
+                    <tr>
+                        <th scope = 'row'> view.tif </th>
+                        <th score = 'row'> \( (34,-14) \) </th>
+                        <th score = 'row'> \( (78,-25) \) </th>
+                        <th score = 'row'> Image Pyramid </th>
+                    </tr>
+                </table>
+            </section>
+
+            <section id="conclusion">
+                <h2>Conclusion</h2>
+                <p>
+                    Using these simple techniques, most of the generated images are sufficiently clear. The only image which 
+                    seems to remain fairly blurry is cathedral.jpg, for which advanced techniques might be more helpful. I think 
+                    the image can be made significantly sharper by using more careful edge detection. Specifically, accentuating 
+                    the edge of the cathedral would likely produce good results. 
+                    <br>
+                    Additionally, it would be great to implement a more efficient contrast normalization, or explore other techniques, 
+                    which would produce a more natural coloration for some of the images. Along similar lines, automatic edge detection
+                    and cropping would be a great plus for images of more varying sizes. 
+                </p>
+            </section>
+        </main>
+    </div>
+
+</body>
+
+</html>
