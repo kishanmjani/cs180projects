@@ -18,7 +18,7 @@
 
 <body>
     <header>
-        <h1>Part 1.1</h1>
+        <h1>Part 1.2</h1>
     </header>
 
     <div class="container">
@@ -27,30 +27,33 @@
         <main>
 
             <section id="jpg">
-                <h2> Convolutions of cameraman.jpg with Dx, Dy, and gradient magnitude filters </h2>
-            <h3> Approach Used and Results</h3>
-            Images to the left are original copies, the ones to the right are binarized with threshold \(h=0.17\).
-            We are working with the first channel of cameraman.png. Given a grayscale image <code>im</code>, we use <code>scipy.signal.convolve2d(im,Dx,mode='same',boundary='symm')</code> in order to compute the convolution of our image with some filter. Observe that \(f\star D_x\) can detect vertical edges, while \(f\star D_y\) can detect horizontal edges. Finally, in order to find the gradient magnitude image, we simply compute \(\sqrt{(f\star D_x)^2 + (f\star D_y)^2} \). 
+                <h2> Derivative of Gaussian Filter. </h2>
+            <h3> Finite Difference operator on Gaussian filtered-image</h3>
+            With \(f\) being the grayscale cameraman.png image again, let \(g\) denote a Gaussian filter. For our results, we used window size \(k=9\) and standard deviation \(\sigma = 1.5\) to create our \(9\times 9\) Gaussian filter. Using once again <code>scipy.signal.convolve2d</code> with symmetric boundaries and <code>mode='same'</code>, we get the images below:
             <br>
           Original image 
           <div class="gallery">
-                <img src="../../images/cameraman.png" alt="cameraman.png" />
+                <img src="../../images/cameraman.png"  />
                 </div>
-          Dx filter
-                     <div class="gallery">
-                <img src="../../results/cameraman_Dx.jpg" />
-                <img src="../../results/bin_cameraman_Dx.jpg" />
-                </div> 
-          Dy filter
-                     <div class="gallery">
-                <img src="../../results/cameraman_Dy.jpg" />
-                <img src="../../results/bin_cameraman_Dy.jpg" />
-                </div> 
-            Gradient Magnitude Image
-                                 <div class="gallery">
-                <img src="../../results/cameraman_grad.jpg" />
-                <img src="../../results/bin_cameraman_grad.jpg" />
-                </div> 
+          Image with Gaussian Blur
+          <div class="gallery">
+                <img src="../../images/cameraman_first.jpg"  />
+                </div>
+          Blurred Image with Dx filter
+          <div class="gallery">
+                <img src="../../images/cameraman_first_Dx.jpg"  />
+                <img src="../../images/bin_cameraman_first_Dx.jpg"  />
+                </div>                
+          Blurred Image with Dy filter
+          <div class="gallery">
+                <img src="../../images/cameraman_first_Dy.jpg" />
+                <img src="../../images/bin_cameraman_first_Dy.jpg"  />
+                </div>
+          Blurred Image with Gradient Magnitude filter
+          <div class="gallery">
+                <img src="../../images/cameraman_first_grad.jpg"  />
+                <img src="../../images/bin_cameraman_first_grad.jpg"  />
+                </div>
 
             <h3>Choice of <code>thresh</code> in binarizing an image</h3>
                 When we binarize an image, the function of <code>0<=thresh<=1</code> is to promote all values \(x\ge \texttt{thresh} \) to \(1\) and send the remaining values to \(0\). The advantage with choosing lower <code>thresh</code> is that we get better-defined, thicker edges. However, pushing this too far can lead to the emergence of non-existent edges and noise in the image, so a balance point needs to be found empirically. As stated before, <code>thresh=0.17</code> was used here. 
