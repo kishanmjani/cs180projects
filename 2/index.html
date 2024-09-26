@@ -66,8 +66,8 @@
                 We will be able to create various interesting images (sharper images from blurred ones, hybrid images, blended images) using tricks with frequency and the Gaussian. 
 
                 <h3> Part 2.1: Image Sharpening </h3>
-                Let \(G\)  be a Gaussian Filter and let \(I\) be the identity filter. If \(f\star G\) blurs an image, then for \(\alpha > 0\) we can use the formula \( f - f\star g\) to construct an image of "details". Then 
-                \[ f_s = f + \alpha(f-f\star g) = f\star[ (1+\alpha) e - \alpha g ] \] 
+                Let \(G\)  be a Gaussian Filter and let \(I\) be the identity filter. If \(f\star G\) blurs an image, then for \(\alpha > 0\) we can use the formula \( f - f\star G\) to construct an image of "details". Then 
+                \[ f_s(\alpha) = f + \alpha(f-f\star G) = f\star[ (1+\alpha) I - \alpha G ] \] 
                 is a sharpened image i.e. an image with more details. 
 <br>
                 To see results, click on the following link: 
