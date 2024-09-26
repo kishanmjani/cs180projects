@@ -31,31 +31,56 @@
             <h3> Finite Difference operator on Gaussian filtered-image</h3>
             With \(f\) being the grayscale cameraman.png image again, let \(g\) denote a Gaussian filter. For our results, we used window size \(k=9\) and standard deviation \(\sigma = 1.5\) to create our \(9\times 9\) Gaussian filter. Using once again <code>scipy.signal.convolve2d</code> with symmetric boundaries and <code>mode='same'</code>, we get the images below:
             <br>
-          Original image 
+          Original image \(f\)
           <div class="gallery">
                 <img src="../../images/cameraman.png"  />
                 </div>
-          Image with Gaussian Blur
+          Image with Gaussian Blur \(f\star g\)
           <div class="gallery">
-                <img src="../../images/cameraman_first.jpg"  />
+                <img src="../../results/cameraman_first.jpg"  />
                 </div>
-          Blurred Image with Dx filter
+          Blurred Image with Dx filter \( (f\star g) \star D_x\)
           <div class="gallery">
-                <img src="../../images/cameraman_first_Dx.jpg"  />
-                <img src="../../images/bin_cameraman_first_Dx.jpg"  />
+                <img src="../../results/cameraman_first_Dx.jpg"  />
+                <img src="../../results/bin_cameraman_first_Dx.jpg"  />
                 </div>                
-          Blurred Image with Dy filter
+          Blurred Image with Dy filter \( (f\star g) \star D_y \)
           <div class="gallery">
-                <img src="../../images/cameraman_first_Dy.jpg" />
-                <img src="../../images/bin_cameraman_first_Dy.jpg"  />
+                <img src="../../results/cameraman_first_Dy.jpg" />
+                <img src="../../results/bin_cameraman_first_Dy.jpg"  />
                 </div>
           Blurred Image with Gradient Magnitude filter
           <div class="gallery">
-                <img src="../../images/cameraman_first_grad.jpg"  />
-                <img src="../../images/bin_cameraman_first_grad.jpg"  />
+                <img src="../../results/cameraman_first_grad.jpg"  />
+                <img src="../../results/bin_cameraman_first_grad.jpg"  />
+                </div>
+    <h3> Derivative of Gaussian filters on the image</h3>
+            Using once again <code>scipy.signal.convolve2d</code> with symmetric boundaries and <code>mode='same'</code>, the difference now is that we first compute \(  g\star D_x\) and \(g\star D_y\) and then later compute \( (g\star D_x) \star f\) and \( (g\star D_y) \star f\). We will see that the outputs from both approaches are identical, which shows that convolution commutes and associates. We get the images below:
+            <br>
+          Original image \(f\)
+          <div class="gallery">
+                <img src="../../images/cameraman.png"  />
+                </div>
+          Image with DoG x filter \( (g\star D_x) \star f\)
+          <div class="gallery">
+                <img src="../../results/cameraman_second_Dx.jpg"  />
+                <img src="../../results/bin_cameraman_second_Dx.jpg"  />
+                </div>                
+          Image with Dog y filter \( (g\star D_y) \star f\)
+          <div class="gallery">
+                <img src="../../results/cameraman_second_Dy.jpg" />
+                <img src="../../results/bin_cameraman_second_Dy.jpg"  />
+                </div>
+          Gradient Magnitude Filter
+          <div class="gallery">
+                <img src="../../results/cameraman_second_grad.jpg"  />
+                <img src="../../results/bin_cameraman_second_grad.jpg"  />
                 </div>
 
-            <h3>Choice of <code>thresh</code> in binarizing an image</h3>
+            <h3>Comparison with Part 1.1: Removal of Noise</h3>
+
+
+            <h3>Commutativity of Convolution</h3>
                 When we binarize an image, the function of <code>0<=thresh<=1</code> is to promote all values \(x\ge \texttt{thresh} \) to \(1\) and send the remaining values to \(0\). The advantage with choosing lower <code>thresh</code> is that we get better-defined, thicker edges. However, pushing this too far can lead to the emergence of non-existent edges and noise in the image, so a balance point needs to be found empirically. As stated before, <code>thresh=0.17</code> was used here. 
             </section>
         </main>
