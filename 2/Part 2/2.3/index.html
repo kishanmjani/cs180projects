@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>2.1</title>
+    <title>2.3</title>
 
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
@@ -18,7 +18,7 @@
 
 <body>
     <header>
-        <h1>Part 2.1</h1>
+        <h1>Part 2.3</h1>
     </header>
 
     <div class="container">
@@ -27,24 +27,14 @@
         <main>
 
             <section id="jpg">
-                <h2> Sharpening Images </h2>
-            <h3> Approach Used and Results</h3>
+                <h2> Gaussian and Laplacian Stacks </h2>
+            <h3> Recreating the outcomes of Figure 3.42 in Szelski (Ed 2) page 167,</h3>
             <br>
-          Taj Mahal \( (\alpha = 0.85, \sigma = 1.5, \text{ window size } k = 9) \)
+          We use \( d = 7, \sigma = 4\) for the depth of the stack and standard deviation of the first Gaussian, respectively. The window size for the Gaussian 
+                kernel was once again taken to be \( k = 6[\sigma] + 1 \). Furthermore, for better results, we skip the first two masks in order to have smoother transition
+                between the two images (i.e. we start choosing masks once they are smoothened enough by a Gaussian). 
                      <div class="gallery">
-                <img src="../../results/taj.jpg" />
-                <img src="../../results/sharp_taj.jpg" />
-                </div> 
-          Monastery from Project 1 \( (\alpha = 0.75, \sigma = 1.5, \text{ window size } k = 9) \)
-                     <div class="gallery">
-                <img src="../../results/monastery.jpg" />
-                <img src="../../results/sharp_monastery.jpg" />
-                </div> 
-            Mount Everest \( (\alpha = 4, \sigma = 2.5, \text{ window size } k = 15) \)
-                                 <div class="gallery">
-                <img src="../../results/blurry_everest.jpg" />
-                <img src="../../results/everest.jpg" />
-                <img src="../../results/sharp_everest.jpg" />
+                <img src="../../results/orapple_laplace.png" />
                 </div> 
 
             <h3>Observations</h3>
