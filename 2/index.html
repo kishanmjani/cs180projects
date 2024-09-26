@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Project 1: Colorizing the Prokudin-Gorskii photo collection</title>
+    <title>Project 2: Fun with Filters and Frequencies!</title>
 
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
@@ -18,7 +18,7 @@
 
 <body>
     <header>
-        <h1>Project 1: Colorizing the Prokudin-Gorskii photo collection</h1>
+        <h1>Project 2: Fun with Filters and Frequencies!</h1>
         <p>Kishan Jani</p>
     </header>
 
@@ -26,27 +26,28 @@
 
         <!-- Contents -->
         <main>
-            <section id="intro">
-                <h2>Introduction</h2>
+            <section id="part 1">
+                <h2>Part 1: Fun with Filters</h2>
                 <p>
-                    The goal of this assignment is to take the digitized Prokudin-Gorskii glass 
-                    plate images and, using image processing techniques, automatically produce a
-                    color image with as few visual artifacts as possible. In order to do this, we
-                    extract the three color channel images, place them on top of
-                    each other, and align them so that they form a single RGB color image.
+                    In this part, we build intuitions about 2D convolutions and filtering.
+<br>
+                    This is done primarily through visualizing what convolutions with the derivative look like.
 <br>
                     IMPORTANT NOTE: For clarity, this webpage contains a link where images before and after alignment are 
                     displayed. For the webpage pdf, this other page has been attached at the bottom for convenience of viewing. 
                     Clicking links to Images and Cropped Images below will lead to the aforementioned pages.
 <br>
-                    Less Important Note: For this exposition, we use notation \([-3,3]\) to denote the set \(\{-3,-2,-1,0,1,2\}\).
                 </p>
+                <h3> Part 1.1: Finite Difference Operator</h3>
+
+                Our goal here is to visually see what the convolutions \(f\star D_x\) and \(f\star D_y \) do. 
+                
             </section>
 
-            <section id="section-1">
-                <h2>Section 1: Methods Used </h2>
+            <section id="part 2">
+                <h2>Part 2: </h2>
 
-                <h3> Single-Scale Alignment for low-resolution images: </h3>
+                <h3> Part 2.1 </h3>
                 <p>
                     For smaller images (stored in .jpg format: cathedral.jpg, monastery.jpg, tobolsk.jpg), a simple 'single scale' implementation was used. Using the BLUE frame as a base, we exhaustively search for the optimal displacement (judged by a similarity metric) within a specified search space. The RED/GREEN frames are then displaced accordingly to produce the desirable alignment for all 3 frames. 
 <br>
