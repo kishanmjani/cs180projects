@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Images</title>
+    <title>1.1</title>
 
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
@@ -28,7 +28,7 @@
 
             <section id="jpg">
                 <h2> Convolutions of cameraman.jpg with Dx, Dy, and gradient magnitude filters </h2>
-            </section>
+            <h3> Approach Used and Results</h3>
             Images to the left are original copies, the ones to the right are binarized with threshold \(h=0.17\).
             We are working with the first channel of cameraman.png. Given a grayscale image <code>im</code>, we use <code>scipy.signal.convolve2d(im,Dx,mode='same',boundary='symm')</code> in order to compute the convolution of our image with some filter. Observe that \(f\star D_x\) can detect vertical edges, while \(f\star D_y\) can detect horizontal edges. Finally, in order to find the gradient magnitude image, we simply compute \(\sqrt{(f\star D_x)^2 + (f\star D_y)^2} \). 
             <br>
@@ -51,6 +51,10 @@
                 <img src="../../results/cameraman_grad.jpg" />
                 <img src="../../results/bin_cameraman_grad.jpg" />
                 </div> 
+
+            <h3>Choice of <code>thresh</code> in binarizing an image</h3>
+                
+            </section>
         </main>
     </div>
 
