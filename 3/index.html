@@ -34,8 +34,8 @@
                     later a morph, between the following two images: 
 
                     <div class="gallery">
-                <img src="./images/dinero.png" />
-                <img src="./images/george.png" />
+                <img src="./images/dinero.jpg" />
+                <img src="./images/george.jpg" />
                 </div> 
 
                 [The images are taken from the photographs by Martin Schoeller. While it was recommended to do the first few parts 
@@ -44,9 +44,11 @@
 
                 <br> 
                 A total of 60 points were chosen to build the correspondence, giving arrays \(\text{arr1}\) and \(\text{arr2}\) of length
-                60 each. We compute the average shape between the two images as \(\frac{1}{2}(  \text{arr1} + \text{arr2} ) \). 
+                60 each. We compute the average between the two image keypoints as \(\frac{1}{2}(  \text{arr1} + \text{arr2} ) \). 
+                We then use <code>scipy.spatial.Delaunay</code> to compute a triangulation of the averaged points, which gives us 
+                the average shape between the two faces. I implemented a custom labelling tool using <code>ginput</code>. In the next part, 
+                we use this average triangulation to compute the midway face. 
                 <br>
-                
                 To see results, click on the following link: 
                 <br>
                 <a href="./3.1/index.html">Part 3.1 Results</a>
