@@ -56,6 +56,7 @@
 
             <section id="part 2">
                 <h2>Part 3.2: Computing the Midway face</h2>
+                <h3> Computing Affine Transformations between simplices</h3>
                 <p>
                     Let \(T = T_1 \sqcup \cdots \sqcup T_n \) and \(T' = T_1' \sqcup \cdots \sqcup T_n'\) be triangulations of two images. Then between triangles \(T_i\) and \(T_i'\), we wish to find an affine transformation \(A_i: T_i \to T_i'\) such that the vertices of \(T_i\) are mapped to the vertices of \(T_i'\). If \((x_j, y_j)\) and \((x_j', y_j')\) for \(j=1, 2, 3\) are the vertices of \(T_i\) and \(T_i'\) respectively, then
 
@@ -98,6 +99,25 @@ since that will be used for the inverse warp later.
 
                     
                 </p>
+
+            <h3>Inverse Warp</h3>
+                <p>
+                    Let \(f\) be an image and let \(T = T_1 \sqcup \cdots \sqcup T_n\) be a triangulation for it. Let \(T' = T_1' \sqcup \cdots \sqcup T_n'\) be the triangulation we want to warp \(f\) into. We have transformations \(A_1^{-1}, \ldots, A_n^{-1}\) where \(A_i^{-1} : T_i' \to T_i\), available for the inverse warp. To compute the warped image \(f'\) at coordinates \((x', y') \in T_i'\), we have
+
+\[
+f'(x', y') = f(T_i^{-1}(x', y')).
+\]
+
+To address the case that \(T_i^{-1}(x', y')\) is not an integer, we use interpolation. 
+We loop over all triangulations \(T_i\), evaluating \(f'\) on all points inside the triangulation.
+
+To implement this partition of space into triangulations, we will use polygon masks using <code>skimage.draw.polygon</code>
+                    applied to the image to piece-by-piece compute the inverse warped image. 
+                </p>
+            <h3>Results </h3>After inverse warping across all simplices, we have our warped image, which in this case is the midway face 
+            for Goerge Clooney and Robert Deniro. To see results, click the following link: 
+            <br>
+            <a href="./3.2/index.html">Part 3.2 Results</a>
             </section>
             
         </main>
