@@ -32,7 +32,7 @@
                     In this part, we define keypoints/correspondences on two faces, which can be thought of as facial details
                     that we would like the warping mechanism to pay special attention to. The goal is to create a midway, and then 
                     later a morph, between the following two images of Robert Deniro and George Clooney: 
-
+                </p>
                     <div class="gallery">
                 <img src="./images/deniro.jpg" />
                 <img src="./images/george.jpg" />
@@ -56,7 +56,48 @@
 
             <section id="part 2">
                 <h2>Part 3.2: Computing the Midway face</h2>
+                <p>
+                    Let \(T = T_1 \sqcup \cdots \sqcup T_n \) and \(T' = T_1' \sqcup \cdots \sqcup T_n'\) be triangulations of two images. Then between triangles \(T_i\) and \(T_i'\), we wish to find an affine transformation \(A_i: T_i \to T_i'\) such that the vertices of \(T_i\) are mapped to the vertices of \(T_i'\). If \((x_j, y_j)\) and \((x_j', y_j')\) for \(j=1, 2, 3\) are the vertices of \(T_i\) and \(T_i'\) respectively, then
 
+\[
+\begin{bmatrix} 
+x_1' & x_2' & x_3' \\ 
+y_1' & y_2' & y_3' \\ 
+1 & 1 & 1 
+\end{bmatrix} 
+= \underbrace{\begin{bmatrix} 
+a & b & c \\ 
+d & e & f \\ 
+0 & 0 & 1 
+\end{bmatrix}}_{=:A_i} 
+\begin{bmatrix} 
+x_1 & x_2 & x_3 \\ 
+y_1 & y_2 & y_3 \\ 
+1 & 1 & 1 
+\end{bmatrix} .
+\]
+
+Since the points form a triangle, the matrices other than \(A_i\) are invertible, and this is how we compute the affine transformation.
+
+In reality, we will store 
+
+\[
+A_i^{-1} = \begin{bmatrix} 
+x_1 & x_2 & x_3 \\ 
+y_1 & y_2 & y_3 \\ 
+1 & 1 & 1 
+\end{bmatrix} 
+\begin{bmatrix} 
+x_1' & x_2' & x_3' \\ 
+y_1' & y_2' & y_3' \\ 
+1 & 1 & 1 
+\end{bmatrix}^{-1}
+\]
+
+since that will be used for the inverse warp later.
+
+                    
+                </p>
             </section>
             
         </main>
