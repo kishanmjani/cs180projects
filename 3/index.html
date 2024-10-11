@@ -29,9 +29,24 @@
             <section id="part 1">
                 <h2>Part 3.1: Defining Correspondences</h2>
                 <p>
-                    In this part, we define correspondences.
-<br>
-                </p>
+                    In this part, we define keypoints/correspondences on two faces, which can be thought of as facial details
+                    that we would like the warping mechanism to pay special attention to. The goal is to create a midway, and then 
+                    later a morph, between the following two images: 
+
+                    <div class="gallery">
+                <img src="./images/dinero.png" />
+                <img src="./images/george.png" />
+                </div> 
+
+                [The images are taken from the photographs by Martin Schoeller. While it was recommended to do the first few parts 
+                with your own face, I found it much simpler to take a photo which had enough detail and was aligned well to focus on
+                the face. Photographs by the same artist means similarity, and easier warping] 
+
+                <br> 
+                A total of 60 points were chosen to build the correspondence, giving arrays \(\text{arr1}\) and \(\text{arr2}\) of length
+                60 each. We compute the average shape between the two images as \(\frac{1}{2}(  \text{arr1} + \text{arr2} ) \). 
+                <br>
+                
                 To see results, click on the following link: 
                 <br>
                 <a href="./3.1/index.html">Part 3.1 Results</a>
