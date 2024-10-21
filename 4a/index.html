@@ -43,27 +43,41 @@
                 <h2>Part 4a.2: Computing Homographies and Warping Images</h2>
                 <h3> Computing Homographies between keypoints</h3>
                 <p>
-                    Suppose we wish to send points \([x:y:w]\) (in \(\mathbb{P}^2\) projective space) to \([x':y':w']\) for 
+                    Suppose we wish to send points \([wx:wy:w]\) (in \(\mathbb{P}^2\) projective space) to \([w'x':w'y':w']\) for 
                     indices \(i=1,2,\ldots, n\) (for conciceness, we supress the indices) via some homography \(H\) i.e.; 
-                    \[ \begin{bmatrix} x'\\y'\\w'\end{bmatrix} = H \begin{bmatrix} x\\y\\w\end{bmatrix}\]
+                    \[ \begin{bmatrix} w'x'\\w'y'\\w'\end{bmatrix} = H \begin{bmatrix} wx\\wy\\w\end{bmatrix}\]
                 </p>
-                    Recall the conversion from heterogeneous to homogeneous depends on \(w\) (resp. \(w'\)):
-                        \[u = x / w, \quad \quad v = y / w.\]
+                    
+                <p>
+    
                     Thus we have (scaling \(H\) to set \(h_{33} = 1\))
-                \[ s \begin{bmatrix} u'\\v'\\1\end{bmatrix} = H \begin{bmatrix} u\\v\\1\end{bmatrix} =
-\begin{bmatrix} h_{11}, h_{12}, h_{13}\\h_{21}, h_{22}, h_{23}\\h_{31}, h_{32}, 1\end{bmatrix} \begin{bmatrix} u\\v\\1\end{bmatrix},\]
+                \[ s \begin{bmatrix} x'\\y'\\1\end{bmatrix} = H \begin{bmatrix} x\\y\\1\end{bmatrix} =
+\begin{bmatrix} h_{11}, h_{12}, h_{13}\\h_{21}, h_{22}, h_{23}\\h_{31}, h_{32}, 1\end{bmatrix} \begin{bmatrix}x\\y\\1\end{bmatrix},\]
                     where we set \(s:= w'/w\). Then substituting the value for \(s\) from the third equation and rearranging, we get the linear 
                 system 
-                \[ \begin{bmatrix} u& v& 1& 0& 0& 0& -u'u& -u'v \\ 0& 0& 0& u& v& 1& -v'u& -v'v \end{bmatrix}  
+                \[ \begin{bmatrix} x& y& 1& 0& 0& 0& -x'x& -x'y \\ 0& 0& 0& u& v& 1& -y'x& -y'y \end{bmatrix}  
 \begin{bmatrix} h_{11} \\ h_{12} \\ h_{13} \\ h_{21} \\ h_{22} \\ h_{23} \\ h_{31} \\ h_{32} \end{bmatrix}  
-=\begin{bmatrix} u' \\ v' \end{bmatrix}  \]
+=\begin{bmatrix} x' \\ y' \end{bmatrix}  \]
+                For a batch of \(n\) distinct points, we then have the overdetermined linear system \(A \mathbf{h} = \mathbf{b}\)
+                to solve, where \(\mathbf{h} = \begin{bmatrix} h_{11} & \cdots & h_{32} \end{bmatrix}^\top \) as above, \(A\) is a \(2n\times 8\)
+                stacking \(n\) matrices of shapre \(2\times 8\) and form above. Finally, \(\mathbf{b}\) is formed by interleaving the new \(xy\)-coordinates
+                \(x'\) and \(y'\). 
+                </p>
+
                 <p>
-                    
+                    Now observe that this overdetermined system can be solved via least-squares, which then gives the best homography mapping 
+                    \( (x_1,y_1),\ldots, (x_n,y_n) \) to \( (x_1',y_1'), \ldots, (x_n, y_n') \). 
                 </p>
 
             <h3>Inverse Warp</h3>
                 <p>
-                  
+                  Once we have the homography, to actually transform the image, we will use an inverse warp. Specifically, we first determine the 
+                    bounding box \(T\) for the image by predicting where the corners map. Then we find the pixel value of \((x',y')\) in the new image via 
+                    
+                    \[ g(x',y') = f(T^{-1}(x',y')) \]
+                    so we set the new image pixels to be the the old-image pixel values for \(T^{-1}(\text{bounding box})\). To ensure that 
+                    \(T^{-1}(\text{bounding box})\) hits integers, we use <code>scipy.interpolate.RegularGridInterpolator</code> as last time. 
+                    Multiple homographies can also be chained together to generate mosaics with \( > 2\) images.
                 </p>
                   
             </section>
