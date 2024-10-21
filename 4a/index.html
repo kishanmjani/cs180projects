@@ -117,8 +117,8 @@
                 With this, we will have two images whose keypoints roughly match. In order to properly blend these images, we 
                 use a distance transform on the alpha channel. This way, during the blending, we give more weight to the image 
                 which is further from the background at a certain point. Specifically, 
-                \[\text{Blended Image}[i,j] = \mathbb{1}_k\{ \text{dist}_1[i,j] > \text{dist}_2[i,j] \} \text{Image}_1[i,j] + \big( 1 -
-                \mathbb{1}_k\{ \text{dist}_1[i,j] > \text{dist}_2[i,j] \} \big) \text{Image}_2[i,j].\]
+                \[\text{Blended Image}[i,j] = \mathbb{1}_k\{ \text{dist}_1[i,j] > \text{dist}_2[i,j] \}\cdot \text{Image}_1[i,j] + \big( 1 -
+                \mathbb{1}_k\{ \text{dist}_1[i,j] > \text{dist}_2[i,j] \} \big) \cdot \text{Image}_2[i,j].\]
                 In order to ensure that the blending is smooth, we use a Gaussian blur on the indicator/mask 
                 \[\mathbb{1}_k\{ \text{dist}_1[i,j] > \text{dist}_2[i,j]\} = \text{Gaussian}(\sigma_k = 2^k \sigma_0, \text{window} =
                 \lfloor 6\sigma_k \rfloor +1) \star \mathbb{1}\{ \text{dist}_1[i,j] > \text{dist}_2[i,j]\},\]
