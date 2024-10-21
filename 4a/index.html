@@ -43,16 +43,20 @@
                 <h2>Part 4a.2: Computing Homographies and Warping Images</h2>
                 <h3> Computing Homographies between keypoints</h3>
                 <p>
-                    Suppose we wish to send points \([x:y:w]\) (in \(\mathbb{P}^2\) projective space) to \([x':y':w']\_ for 
-                    indices $i=1,2,\ldots, n$ (for conciceness, we supress the indices) via some homography \(H\) i.e.; 
+                    Suppose we wish to send points \([x:y:w]\) (in \(\mathbb{P}^2\) projective space) to \([x':y':w']\) for 
+                    indices \(i=1,2,\ldots, n\) (for conciceness, we supress the indices) via some homography \(H\) i.e.; 
                     \[ \begin{bmatrix} x'\\y'\\w'\end{bmatrix} = H \begin{bmatrix} x\\y\\w\end{bmatrix}\]
                 </p>
                     Recall the conversion from heterogeneous to homogeneous depends on \(w\) (resp. \(w'\)):
                         \[u = x / w, \quad \quad v = y / w.\]
                     Thus we have (scaling \(H\) to set \(h_{33} = 1\))
-                \[ w' / w \begin{bmatrix} u'\\v'\\1\end{bmatrix} = H \begin{bmatrix} u\\v\\1\end{bmatrix} =
-\begin{bmatrix} h_{11}, h_{12}, h_{13}\\h_{21}, h_{22}, h_{23}\\h_{31}, h_{32}, 1\end{bmatrix} \begin{bmatrix} u\\v\\1\end{bmatrix}.\]
-
+                \[ s \begin{bmatrix} u'\\v'\\1\end{bmatrix} = H \begin{bmatrix} u\\v\\1\end{bmatrix} =
+\begin{bmatrix} h_{11}, h_{12}, h_{13}\\h_{21}, h_{22}, h_{23}\\h_{31}, h_{32}, 1\end{bmatrix} \begin{bmatrix} u\\v\\1\end{bmatrix},\]
+                    where we set \(s:= w'/w\). Then substituting the value for \(s\) from the third equation and rearranging, we get the linear 
+                system 
+                \[ \begin{bmatrix} u& v& 1& 0& 0& 0& -u'u& -u'v \\ 0& 0& 0& u& v& 1& -v'u& -v'v \end{bmatrix}  
+\begin{bmatrix} h_{11} \\ h_{12} \\ h_{13} \\ h_{21} \\ h_{22} \\ h_{23} \\ h_{31} \\ h_{32} \end{bmatrix}  
+=\begin{bmatrix} u' \\ v' \end{bmatrix}  \]
                 <p>
                     
                 </p>
