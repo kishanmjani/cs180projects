@@ -71,13 +71,15 @@
 
             <h3>Inverse Warp</h3>
                 <p>
-                  Once we have the homography, to actually transform the image, we will use an inverse warp. Specifically, we first determine the 
-                    bounding box \(T\) for the image by predicting where the corners map. Then we find the pixel value of \((x',y')\) in the new image via 
+                  Once we have the homography \(H\), to actually transform the image, we will use an inverse warp. Specifically, we first determine the 
+                    bounding box for the image by predicting where the corners map under \(H\). Then we find the pixel value of \((x',y')\) in the new image via 
                     
-                    \[ g(x',y') = f(T^{-1}(x',y')) \]
-                    so we set the new image pixels to be the the old-image pixel values for \(T^{-1}(\text{bounding box})\). To ensure that 
-                    \(T^{-1}(\text{bounding box})\) hits integers, we use <code>scipy.interpolate.RegularGridInterpolator</code> as last time. 
+                    \[ g(x',y') = f(H^{-1}(x',y')) \]
+                    so we set the new image pixels to be the the old-image pixel values for \(H^{-1}(\text{bounding box})\). To ensure that 
+                    \(H^{-1}(\text{bounding box})\) hits integer coordinates, we use <code>scipy.interpolate.RegularGridInterpolator</code> like in the previous project.  
                     Multiple homographies can also be chained together to generate mosaics with \( > 2\) images.
+                    <br>
+                    Results of this section are presented in Image Rectification and Mosaicing. 
                 </p>
                   
             </section>
@@ -89,10 +91,15 @@
                     Part 4a.3: Image Rectification (Contains Deliverables)
                 </h2>
                 <h3> Introduction</h3>
-                    Any particular instance of the morph sequence, as described in the project outline, is given by the function 
-                    <code>morph_fixed(im1, pts_arr1, im2, pts_arr2, simplices, warp_frac, dissolve_frac, channel)</code>, 
-                    and produces a morphing .gif file that takes im1 to im2 as <code>warp_frac</code> and <code>dissolve_frac</code> go from 0 to 1. In future parts, 
-                    we will also explore the impact of differently varying warp_frac and dissolve_frac. 
+                    By setting the target keypoints to be a well-defined rectangle in the homography, given an image, we can select a feature that we know
+                is rectangular to "rectify" it i.e, make it straight. 
+                <br>
+                Results in this section are highly sensitive to selection of points. Firstly, it is crucial that the points selected are accurate, 
+                since rectification empirically proved to be highly sensitive to this. Furthermore, the ordering of points needs to be correct (otherwise 
+                unintelligible results are produced since the image gets "flipped over itself"). 
+                <br>
+                Finally, to produce aesthetic images, the dimensions of the new rectified feature were chosen to be somewhat similar to those of the old 
+                feature. 
 
                 <h3> Results </h3>
 
