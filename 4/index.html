@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Project 3</title>
+    <title>Project 4</title>
 
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
@@ -18,7 +18,7 @@
 
 <body>
     <header>
-        <h1>Project 4a: Image Warping and Mosaicing</h1>
+        <h1>Project 4: [Auto]Stiching Photo Mosaics</h1>
         <p>Kishan Jani</p>
     </header>
 
@@ -26,6 +26,10 @@
 
         <!-- Contents -->
         <main>
+            <section id = "part A">
+                <h2>Project 4a: Image Warping and Mosaicing</h2>
+            </section>
+            </section>
             <section id="part 1">
                 <h2>Part 4a.1: Shooting the Images</h2>
                 <p>
@@ -132,6 +136,49 @@
             <a href="./4a.4/index.html">Part 4a.4 Results</a>
               
             </section>
+
+            <section id = "part B">
+                <h2>Project 4b: Image Warping and Mosaicing</h2>
+            </section>
+            </section>
+            <section id="part 1">
+                <h2>Part 4b.1: Detecting corner features in an image</h2>
+                <h3> Harris Point Detector </h3>
+                <p>
+                    In this part, we use the Harris Matrix \( H_\ell(x,y) \) at each position \( (x,y) \)
+                    (and appropriate level \(\ell\) ) to detect corners. It is defined as 
+                    \[ H_\elll(x,y) = \nabla P_\ell(x,y) \nabla P_\ell(x,y)^{\text{T}} \star g_\sigma(x,y).\]
+                    Here \(P_\ell \) is the level \( \ell \) image from the pyramid for our image. Thus, the 
+                    Harris Matrix looks at the outer product of (smoothed at level \( \ell \)) the gradient of 
+                    \( P_\ell \) with itself, smoothed by an appropriate Gaussian \( g_\sigma \). 
+                </p>
+                <p>
+                    The corner strength is measured by the Harmonic Mean of the eigenvalues of \( H_\ell(x,y) \) i.e. 
+                    \[ S(x,y) = \frac{\lambda_1 \lambda_2}{\lambda_1 + \lamdba_2}.\]
+                    Reasoning: When the corner strength is large and positive, we have one eigenvalue that is large 
+                    and another that is small (say \( \lambda_1 > \lambda_2\) WLOG). Thus there is sharp change in the 
+                    direction of the eigenvector of \( \lambda_1\) while the \( \lambda_2\) direction does not change as much. 
+                    This is precisely a corner. We look for corners which are sufficiently spaced out and match a certain threshold value. 
+                </p>
+                <h3> Adaptive Non-Maximal Suppression (ANMS) </h3>
+                <p>
+                    There are two issues with simply using Harris Corners: the points are not evenly spaced out 
+                    across the image to ensure a robust homography, and there are too many points. The Adaptive Non-Maximal 
+                    Suppression Algorithm selects only the interest points \( p* \) that are sufficiently far from other interest points. 
+                    The reasoning is that these other interest points, should their corner values exceed that of \( p*\), would suppress 
+                    the value of \( p*\)  as a corner. We choose \( c=0.9 \) as our "robustness" parameter, which is the fraction by which the 
+                      \(S(p*)\) would have to be smaller than its neighbors in order to not be selected. Particularly, we compute 
+                     \[r_i = \min_i |\vec{x}_i - \vec{x}_j| \; \forall \vec{x}_j \text{ s.t. } S(\vec{x}_i) < c\cdot S(\vec{x}_j)\]
+                     then choose the top \( N_{ip}\) candidates to be the new interest points. As can be seen with the results, not only does this cull a lot of 
+                     points that are densely packed, but it also chooses spaced out points. 
+                </p>
+                <br>
+                    To see the selected Harris Points and Harris + ANMS points, click the link below.
+                <br>
+                <a href="./4b.1/index.html">Part 4b.1 Results</a>
+            </section>
+
+
         </main>
     </div>
 
