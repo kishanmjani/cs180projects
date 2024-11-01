@@ -147,14 +147,14 @@
                 <p>
                     In this part, we use the Harris Matrix \( H_\ell(x,y) \) at each position \( (x,y) \)
                     (and appropriate level \(\ell\) ) to detect corners. It is defined as 
-                    \[ H_\elll(x,y) = \nabla P_\ell(x,y) \nabla P_\ell(x,y)^{\text{T}} \star g_\sigma(x,y).\]
+                    \[ H_\ell(x,y) = \nabla P_\ell(x,y) \nabla P_\ell(x,y)^{\text{T}} \star g_\sigma(x,y).\]
                     Here \(P_\ell \) is the level \( \ell \) image from the pyramid for our image. Thus, the 
                     Harris Matrix looks at the outer product of (smoothed at level \( \ell \)) the gradient of 
                     \( P_\ell \) with itself, smoothed by an appropriate Gaussian \( g_\sigma \). 
                 </p>
                 <p>
                     The corner strength is measured by the Harmonic Mean of the eigenvalues of \( H_\ell(x,y) \) i.e. 
-                    \[ S(x,y) = \frac{\lambda_1 \lambda_2}{\lambda_1 + \lamdba_2}.\]
+                    \[ S(x,y) = \frac{\lambda_1 \lambda_2}{\lambda_1 + \lambda_2}.\]
                     Reasoning: When the corner strength is large and positive, we have one eigenvalue that is large 
                     and another that is small (say \( \lambda_1 > \lambda_2\) WLOG). Thus there is sharp change in the 
                     direction of the eigenvector of \( \lambda_1\) while the \( \lambda_2\) direction does not change as much. 
@@ -169,15 +169,46 @@
                     the value of \( p*\)  as a corner. We choose \( c=0.9 \) as our "robustness" parameter, which is the fraction by which the 
                       \(S(p*)\) would have to be smaller than its neighbors in order to not be selected. Particularly, we compute 
                      \[r_i = \min_i |\vec{x}_i - \vec{x}_j| \; \forall \vec{x}_j \text{ s.t. } S(\vec{x}_i) < c\cdot S(\vec{x}_j)\]
-                     then choose the top \( N_{ip}\) candidates to be the new interest points. As can be seen with the results, not only does this cull a lot of 
+                     then choose the top \( N_{ip}=500\) candidates to be the new interest points. As can be seen with the results, not only does this cull a lot of 
                      points that are densely packed, but it also chooses spaced out points. 
                 </p>
+                <h3> Results </h3>
                 <br>
                     To see the selected Harris Points and Harris + ANMS points, click the link below.
                 <br>
                 <a href="./4b.1/index.html">Part 4b.1 Results</a>
             </section>
 
+            <section>
+                <h2> Part 4b.2 and 4b.3: Extracting and Matching Feature Descriptors</h2>
+                <h3> Extracting Feature Detectors </h3>
+
+                <h3> Matching Feature Detectors </h3>
+
+                <h3> Results </h3>
+                <br>
+                    To see the matchings and some matched features from each mosaic, click the link below.
+                <br>
+                <a href="./4b.2/index.html">Part 4b.2 and 4b.3 Results</a>
+            </section>
+
+            <section>
+                <h2> Part 4b.4: Use RANSAC for Robust Homography </h2>
+            </section>
+
+            <section>
+                <h2> Part 4b.5: Produce Mosaics </h2>
+            </section>
+
+            Using exactly the same warping technique as in Part 4a, we can now use the Homography \( H\) computed 
+            via RANSAC to warp one image into another, producing a mosaic. We use Pyramid Blending with the same parameters 
+            as before. 
+
+            <h3> Results </h3>
+            <br>
+            To see the final mosaics (and comparison with manual mosaics), click the link below: 
+        </br>
+        <a href="./4b.5/index.html">Part 4b.5 Results</a>
 
         </main>
     </div>
