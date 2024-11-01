@@ -182,8 +182,18 @@
             <section>
                 <h2> Part 4b.2 and 4b.3: Extracting and Matching Feature Descriptors</h2>
                 <h3> Extracting Feature Detectors </h3>
+                We generate axis-aligned 8x8 patches of images as our feature descriptor, sub-sampled (with anti-aliasing)
+                from a 40x40 window. For coherence across the image, we  bias/gain normalize the sub-image and also turn it 
+                black and white. 
 
                 <h3> Matching Feature Detectors </h3>
+
+                For matching, we can use Lowe's trick. Specifically, we can compute the 1-NN and 2-NN of each feature 
+                patch. We can then divide the distance of the 1-NN by the 
+               distance of the 2-NN, and if this ratio is below a certain threshold, we can 
+               consider the 1-NN to be a match. This threshold \(t \in (0,1)\) is determined empirically by taking the value 
+               of the squared error 1-NN/2-NN below which having a correct match is much more likely. This can be seen 
+               in Figure 6(b) from the paper. We choose \( t=0.4\) for our purposes. 
 
                 <h3> Results </h3>
                 <br>
@@ -195,6 +205,19 @@
             <section>
                 <h2> Part 4b.4: Use RANSAC for Robust Homography </h2>
             </section>
+            <h3> The RANSAC Algorithm </h3>
+            The idea here is to choose the optimal homography \( H^*\), fitted to 4 points chosen uniformly at random
+            from all interest points, that maximizes the number of inliers i.e. interest points which are mapped accurately 
+            within a certain threshold \(\varepsilon \in \{2,3,4\}\) by \( H^*\). We then use these inliers as our new interest points 
+            and output the Homography that we get by least-squares on the interest points. This removes any non-matchings that are inconsistent
+            with the ideal homomgraphy.  We use around 5000 iterations of RANSAC. 
+
+            <h3> Results </h3>
+
+            To see results, click on the following link 
+            <br>
+
+            <a href="./4b.4/index.html">Part 4b.4 Results</a>
 
             <section>
                 <h2> Part 4b.5: Produce Mosaics </h2>
@@ -207,7 +230,7 @@
             <h3> Results </h3>
             <br>
             To see the final mosaics (and comparison with manual mosaics), click the link below: 
-        </br>
+        <br>
         <a href="./4b.5/index.html">Part 4b.5 Results</a>
 
         </main>
