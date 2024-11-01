@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Project 3</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
+        integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP"
+        crossorigin="anonymous"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Project 4a: Image Warping and Mosaicing</h1>
+        <p>Kishan Jani</p>
+    </header>
+
+    <div class="container">
+
+        <!-- Contents -->
+        <main>
+            <section id="part 1">
+                <h2>Part 4a.1: Shooting the Images</h2>
+                <p>
+                    In this part, we manually touch grass (whoa!) and shoot some photos. To ensure that the photos can be stitched together well, it is important to shoot
+                  all images while fixing the position of the lens. Additionally, a wide-angle lens is recommended. 
+                  Furthermore, it is recommended that we overlap the fields of view significantly. 40% to 70% overlap is recommended. 
+                  Too little overlap makes registration harder. 
+                <br>
+                To see the images shot, click on the following link: 
+                <br>
+                <a href="./4a.1/index.html">Part 4a.1 Results</a>
+            </section>
+
+            <section id="part 2">
+                <h2>Part 4a.2: Computing Homographies and Warping Images</h2>
+                <h3> Computing Homographies between keypoints</h3>
+                <p>
+                    Suppose we wish to send points \([wx:wy:w]\) (in \(\mathbb{P}^2\) projective space) to \([w'x':w'y':w']\) for 
+                    indices \(i=1,2,\ldots, n\) (for conciceness, we supress the indices) via some homography \(H\) i.e.; 
+                    \[ \begin{bmatrix} w'x'\\w'y'\\w'\end{bmatrix} = H \begin{bmatrix} wx\\wy\\w\end{bmatrix}\]
+                </p>
+                    
+                <p>
+    
+                    Thus we have (scaling \(H\) to set \(h_{33} = 1\))
+                \[ s \begin{bmatrix} x'\\y'\\1\end{bmatrix} = H \begin{bmatrix} x\\y\\1\end{bmatrix} =
+\begin{bmatrix} h_{11}& h_{12}& h_{13}\\h_{21}& h_{22}& h_{23}\\h_{31}& h_{32}& 1\end{bmatrix} \begin{bmatrix}x\\y\\1\end{bmatrix},\]
+                    where we set \(s:= w'/w\). Then substituting the value for \(s\) from the third equation and rearranging, we get the linear 
+                system 
+                \[ \begin{bmatrix} x& y& 1& 0& 0& 0& -x'x& -x'y \\ 0& 0& 0& u& v& 1& -y'x& -y'y \end{bmatrix}  
+\begin{bmatrix} h_{11} \\ h_{12} \\ h_{13} \\ h_{21} \\ h_{22} \\ h_{23} \\ h_{31} \\ h_{32} \end{bmatrix}  
+=\begin{bmatrix} x' \\ y' \end{bmatrix}  \]
+                For a batch of \(n\) distinct points, we then have the overdetermined linear system \(A \mathbf{h} = \mathbf{b}\)
+                to solve, where \(\mathbf{h} = \begin{bmatrix} h_{11} & \cdots & h_{32} \end{bmatrix}^\top \) as above, \(A\) is a \(2n\times 8\)
+                stacking \(n\) matrices of shapre \(2\times 8\) and form above. Finally, \(\mathbf{b}\) is formed by interleaving the new \(xy\)-coordinates
+                \(x'\) and \(y'\). 
+                </p>
+
+                <p>
+                    Now observe that this overdetermined system can be solved via least-squares, which then gives the best homography mapping 
+                    \( (x_1,y_1),\ldots, (x_n,y_n) \) to \( (x_1',y_1'), \ldots, (x_n, y_n') \). 
+                </p>
+
+            <h3>Inverse Warp</h3>
+                <p>
+                  Once we have the homography \(H\), to actually transform the image, we will use an inverse warp. Specifically, we first determine the 
+                    bounding box for the image by predicting where the corners map under \(H\). Then we find the pixel value of \((x',y')\) in the new image via 
+                    
+                    \[ g(x',y') = f(H^{-1}(x',y')) \]
+                    so we set the new image pixels to be the the old-image pixel values for \(H^{-1}(\text{bounding box})\). To ensure that 
+                    \(H^{-1}(\text{bounding box})\) hits integer coordinates, we use <code>scipy.interpolate.RegularGridInterpolator</code> like in the previous project.  
+                    Multiple homographies can also be chained together to generate mosaics with \( > 2\) images.
+                    <br>
+                    Results of this section are presented in Image Rectification and Mosaicing. 
+                </p>
+                  
+            </section>
+
+
+            <section id = "part 3">
+
+                <h2>
+                    Part 4a.3: Image Rectification (Contains Deliverables)
+                </h2>
+                <h3> Introduction</h3>
+                    By setting the target keypoints to be a well-defined rectangle in the homography, given an image, we can select a feature that we know
+                is rectangular to "rectify" it i.e, make it straight. 
+                <br>
+                Results in this section are highly sensitive to selection of points. Firstly, it is crucial that the points selected are accurate, 
+                since rectification empirically proved to be highly sensitive to this. Furthermore, the ordering of points needs to be correct (otherwise 
+                unintelligible results are produced since the image gets "flipped over itself"). 
+                <br>
+                Finally, to produce aesthetic images, the dimensions of the new rectified feature were chosen to be somewhat similar to those of the old 
+                feature. 
+
+                <h3> Results </h3>
+
+                We present some examples of image rectification. Click the following link for results. 
+                            <br>
+            <a href="./4a.3/index.html">Part 4a.3 Results</a>
+            <h2>
+                Part 4a.4: Image Mosaicing (Contains Deliverables)
+            </h2>
+                <h3>Introduction </h3>
+                Finally, we can use the developed machinery to create a mosaic using several images. The strategy is to choose 
+                several corresponding keypoints (from prominent features) between the two images, and warp the first image into 
+                the second so that keypoints map to keypoints (as best as possible). 
+                <br>
+                With this, we will have two images whose keypoints roughly match. In order to properly blend these images, we 
+                use a distance transform on the alpha channel. This way, during the blending, we give more weight to the image 
+                which is further from the background at a certain point. Specifically, 
+                \[\text{Blended Image}[i,j] = \mathbb{1}_k\{ \text{dist}_1[i,j] > \text{dist}_2[i,j] \}\cdot \text{Image}_1[i,j] + \big( 1 -
+                \mathbb{1}_k\{ \text{dist}_1[i,j] > \text{dist}_2[i,j] \} \big) \cdot \text{Image}_2[i,j].\]
+                In order to ensure that the blending is smooth, we use a Gaussian blur on the indicator/mask 
+                \[\mathbb{1}_k\{ \text{dist}_1[i,j] > \text{dist}_2[i,j]\} = \text{Gaussian}(\sigma_k = 2^k \sigma_0, \text{window} =
+                \lfloor 6\sigma_k \rfloor +1) \star \mathbb{1}\{ \text{dist}_1[i,j] > \text{dist}_2[i,j]\},\]
+                skipping the first few steps in the Gaussian stack until the mask is sufficiently blurred. This ensures that there are no 
+                edge artifacts in the final product. 
+                
+                <h3>Results </h3>
+                Click the following link for results. Across all cases, we start with \(\sigma_0 = 7\) and skip the first \(2\)
+                images from the Gaussian Stack of the mask, with depth \(5\). 
+                            <br>
+            <a href="./4a.4/index.html">Part 4a.4 Results</a>
+              
+            </section>
+        </main>
+    </div>
+
+</body>
+
+</html>
