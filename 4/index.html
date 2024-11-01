@@ -228,6 +228,15 @@
             <br>
             Across all mosaics, we use a Laplacian Pyramid with skip = 2, depth = 4, sigma = 11 as parameters for blending. See 
             Part 4a.5 for more detail on how exactly this is implemented. 
+            <p>
+                We see that the VLSB and house images blend very well: most detail is recovered and there are no obvious 
+                double-edge / blurry artifacts from a non-robust homography. However, the text for the blackboard is not 
+                clear. The reasoning is that the text consists of many sharp edges, and pyramid blending does not particularly help 
+                in recovering the sharpness of individual characters (too weak). We need to ideally find a balance between good 
+                blending and being able to recover/understand the characters. Here, we chose better blending, however, we can still 
+                see that the images have different shadows (due to weak blending). Thus we see that there is a certain 
+                trade-off between good blending and level of detail, which becomes a lot more apparent for highly detaield images. 
+            </p>
             To see the final mosaics (and comparison with manual mosaics), click the link below: 
         <br>
         <a href="./4b.5/index.html">Part 4b.5 Results</a>
