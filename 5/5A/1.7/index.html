@@ -159,7 +159,7 @@
             <h2> 1.7.1: Editing Hand-drawn and Web-Images </h2>
 
             <p>
-                This procedure works particularly well if we start with a nonrealistic image 
+                The procedure above works particularly well if we start with a nonrealistic image 
                 (e.g. painting, a sketch, some scribbles) and project it onto the natural image manifold. 
                 That is exactly what we do here. 
             </p>
@@ -290,14 +290,32 @@
                 a binary mask \( m \), we compute a new image \(x'\) which has the same content as
                 \(x\) where \(m\) is 0, but creates content where \(m\) is  1. We run the diffusion 
                 denoising loop as normal, but now 
-                \[ x_t \gets m \cdot x_t + (1-m)\cdot \textup{forward}(x,t).\] 
+                \[ x_t \gets m \cdot x_t + (1-m)\cdot \textup{forward}(x,t)\]
+                is the noisy image. The idea is that with the mask of a certain region, <code>inpaint</code> 
+                allows us to edit the image within the context of the background. This can allows us to make 
+                interesting changes to images, as seen below:  
             </p>
 
             <h3> Changing the top of the campanile with square mask</h3>
 
+            <figure class="gallery-item">
+                <img src="../A_results/1.7.2/camp.png" alt="Image 3" 
+                style="width: 128px; height: 128px;"\>
+                <figcaption>Campanile</figcaption>
+                <img src="../A_results/1.7.2/square_mask.png" alt="Image 3" 
+                style="width: 128px; height: 128px;"\>
+                <figcaption>Mask</figcaption>
+                <img src="../A_results/1.7.2/camp.png" alt="Image 3" 
+                style="width: 128px; height: 128px;"\>
+                <figcaption>Campanile+Mask</figcaption>
+            </figure>
+
+
+
+
             <h3> Modernizing the Campanile & Nether Portal with rectangular mask</h3>
 
-            <h3> Circular mask to replace the sun </h3>
+            <h3> Circular mask to replace a clock </h3>
 
             <h3> Rectangular mask to replace billboard </h3>
 
