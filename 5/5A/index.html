@@ -172,7 +172,14 @@
                 <h2>Part 5A 1.8: Visual Anagrams</h2>
                 <h3> Overview </h3>
                 <p>
-                    We create visual anagrams
+                    Similar to inpainting, we can make other fancy edits to the noise to create interesting images. 
+                    Over here, we develop visual anagrams: oriented normally, the image looks like <code>prompt1</code>, 
+                    but when flipped, the image looks like <code>prompt2</code>. Once again, within our denoising loop, 
+                    we make the following edit to noisy image \( x_t\): 
+                    \[\varepsilon_1 \gets \textup{Unet}(x_t,t, \text{prompt}_1) \]
+                    \[\varepsilon_2 \gets \textup{Unet}(x_t,t, \text{prompt}_2) \]
+                    \[\varepsilon \gets \frac{\varepsilon_1 + \varepsilon_2}{2},\]
+                    where \( \varepsilon \) is the final noise estimate for iteration \(t \). 
                 </p>
                 <h3> Results </h3>
                 <p> To see results, click the link below: </p>
