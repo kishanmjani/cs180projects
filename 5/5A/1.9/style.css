@@ -74,15 +74,25 @@ h3 {
 
 .gallery {
     display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin: 1rem 0;
+    flex-wrap: wrap; /* Allow images to wrap to the next line */
+    gap: 1rem; /* Space between images */
+    justify-content: center; /* Center the gallery on the page */
+    padding: 1rem;
+}
+
+.gallery-item {
+    text-align: center; /* Center captions under images */
 }
 
 .gallery img {
-    max-width: calc(33.333% - 0.67rem);
-    border-radius: 4px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: block; /* Removes extra space below images caused by inline display */
+    margin: 0 auto; /* Centers the image */
+}
+
+.gallery figcaption {
+    margin-top: 0.5rem; /* Adds space between image and caption */
+    font-size: 14px; /* Caption font size */
+    color: #555; /* Optional: Caption text color */
 }
 
 table {
