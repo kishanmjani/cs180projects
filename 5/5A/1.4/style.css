@@ -79,10 +79,21 @@ h3 {
     margin: 1rem 0;
 }
 
-.gallery img {
+.gallery-item {
     max-width: calc(33.333% - 0.67rem);
+    text-align: center; /* Center-align captions */
+}
+
+.gallery img {
+    width: 100%; /* Make image take up the width of its container */
     border-radius: 4px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.gallery figcaption {
+    margin-top: 0.5rem; /* Add spacing between image and caption */
+    font-size: 14px; /* Set font size for captions */
+    color: #555; /* Optional: Caption text color */
 }
 
 table {
