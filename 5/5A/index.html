@@ -61,6 +61,41 @@
             </section>
 
 
+            <section id="part 1.2">
+                <h2>Part 5A 1.2: Gaussian Blur Denoising</h2>
+                <h3> Overview </h3>
+                <p>
+                    We naively denoise images by blurring them with a fixed Gaussian. We use
+                    <code>kernel_size = 5</code> and <code> sigma = 1.5 </code> for the Gaussian. We do
+                    this for the noise levels seen before. 
+                </p>
+                <h3> Results </h3>
+                <p> To see results for \( t\in [250,500,750] \), click the link below: </p>
+
+                <a href="./1.2/index.html">5A Part 1.2 Results</a>
+                  
+            </section>
+
+            <section id="part 1.3">
+                <h2>Part 5A 1.3: One-Step Denoising</h2>
+                <h3> Overview </h3>
+                <p>
+                    Now, we'll use a pretrained diffusion model to denoise. The actual denoiser
+                     can be found at <code>stage_1.unet</code>. This is a UNet that has already been trained on 
+                     a very, very large dataset of pairs of images \( x_0, x_t \). We can use it to 
+                     recover Gaussian noise from the image. Then, we can remove this noise to recover 
+                     (something close to) the original image. To compute \(x_0\) from \(x_t\), we use 
+                     \[ \hat{x}_0 = \frac{1}{\sqrt{\bar{\alpha}_t}} (x_t - \sqrt{1 - \bar{\alpha}_t} \varepsilon_\theta(x,t),\]
+                     where \(\varepsilon_\theta(\cdot,\cdot)\) is the noise predicted by our model for a given noisy image \(x_t\)
+                     and corresponding noise level \(t\).  
+                </p>
+                <h3> Results </h3>
+                <p> To see results for \( t\in [250,500,750] \), click the link below: </p>
+
+                <a href="./1.3/index.html">5A Part 1.3 Results</a>
+                  
+            </section>
+
             <section id="part 1.1">
                 <h2>Part 5A 1.2: Gaussian Blur Denoising</h2>
                 <h3> Overview </h3>
@@ -75,6 +110,52 @@
                 <a href="./1.2/index.html">5A Part 1.2 Results</a>
                   
             </section>
+
+            <section id="part 1.1">
+                <h2>Part 5A 1.2: Gaussian Blur Denoising</h2>
+                <h3> Overview </h3>
+                <p>
+                    We naively denoise images by blurring them with a fixed Gaussian. We use
+                    <code>kernel_size = 5</code> and <code> sigma = 1.5 </code> for the Gaussian. We do
+                    this for the noise levels seen before. 
+                </p>
+                <h3> Results </h3>
+                <p> To see results for \( t\in [250,500,750] \), click the link below: </p>
+
+                <a href="./1.2/index.html">5A Part 1.2 Results</a>
+                  
+            </section>
+
+            <section id="part 1.1">
+                <h2>Part 5A 1.2: Gaussian Blur Denoising</h2>
+                <h3> Overview </h3>
+                <p>
+                    We naively denoise images by blurring them with a fixed Gaussian. We use
+                    <code>kernel_size = 5</code> and <code> sigma = 1.5 </code> for the Gaussian. We do
+                    this for the noise levels seen before. 
+                </p>
+                <h3> Results </h3>
+                <p> To see results for \( t\in [250,500,750] \), click the link below: </p>
+
+                <a href="./1.2/index.html">5A Part 1.2 Results</a>
+                  
+            </section>
+
+            <section id="part 1.1">
+                <h2>Part 5A 1.2: Gaussian Blur Denoising</h2>
+                <h3> Overview </h3>
+                <p>
+                    We naively denoise images by blurring them with a fixed Gaussian. We use
+                    <code>kernel_size = 5</code> and <code> sigma = 1.5 </code> for the Gaussian. We do
+                    this for the noise levels seen before. 
+                </p>
+                <h3> Results </h3>
+                <p> To see results for \( t\in [250,500,750] \), click the link below: </p>
+
+                <a href="./1.2/index.html">5A Part 1.2 Results</a>
+                  
+            </section>
+
         </main>
     </div>
 
