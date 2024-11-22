@@ -29,9 +29,20 @@
             </section>
 
             <section id="part 1.1">
-                <h2>Part 1: Single-Step UNET</h2>
+                <h2>Part 5B 1: Single-Step UNET</h2>
+                <h3> Overview </h3>
+                <p> 
+                    We first build a one-step denoiser. Optimizing over L2 loss, we implement the denoiser 
+                    as a UNet with the following architecture: 
+
+                    These are the operations used: 
+
+                    We will train a denoiser to denoise noisy image \(z \) 
+                    with \( \sigma = 0.5\) applied to a clean image \(x \): <code>num_epochs = 5</code>, <code>batch_size = 256</code>
+            , and <code>hidden_dims = 128</code>: . An Adam optimizer with <code>lr = 1e-4</code> is used. 
+                </p>
                 <h3> Results </h3>
-                <p> To see results for \( t\in [250,500,750] \), click the link below: </p>
+                <p> To see results, click the link below: </p>
 
                 <a href="./B1/index.html">5B Part 1 Results</a>
                   
