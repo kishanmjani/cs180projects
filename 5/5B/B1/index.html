@@ -31,35 +31,57 @@
                 
                 <h3> Varying levels of noise </h3>
 
+                Below is a visualization of the noising process for some sample images from 
+                the training set, taken over values \( \sigma \in [0.0,0.2,0.6,0.8,1.0]\). The noising
+                process is simply 
+                \[z \gets x + \sigma \varepsilon  \]
+                where \(x \)  is the clean image, \( \sigma \) is the noise level, and \( \varepsilon \sim N(0,I) \). 
                 <figure class="gallery-item">
                         <img src="../B_results/B1/noising_mnist.png" alt="Image 1"
                         style="width: 512px; height: 512px;" \>
-                </figure>
+                </figure>   
                 
                 <h3> Training loss curve </h3>
+
+                Consider training the model on noisy images \( z \) with \( \sigma = 0.5 \) as the fixed noise level. 
+                With parameters <code> num_epochs = 5 <code>, <code> batch_size = 256 </code>, <code>D=128</code>, 
+                <code>num_ts = 300</code>, <code> beta1 = 0.0001</code>, <code> beta2 = 0.02 </code>, and for gradient descent 
+                <code> thresh = 0.02</code>. The training log-loss curve is shown below. As we see, 
+                after about 800 iterations, the loss goes down at a slow, constant, linear rate, after 
+                an initially fast decay. 
 
                 <figure class="gallery-item">
                     <img src="../B_results/B1/training_loss.png" alt="Image 1"
                  \>
                  </figure>
 
-                 <h3> Epoch 1 Results  </h3>
+                 <h3> Denoising Attempt after 1 Epoch  </h3>
 
+                 We take some sample digits from the testing set, add noise at level \( \sigma = 0..5 \), 
+                 and then one-step denoise (on the model after 1 epoch is run) to produce the results below. 
                  <figure class="gallery-item">
                      <img src="../B_results/B1/epoch1_test.png" alt="Image 1"
-                     style="width: 512px; height: 512px;"
+                     style="width: 768px; height: 512px;"
                   \>
             </figure>
 
             <h3> Epoch 5 Results  </h3>
+            We take some sample digits from the testing set, add noise at level \( \sigma = 0..5 \), 
+            and then one-step denoise (on the model after 5 epoch is run) to produce the results below. Notice that 
+            some of the extra edge artifacts that make identifying the digit difficult are now gone by the time 
+            the model has been trained till <code> epoch = 5 </code>.  
 
             <figure class="gallery-item">
                 <img src="../B_results/B1/epoch5_test.png" alt="Image 5"
-                style="width: 512px; height: 512px;"
+                style="width: 768px; height: 512px;"
              \>
        </figure>
 
        <h3> OOD Testing   </h3>
+       To test our model further, we use out-of-distribution testing. Specifically, given a test image \(x \), we noise it 
+       at levels \( \sigma \in [0.0,0.2,0.6,0.8,1.0]\) and then apply our model to denoisify. For levels lower than what we trained on,
+       obviously the denoising looks great. However, denoising more confuses the model and results in imprecise denoising (too many artifacts). 
+
        <figure class="gallery-item">
            <img src="../B_results/B1/ood0.png" alt="Image 1" \>
            <figcaption> sigma = 0.0 </figcaption>
