@@ -85,7 +85,7 @@
                      a very, very large dataset of pairs of images \( x_0, x_t \). We can use it to 
                      recover Gaussian noise from the image. Then, we can remove this noise to recover 
                      (something close to) the original image. To compute \(x_0\) from \(x_t\), we use 
-                     \[ \hat{x}_0 = \frac{1}{\sqrt{\bar{\alpha}_t}} (x_t - \sqrt{1 - \bar{\alpha}_t} \varepsilon_\theta(x,t),\]
+                     \[ \hat{x}_0 = \frac{1}{\sqrt{\bar{\alpha}_t}} [x_t - \sqrt{1 - \bar{\alpha}_t} \varepsilon_\theta(x_t,t)],\]
                      where \(\varepsilon_\theta(\cdot,\cdot)\) is the noise predicted by our model for a given noisy image \(x_t\)
                      and corresponding noise level \(t\).  
                 </p>
