@@ -29,6 +29,173 @@
             <section id="Results">
                 <h2> Generating Images based on Text Prompts </h2>
 
+                We observe that as the number of inference steps increases, the images get more 
+                and more detailed. For very low inference steps (i.e. 4), we see that the image is 
+                still just noise. Only the rocket is discernable. As <code>num_inference_steps</code>
+                increases, not only does the prompt become recognizable in the image, but the image 
+                also becomes sharper/more detailed. Hallucinations in the images (in the form of mistaken 
+                shades/colors) also disappear.  
+
+
+                <h2><code>num_inference_steps=4</code></h2>
+
+                <h3>an oil painting of a snowy mountain village</h3>
+                <div class="gallery">
+                    <img src="../A_results/0/snow04.png" 
+                    style="width: 64px; height: 64px;" />
+                    <figcaption>After Stage 1</figcaption>
+                </div> 
+
+                <div class="gallery">
+                    <img src="../A_results/0/snow04_big.png" 
+                    style="width: 256px; height: 256px;" />
+                    <figcaption>After Stage 2</figcaption>
+                </div> 
+                <h3>a man wearing a hat</h3>
+                <div class="gallery">
+                    <img src="../A_results/0/old04.png" 
+                    style="width: 64px; height: 64px;" />
+                    <figcaption>After Stage 1</figcaption>
+                </div> 
+
+                <div class="gallery">
+                    <img src="../A_results/0/old04_big.png" 
+                    style="width: 256px; height: 256px;" />
+                    <figcaption>After Stage 2</figcaption>
+                </div> 
+                <h3>a rocket ship</h3>
+                <div class="gallery">
+                    <img src="../A_results/0/rocket04.png" 
+                    style="width: 64px; height: 64px;" />
+                    <figcaption>After Stage 1</figcaption>
+                </div> 
+
+                <div class="gallery">
+                    <img src="../A_results/0/rocket04_big.png" 
+                    style="width: 256px; height: 256px;" />
+                    <figcaption>After Stage 2</figcaption>
+                </div> 
+
+
+                <h2><code>num_inference_steps=6</code></h2>
+
+                <h3>an oil painting of a snowy mountain village</h3>
+                <div class="gallery">
+                    <img src="../A_results/0/snow06.png" 
+                    style="width: 64px; height: 64px;" />
+                    <figcaption>After Stage 1</figcaption>
+                </div> 
+
+                <div class="gallery">
+                    <img src="../A_results/0/snow06_big.png" 
+                    style="width: 256px; height: 256px;" />
+                    <figcaption>After Stage 2</figcaption>
+                </div> 
+                <h3>a man wearing a hat</h3>
+                <div class="gallery">
+                    <img src="../A_results/0/old06.png" 
+                    style="width: 64px; height: 64px;" />
+                    <figcaption>After Stage 1</figcaption>
+                </div> 
+
+                <div class="gallery">
+                    <img src="../A_results/0/old06_big.png" 
+                    style="width: 256px; height: 256px;" />
+                    <figcaption>After Stage 2</figcaption>
+                </div> 
+                <h3>a rocket ship</h3>
+                <div class="gallery">
+                    <img src="../A_results/0/rocket06.png" 
+                    style="width: 64px; height: 64px;" />
+                    <figcaption>After Stage 1</figcaption>
+                </div> 
+
+                <div class="gallery">
+                    <img src="../A_results/0/rocket06_big.png" 
+                    style="width: 256px; height: 256px;" />
+                    <figcaption>After Stage 2</figcaption>
+                </div> 
+
+
+                <h2><code>num_inference_steps=10</code></h2>
+
+                <h3>an oil painting of a snowy mountain village</h3>
+                <div class="gallery">
+                    <img src="../A_results/0/snow10.png" 
+                    style="width: 64px; height: 64px;" />
+                    <figcaption>After Stage 1</figcaption>
+                </div> 
+
+                <div class="gallery">
+                    <img src="../A_results/0/snow10_big.png" 
+                    style="width: 256px; height: 256px;" />
+                    <figcaption>After Stage 2</figcaption>
+                </div> 
+                <h3>a man wearing a hat</h3>
+                <div class="gallery">
+                    <img src="../A_results/0/old10.png" 
+                    style="width: 64px; height: 64px;" />
+                    <figcaption>After Stage 1</figcaption>
+                </div> 
+
+                <div class="gallery">
+                    <img src="../A_results/0/old10_big.png" 
+                    style="width: 256px; height: 256px;" />
+                    <figcaption>After Stage 2</figcaption>
+                </div> 
+                <h3>a rocket ship</h3>
+                <div class="gallery">
+                    <img src="../A_results/0/rocket10.png" 
+                    style="width: 64px; height: 64px;" />
+                    <figcaption>After Stage 1</figcaption>
+                </div> 
+
+                <div class="gallery">
+                    <img src="../A_results/0/rocket10_big.png" 
+                    style="width: 256px; height: 256px;" />
+                    <figcaption>After Stage 2</figcaption>
+                </div> 
+
+
+                <h2><code>num_inference_steps=15</code></h2>
+
+                <h3>an oil painting of a snowy mountain village</h3>
+                <div class="gallery">
+                    <img src="../A_results/0/snow15.png" 
+                    style="width: 64px; height: 64px;" />
+                    <figcaption>After Stage 1</figcaption>
+                </div> 
+
+                <div class="gallery">
+                    <img src="../A_results/0/snow15_big.png" 
+                    style="width: 256px; height: 256px;" />
+                    <figcaption>After Stage 2</figcaption>
+                </div> 
+                <h3>a man wearing a hat</h3>
+                <div class="gallery">
+                    <img src="../A_results/0/old15.png" 
+                    style="width: 64px; height: 64px;" />
+                    <figcaption>After Stage 1</figcaption>
+                </div> 
+
+                <div class="gallery">
+                    <img src="../A_results/0/old15_big.png" 
+                    style="width: 256px; height: 256px;" />
+                    <figcaption>After Stage 2</figcaption>
+                </div> 
+                <h3>a rocket ship</h3>
+                <div class="gallery">
+                    <img src="../A_results/0/rocket15.png" 
+                    style="width: 64px; height: 64px;" />
+                    <figcaption>After Stage 1</figcaption>
+                </div> 
+
+                <div class="gallery">
+                    <img src="../A_results/0/rocket15_big.png" 
+                    style="width: 256px; height: 256px;" />
+                    <figcaption>After Stage 2</figcaption>
+                </div> 
+
                 <h2><code>num_inference_steps=20</code></h2>
 
                 <h3>an oil painting of a snowy mountain village</h3>
