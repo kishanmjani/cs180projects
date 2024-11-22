@@ -105,7 +105,7 @@
                     we denoise the image iteratively as follows: 
                     \[ x_{t'} = \frac{\sqrt{\bar{\alpha}_{t'}} \beta_t} {1 - \bar{\alpha}_t} x_0 
                     + \frac{\sqrt{\alpha_t}(1-\bar{\alpha}_{t'})}{1-\bar{\alpha}_t} x_t + v_\sigma,\]
-                    where \(x_0\) is our current clean estimate, \(v_\sigma\) is random noise (predicted for DeepFloyd), 
+                    where \(x_0\) is our current clean estimate via a one-step estimate from \(x_t\), \(v_\sigma\) is random noise (predicted for DeepFloyd), 
                     alphas and betas are known parameters. Here \(x_t\) is the more noisy image at some timestep \(t\), while 
                     \(x_{t'}\) is the less noisy image at the next timestep \(t'\) in our iteration sequence. 
                     
