@@ -100,7 +100,15 @@
                 <h2>Part 5A 1.4: Iterative Denoising</h2>
                 <h3> Overview </h3>
                 <p>
-                    Blurb
+                    We can denoise an image and recover more of the original features by denoising several times 
+                    in small steps instead of denoising in one-step. Specifically, over \(T=1000\) iterations (step = -30), 
+                    we denoise the image iteratively as follows: 
+                    \[ x_{t'} = \frac{\sqrt{\bar{\alpha}_{t'}} \beta_t} {1 - \bar{\alpha}_t} x_0 
+                    + \frac{\sqrt{\alpha_t}(1-\bar{\alpha}_{t'})}{1-\bar{\alpha}_t} x_t + v_\sigma,\]
+                    where \(x_0\) is our current clean estimate, \(v_\sigma\) is random noise (predicted for DeepFloyd), 
+                    alphas and betas are known parameters. Here \(x_t\) is the more noisy image at some timestep \(t\), while 
+                    \(x_{t'}\) is the less noisy image at the next timestep \(t'\) in our iteration sequence. 
+                    
                 </p>
                 <h3> Results </h3>
                 <p> To see results, click the link below: </p>
@@ -114,7 +122,9 @@
                 <h3> Overview </h3>
                 <p>
                     We "generate" images using the Diffusion Model by feeding random noise into the iterative 
-                    denoiser, using <code> i_start = 0 </code>. 
+                    denoiser, using <code> i_start = 0 </code>. By starting with random noise as the noisy image, 
+                    we are "solving" towards a random image via iterative denoising. We use the text prompt "a high 
+                    quality photo" for denoising. 
                 </p>
                 <h3> Results </h3>
                 <p> To see results, click the link below: </p>
@@ -127,7 +137,16 @@
                 <h2>Part 5A 1.6: Classifier Free Guidance (CFG)</h2>
                 <h3> Overview </h3>
                 <p>
-                    Blurb
+                    We can generate higher quality images by implementing conditional diffusion with prompt 
+                    "a high quality photo" (using unconditional prompt ""). With scale \( \gamma = 7\), this 
+                    ensures that our model diffuses the image towards the prompt being fed to generate 
+                    the conditional noise. Specifically, we skew our noise estimate as 
+                    \[\varepsilon = \varepsilon_{\text{uncond}} + \gamma(\varepsilon_{\text{cond}} - 
+                    \varepsilon_{\text{uncond}} ).\]
+                    With $\gamma=0$, we have the standard unconditional noise estimate, while with $\gamma=1$, 
+                    we have the conditional noise estimate. It has been determined empirically that 
+                    choosing $\gamma > 1$ improves conditioning. This generates images of higher quality, albeit 
+                    slightly lesser variance. 
                 </p>
                 <h3> Results </h3>
                 <p> To see results, click the link below: </p>
