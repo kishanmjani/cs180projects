@@ -30,17 +30,6 @@
 
             <section id="part 1.1">
                 <h2>Part 1: Single-Step UNET</h2>
-                <h3> Overview </h3>
-                <p>
-                    The forward process is defined by 
-                    \[ x_t = \sqrt{\bar{\alpha}_t}x_0 + \sqrt{1 - \bar{\alpha}_t}\varepsilon  \]
-                    where \( \varepsilon \sim N(0,1) \). Here \(x_0\) is the clean image, the noisy image 
-                    generated is \( x_t \), so we really are making the noisy image by sampling from a Gaussian 
-                    of mean \( \sqrt{\bar{\alpha}_t} x_0\) and variance \( 1- \bar{\alpha}_t \). 
-
-                    We perform the process on a test image of the campanile shown below, which we will resize 
-                    to \( 64 \times 64 \). 
-                </p>
                 <h3> Results </h3>
                 <p> To see results for \( t\in [250,500,750] \), click the link below: </p>
 
@@ -51,12 +40,6 @@
 
             <section id="part 2.2">
                 <h2>Part 5B 2: Diffusion Model</h2>
-                <h3> Overview </h3>
-                <p>
-                    We use time and class conditioning to train diffusion models and sample mnist digits. 
-                    Class conditioning gives much better results than time conditioning, which gives better results 
-                    as compared to single step. 
-                </p>
                 <h3> Results </h3>
                 <p> To see results, click the link below: </p>
 
