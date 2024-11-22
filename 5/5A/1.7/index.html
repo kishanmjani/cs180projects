@@ -29,7 +29,14 @@
             <section id="Results">
                 <h2> 1.7: Image-to-Image translation </h2>
                 Here, we're going to take the original test image, noise it a little,
-                and force it back onto the image manifold without any conditioning
+                and force it back onto the image manifold without any conditioning. 
+                Specifically, we run the forward process to get a noisy test image.
+                Then, we run the <code>iterative_denoise_cfg</code> function using a 
+                starting index <code>i_start</code> of [1, 3, 5, 7, 10, 20] steps, with conditioning towards 
+                prompt "a high quality photo". We see a series of "edits" to the original image, 
+                gradually matching the original image closer and closer as we delay <code>i_start</code>, 
+                which corresponds to fewer iterations of diffusion.
+
                 <h3> Edits to Campanile using prompt "high quality photo" </h3>
                 <div class="gallery">
                     <figure class="gallery-item">
@@ -151,7 +158,13 @@
 
             <h2> 1.7.1: Editing Hand-drawn and Web-Images </h2>
 
-            <h3> Web Image 1</h3>
+            <p>
+                This procedure works particularly well if we start with a nonrealistic image 
+                (e.g. painting, a sketch, some scribbles) and project it onto the natural image manifold. 
+                That is exactly what we do here. 
+            </p>
+
+            <h3> Web Image 1: Capybara Returns!</h3>
             <div class="gallery">
                 <figure class="gallery-item">
                     <img src="../A_results/1.7/webim_sd01.png" alt="Image 1" 
@@ -190,7 +203,7 @@
                 </figure>
             </div>
 
-            <h3> Hand-drawn 1 </h3>
+            <h3> Hand-drawn 1: Duck </h3>
 
             <div class="gallery">
                 <figure class="gallery-item">
@@ -230,7 +243,7 @@
                 </figure>
             </div>
 
-            <h3> Hand-drawn 2 </h3>
+            <h3> Hand-drawn 2: Ship </h3>
 
             <div class="gallery">
                 <figure class="gallery-item">
@@ -272,7 +285,25 @@
 
             <h2> 1.7.2: Inpainting </h2>
 
+            <p>
+                We can use the same procedure to implement inpainting. Given an image \(x\) and 
+                a binary mask \( m \), we compute a new image \(x'\) which has the same content as
+                \(x\) where \(m\) is 0, but creates content where \(m\) is  1. We run the diffusion 
+                denoising loop as normal, but now 
+                \[ x_t \gets m \cdot x_t + (1-m)\cdot \textup{forward}(x,t).\] 
+            </p>
+
+            <h3> Changing the top of the campanile with square mask</h3>
+
+            <h3> Modernizing the Campanile & Nether Portal with rectangular mask</h3>
+
+            <h3> Circular mask to replace the sun </h3>
+
+            <h3> Rectangular mask to replace billboard </h3>
+
             <h2> 1.7.3: Text-Conditional Image-to-image Translation</h2>
+
+
 
             
               
