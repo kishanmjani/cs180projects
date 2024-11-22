@@ -188,12 +188,18 @@
                   
             </section>
 
-
             <section id="part 1.9">
                 <h2>Part 5A 1.9: Hybrid Images</h2>
                 <h3> Overview </h3>
                 <p>
-                    We create hybrid images
+                    We create hybrid images: smaller image / from afar looks like <code>prompt1</code>, but 
+                    larger image / from close-by looks like <code>prompt2</code>. We accomplish this by using low
+                    and high pass filters, implemented via a Gaussian of kernel 33 and sigma 2. For any iteration
+                    of the denoising loop, 
+                    \[\varepsilon_1 \gets \textup{UNet}(x_t,t, \text{prompt}_1) \]
+                    \[\varepsilon_2 \gets \textup{UNet}(x_t,t, \text{prompt}_2) \]
+                    \[\varepsilon \gets f_{\text{low}}(\varepsilon_1) + f_{\text{high}}(\varepsilon_2),\]
+                    where \( \varepsilon \) is the final noise estimate for iteration \(t \). 
                 </p>
                 <h3> Results </h3>
                 <p> To see results, click the link below: </p>
