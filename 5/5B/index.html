@@ -1,1 +1,73 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Project 5</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
+        integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP"
+        crossorigin="anonymous"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Project 5B: Diffusion from Scratch </h1>
+        <p>Kishan Jani</p>
+    </header>
+
+    <div class="container">
+
+        <!-- Contents -->
+        <main>
+            </section>
+
+            <section id="part 1.1">
+                <h2>Part 1: Single-Step UNET</h2>
+                <h3> Overview </h3>
+                <p>
+                    The forward process is defined by 
+                    \[ x_t = \sqrt{\bar{\alpha}_t}x_0 + \sqrt{1 - \bar{\alpha}_t}\varepsilon  \]
+                    where \( \varepsilon \sim N(0,1) \). Here \(x_0\) is the clean image, the noisy image 
+                    generated is \( x_t \), so we really are making the noisy image by sampling from a Gaussian 
+                    of mean \( \sqrt{\bar{\alpha}_t} x_0\) and variance \( 1- \bar{\alpha}_t \). 
+
+                    We perform the process on a test image of the campanile shown below, which we will resize 
+                    to \( 64 \times 64 \). 
+                </p>
+                <h3> Results </h3>
+                <p> To see results for \( t\in [250,500,750] \), click the link below: </p>
+
+                <a href="./B1/index.html">5B Part 1 Results</a>
+                  
+            </section>
+
+
+            <section id="part 2.2">
+                <h2>Part 5B 2: Diffusion Model</h2>
+                <h3> Overview </h3>
+                <p>
+                    We use time and class conditioning to train diffusion models and sample mnist digits. 
+                    Class conditioning gives much better results than time conditioning, which gives better results 
+                    as compared to single step. 
+                </p>
+                <h3> Results </h3>
+                <p> To see results, click the link below: </p>
+
+                <a href="./B2/index.html">5B Part 2 Results</a>
+                  
+            </section>
+
+        </main>
+    </div>
+
+</body>
+
+</html>
 
