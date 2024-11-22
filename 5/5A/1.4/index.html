@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>5A 1.4</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
+        integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP"
+        crossorigin="anonymous"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Part 5A 1.4</h1>
+    </header>
+
+    <div class="container">
+
+        <!-- Contents -->
+        <main>
+
+            <section id="Results">
+                <h2> Iterative Denoising for the Campanile </h2>
+                The noisy image at every 5th loop of denoising. From left to right, we start with 
+                a noisy image at t = 690, moving towards cleaner images at t = 90. The list of images below
+                are at timesteps \( [690,540,390,240,90] \).  
+                <div class ="gallery">
+                    <img src="../A_results/1.4/camp_noisy690.png" 
+                    style="width: 256px; height: 256px;" />
+                    <img src="../A_results/1.4/camp_noisy540.png" 
+                    style="width: 256px; height: 256px;" />
+                    <img src="../A_results/1.4/camp_noisy390.png" 
+                    style="width: 256px; height: 256px;" />
+                    <img src="../A_results/1.4/camp_noisy240.png" 
+                    style="width: 256px; height: 256px;" />
+                    <img src="../A_results/1.4/camp_noisy90.png" 
+                    style="width: 256px; height: 256px;" />
+                </div>
+
+
+                <p> 
+                Next, below is a comparison of the original image with all three methods of denoising. 
+                We see that Gaussian Blur denoising is not at all effective. One-Step denoising, while effective, 
+                produces blurry images. Furthermore, the final result is quite "far away" from the original image of the 
+                campanile and retains a few original features. On the other hand, iterative denoising produces a sharper image, which 
+                reflects more of the details of the original image. The intuition here is that one-step denoising 
+                only gets to add one big increment of noise, while iterative-denoising makes several smaller but more accurate 
+                approximations at the time-steps. 
+
+                Below we see the original image, gaussian blur denoised, one-step denoised, and iterative denoised, 
+                Left-to-Right. 
+            </p>
+                <div class ="gallery">
+                    <img src="../A_results/1.4/camp.png" 
+                    style="width: 256px; height: 256px;" />
+                    <img src="../A_results/1.4/camp_gblur.png" 
+                    style="width: 256px; height: 256px;" />
+                    <img src="../A_results/1.4/camp_one_step.png" 
+                    style="width: 256px; height: 256px;" />
+                    <img src="../A_results/1.4/camp_iter.png" 
+                    style="width: 256px; height: 256px;" />
+                </div>
+
+
+              
+            </section>
+        </main>
+    </div>
+
+</body>
+
+</html>
