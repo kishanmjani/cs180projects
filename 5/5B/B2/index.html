@@ -55,7 +55,11 @@
                  \>
                  </figure>
                  <br>
-                
+                Parameters used in both parts: <code> num_epochs = 20 </code>, <code>batch_size = 128</code>,
+                <code> D = 64 </code>, <code>num_ts = 300</code>, and a threshold of 0.02 for Gradient Descent. 
+                An Adam optimizer with initial <code>lr =1e-3 </code> is chosen, with exponential learning rate 
+                decay with gamma of \( (0.1)^{1/\texttt{num_epochs}} \). For Classifier-Free Guidance, we use 
+                \( \gamma = 5 \).
                 <h3> Training loss curve </h3>
 
                 <figure class="gallery-item">
@@ -99,7 +103,7 @@
                 <img src="../B_results/B2/epoch05t_animation.gif" />
                 <figcaption><code>epoch=5</code></figcaption>
                 </div> 
-                <br> 
+                <br>
             <div class="gallery">
                     <img src="../B_results/B2/epoch20t_animation.gif" />
                     <figcaption><code>epoch=20</code></figcaption>
@@ -121,6 +125,8 @@
                  <br>
                  The model architecture is exactly the same as before, but instead of \(x_{i+1} \gets x_i + \text{t_block}\)
                  in the model we perform \(x_{i+1} \gets \text{c_block}*x_i + \text{t_block}\) to incorporate time and class.
+                 Additionally, we have a dropout condition for uncondtional generation: we drop the one-hot encoded vector \( \mathbf{c} \)
+                 to zero vector with probability \( p_{\text{uncond}} = 0.1 \). 
            </figure>
                 <h3> Training loss curve </h3>
 
@@ -129,6 +135,9 @@
                  \>
                  </figure>
                  <br>
+                 Interestingly enough, notice that while training loss curves for time and class conditioning are very similar, 
+                 there is still a big difference between the quality of sampling: class conditioning is far better and much more directed. 
+                 The idea is that we are not improving our model, but denoising with specific intent using CFG, which leads to better samplings. 
                  <h3> Sampling after 5 epochs, all digits 4 times  </h3>
                     Since we can now guide (via CFG) our noise to denoise towards a certain 
                     class (label) of digit, generating/sampling digits from noise becomes a lot easier. 
