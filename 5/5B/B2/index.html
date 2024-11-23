@@ -28,6 +28,21 @@
 
             <section id="Results">
                 <h2> Time Conditioning </h2>
+
+                <h3> Overview </h3>
+                The algorithm used is exactly the same one as before for iterative denoising: except we now determine the alphas and betas ourselves
+                and don't have a trained model to start with. At a high level, 
+                we choose a random image from the training set, random, and train the denoiser to 
+                predict noise in \( x_t \). This ensures that we are able to train the model on both a diverse 
+                dataset of images and timesteps parameter \( t\). We repeat this until the model converges and we are happy. 
+                <figure class="gallery-item">
+                    <img src="../B_results/ims/tc_train.png" alt="Image 1"
+                 \>
+                 </figure>
+
+                 In order to apply time-conditioning into the UNet, we use the following architecture: 
+                 
+
                 
                 <h3> Training loss curve </h3>
 
