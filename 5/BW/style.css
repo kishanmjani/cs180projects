@@ -80,11 +80,9 @@ h3 {
 }
 
 .gallery img {
-    width: 256px; /* Explicitly set fixed width */
-    height: 256px; /* Explicitly set fixed height */
-    object-fit: cover; /* Ensures images maintain their aspect ratio */
-    border-radius: 4px; /* Optional for rounded corners */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Optional for shadow effect */
+    max-width: calc(33.333% - 0.67rem);
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 table {
