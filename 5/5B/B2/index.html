@@ -60,7 +60,21 @@
                  \>
                  </figure>
 
-                 <h3> Epoch 5 Results  </h3>
+                 <h3> Sampling after 5 epochs  </h3>
+                 For sampling, we use the following algorithm: once again, other than the choice of model 
+                 it is identical to the approach from part (a): we sample random noise and then denoise it 
+                 to generate a random digit. 
+
+                 <figure class="gallery-item">
+                    <img src="../B_results/ims/tc_sample.png" alt="Image 1"
+                    style="width: 512px; height: 256px;"
+                 \>
+           </figure>
+
+           Following are the results with this algorithm: notice that we have no control over which 
+           digits are generated, and also only about half of them look like sensible digits. In the next part, 
+           we will use class conditioning to improve results of sampling. Obviously, the results get better with more 
+           and more epochs. 
 
                  <figure class="gallery-item">
                      <img src="../B_results/B2/epoch05_time.png" alt="Image 1"
@@ -68,7 +82,7 @@
                   \>
             </figure>
 
-            <h3> Epoch 20 Results  </h3>
+            <h3> Sampling after 20 epochs  </h3>
 
             <figure class="gallery-item">
                 <img src="../B_results/B2/epoch20_time.png" alt="Image 5"
@@ -92,7 +106,18 @@
 
             <section id="Results">
                 <h2> Class Conditioning </h2>
-                
+
+                <h3> Overview </h3>
+
+                The idea here is similar to time conditioning, except we have added conditioning on class and use 
+                Classifier-Free Guidance exactly as in part A. This leads to the following training algorithm: 
+                <figure class="gallery-item">
+                    <img src="../B_results/ims/cc_train.png" alt="Image 1"
+                    style="width: 512px; height: 256px;"
+                 \>
+                 The model architecture is exactly the same as before, but instead of \(x_{i+1} \gets x_i + \text{t_block}\)
+                 in the model we perform \(x_{i+1} \gets \text{c_block}*x_i + \text{t_block}\) to incorporate time and class.
+           </figure>
                 <h3> Training loss curve </h3>
 
                 <figure class="gallery-item">
@@ -100,19 +125,23 @@
                  \>
                  </figure>
 
-                 <h3> Epoch 5 Results  </h3>
-
+                 <h3> Sampling after 5 epochs, all digits 4 times  </h3>
+                    Since we can now guide (via CFG) our noise to denoise towards a certain 
+                    class (label) of digit, generating/sampling digits from noise becomes a lot easier. 
+                    In fact, we can specify exactly how many instances of a certain digit we want, and the 
+                    model can give us that. This is exactly what is implemented below: here is sampling after 5 and 
+                    20 epochs. 
                  <figure class="gallery-item">
                      <img src="../B_results/B2/epoch05_c.png" alt="Image 1"
-                     style="width: 512px; height: 512px;"
+                     style="width: 224px; height: 560px;"
                   \>
             </figure>
 
-            <h3> Epoch 20 Results  </h3>
+            <h3> Sampling after 20 epochs  </h3>
 
             <figure class="gallery-item">
                 <img src="../B_results/B2/epoch20_c.png" alt="Image 5"
-                style="width: 512px; height: 512px;"
+                style="width: 224px; height: 560px;"
              \>
        </figure>
 
