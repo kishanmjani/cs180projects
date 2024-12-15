@@ -33,7 +33,24 @@
             <section id = "Overview">
                 <h2> Overview </h2>
                 <p>
-                    In this part, we implement image quilting. 
+                    Image quilting is a relatively straightforward algorithm for texture synthesis 
+                    and texture transfer, originally introduced by Efros and Freeman in their
+                     SIGGRAPH 2001 paper. 
+
+                    Texture synthesis involves generating a larger texture image from a small 
+                    sample by intelligently combining overlapping patches to ensure seamless 
+                    transitions. 
+
+                    Texture transfer extends this idea by giving an object the appearance of a 
+                    texture sample while preserving its underlying shape, such as overlaying a 
+                    texture onto a face while maintaining facial features. 
+
+                    The Efros-Freeman algorithm works by sampling patches from the texture and 
+                    arranging them in overlapping patterns, minimizing visual discrepancies in the 
+                    overlapping regions. This is achieved by computing optimal seams, where pixels 
+                    with similar intensities are selected for smooth blending. Here optimal is in 
+                    the sense of SSD between two overlapping images and the seam is found using 
+                    min-cut. 
                 </p>
 
                 <h2> Results </h2>
@@ -48,14 +65,23 @@
             <section id = "Overview">
                 <h2> Overview </h2>
                 <p>
-                    In this part, we create our own CNN several times to detect facial keypoints.
+                    In this project, we automate the detection of facial keypoints using 
+                    convolutional neural networks (CNNs) in PyTorch, building on previous work 
+                    from Project 3 that involved manual keypoint selection. Facial keypoints, 
+                    such as those around the eyes, nose, and mouth, are identified on faces in 
+                    images to enable advanced analysis. In the case of Project 3, we used keypoints
+                    for morphing. We use the IMM Face Database and the 
+                    IBUG face in the wild dataset. This project progressively develops a 
+                    robust neural net-based system capable of detecting faces and predicting the 
+                    precise locations of facial keypoints. 
+
                 </p>
 
                 <h2> Results </h2>
                 To see the page for this project, click the link below.
                 <a href="./nn/index.html">Keypoint Detection Project Results</a>
             </section>
-            
+
         </main>
     </div>
 
