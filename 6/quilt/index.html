@@ -433,7 +433,28 @@
                 <h2>Part 4: Texture Transfer</h2>
                 <h3> Overview </h3>
                 <p>
-                    In this section, we do texture transfer
+                    <p>
+                        The <strong>texture transfer</strong> method builds on the <code>quilt_cut</code> 
+                        function to synthesize a new texture that not only mimics the source texture's
+                        appearance but also aligns with a target image's structure or pattern. This technique 
+                        is guided by a pair of images: <code>sample</code>, which serves as the source 
+                        for patch sampling, and a <code>guidance_im</code>, which defines the structure that the 
+                        synthesized texture must follow.
+                    </p>
+                    <p>
+                        The key difference between <code>texture_transfer</code> and <code>quilt_cut</code> 
+                        is the inclusion of an additional cost term that evaluates the difference between the source patch 
+                        and the target image at the location being synthesized. This added cost ensures that the output texture 
+                        aligns more closely with the features of the target image. The total cost for a patch is a weighted sum of:
+                    </p>
+                    <ul>
+                        <li>The cost of aligning overlapping regions (as in <code>quilt_cut</code>).</li>
+                        <li>The cost of matching the source patch to the target image.</li>
+                    </ul>
+                    <p>
+                        The parameter \( \alpha \) can be adjusted to balance how much the output prioritizes matching the target image versus preserving the texture pattern of the sample.
+                    </p>
+                
                 </p>
                 <h3> Results </h3>
                 <p> 
