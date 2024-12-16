@@ -96,6 +96,26 @@
                     architecture. 
 
                             <img src="nn_images/part1/nose_model.png">
+
+                            <br>
+                            Sequence of operations used was 
+
+                            <pre>
+                                <code>[Conv->Relu->Pool]*3 -> [FC1->Relu] -> FC2</code>
+                            </pre>
+
+                            I initially experimented with using only 7x7 and 5x5 convolutional kernels. 
+                            However, these larger kernels proved challenging to train effectively given the 
+                            limited data and the small size of the images. They were too aggressive for this 
+                            context, and the learning rate further exacerbated the issue. A higher learning 
+                            rate was necessary to achieve sufficient training progress, but this often led to 
+                            overfitting.
+
+                            In contrast, using smaller 3x3 kernels throughout the model consistently produced 
+                            better results in my experiments. While this outcome intuitively defied my 
+                            expectations—particularly considering the success of downsampling/upsampling kernels in architectures 
+                            like UNet—it demonstrates that smaller kernels can strike a better balance between 
+                            learning efficiency and generalization for this specific task and dataset.         
                 </p>
                 <p>
                     The loss function is <code>torch.nn.MSELoss</code>, and the optimizer is Adam 
@@ -158,10 +178,11 @@
    
             </section>
             
-            <section id="part 1">
-                <h2>Part 1: Full Face Detection</h2>
+            <section id="part 2">
+                <h2>Part 2: Full Face Detection</h2>
                 <h3>Overview</h3>
-            
+
+                
 
                 <h3>Data Preparation</h3>
             
