@@ -318,7 +318,7 @@
 
             </section>
 
-            <section id="part 2">
+            <section id="part 3">
                 <h2>Part 3: Larger Datasets</h2>
                 <h3>Overview</h3>
 
@@ -500,6 +500,232 @@
                         <div class="caption">5</div>
                     </div>
                 </div>         
+            </section>
+
+            <section id="part 4">
+                <h2>Part 4: Pixelwise Classification</h2>
+                <h3>Overview</h3>
+
+                <p>
+                    Newer keypoint detection networks, such as those proposed by Toshev et al. (2014) and Jain et al. (2014), 
+                    reframe the regression task of predicting keypoint coordinates as a pixelwise classification problem. These 
+                    models predict the likelihood of each pixel being a keypoint, enabling finer alignment of predictions with 
+                    image features. 
+                </p>
+                <p>
+                    To supervise the model, the ground truth keypoint coordinates are converted into heatmaps by placing 2D 
+                    Gaussians at the true coordinate locations. During inference, the heatmaps are transformed back into 
+                    coordinates using methods like a weighted average over the heatmap or other localization techniques. This 
+                    setup offers an effective way to train keypoint detection models while maintaining high spatial accuracy.
+                </p>
+
+                <h3>Data Preparation</h3>
+
+                <p>
+                    We utilize the same dataset and data augmentation techniques as before. 
+                    However, a key challenge in this approach is managing the conversion between 
+                    keypoints and heatmaps. Currently, I lack a robust and precise algorithm for 
+                    converting heatmaps back into keypoints. This limitation introduces some 
+                    inaccuracies even in the simplest scenario: converting keypoints to heatmaps 
+                    and then back to keypoints. These inaccuracies can propagate through the model 
+                    training process, ultimately affecting prediction quality.
+
+To address this issue, incorporating a more sophisticated method, 
+such as non-maximum suppression, could help accurately identify keypoints from heatmaps.
+ Such techniques would ensure that the model is better equipped to handle the keypoint localization 
+ task, leading to more reliable and consistent predictions. However, this is not the point neither 
+ the scope of this project.
+                </p>
+
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="nn_images/part4/data1.png" class="medium">
+                        <div class="caption">Sample</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/part4/data2.png" class="medium">
+                        <div class="caption">Sample</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/part4/data3.png" class="medium">
+                        <div class="caption">Sample</div>
+                    </div>
+                </div>
+            
+                <h3>Model Architecture</h3>
+
+                <p>
+                    The model uses ResNet18. The first layer is modified to accept 
+                    grayscale images as input, and the final layer outputs 68 <code>(56,56)</code> heatmaps. 
+                    Training is conducted using the following setup:
+                </p>
+                <ul>
+                    <li><strong>Loss Function:</strong> We compared Mean Squared Error (MSE) loss and log loss. Log loss proved 
+                    superior, which as always makes sense for pixelwise classification tasks.</li>
+                    <li><strong>Learning Rate:</strong> Set to <code>5e-3</code> for faster convergence.</li>
+                    <li><strong>Batch Size:</strong> <code>64</code> to handle the larger dataset efficiently.</li>
+                    <li><strong>Weight Decay:</strong> Used to improve convergence speed and regularization. Set <code>1e-5</code></li>
+                    <li><strong>Training Epochs:</strong> 10 epochs (split into two phases for a total of 20 epochs).</li>
+                </ul>
+                <p>
+                    Challenges such as vanishing gradients when using Gaussian-based heatmaps were mitigated with batch 
+                    normalization and weight initialization. Without these techniques, the model frequently predicted zero 
+                    values due to gradient disappearance.
+                </p>
+
+                <h3>Training/Validation Loss Plot</h3>
+
+                                <p>
+                    The model was trained in two phases for a total of 20 epochs. The training and validation loss plots are 
+                    shown below. While the validation curve stabilizes quickly, there is room for improvement in the model 
+                    architecture to achieve better results. It seems as though with logistic loss, there is slightly better scope for improving 
+                    validation across epochs. 
+                </p>
+
+            
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="nn_images/part4/high_plot.png" class="medium">
+                        <div class="caption">Plot with MSE (0-10 epochs) </div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/part4/next_plot.png" class="medium">
+                        <div class="caption">Plot with MSE (10-20 epochs)</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/part4/logistic_plot.png" class="medium">
+                        <div class="caption">Plot with Logistic Loss</div>
+                    </div>
+
+                </div>
+
+                <h3>Results</h3>
+                <p>
+                    The model validation loss stabilizes quickly during training, indicating that 
+                    the model learns effectively with the given architecture and training setup. 
+                    However, this also suggests room for architectural improvements to push the 
+                    model's performance further. 
+                    
+                    </p>
+                    <p> 
+                        A recurring issue encountered is the vanishing 
+                    gradient problem, which impacts the training process and leads to organized 
+                    but incorrect keypoint predictions. This problem arises because gradients 
+                    diminish as they propagate backward through the network, especially when 
+                    using Gaussian-based heatmaps. As a result, the model struggles to adjust 
+                    weights effectively in deeper layers, thereby affecting the final predictions.
+                    Using <code>batch_norm</code> proved effective against this, along with initializing weights 
+                    and enforcing dropout. 
+                </p>
+                <p></p>
+                    One notable observation is that using log-loss instead of MSE loss significantly improves 
+                    performance for pixelwise classification tasks like this one. Log-loss helps the model better 
+                    capture the probabilistic nature of heatmaps, leading to more ordered and predictable keypoint 
+                    predictions. However, while the predictions are more structured, they may lack the variability 
+                    needed to handle edge cases effectively. Potential solutions to address these issues include 
+                    experimenting with more advanced loss functions, implementing gradient clipping to prevent 
+                    excessively small updates, and introducing better weight initialization and normalization 
+                    techniques to stabilize training. These adjustments could improve gradient flow, reduce 
+                    training biases, and lead to more robust keypoint predictions. Below are the heatmaps visualized for these. 
+
+                    <p><strong>MSE Loss</strong></p> We visualize ground and predicted keypoints and heatmaps, 
+                    along with the original image for validation subjects not trained on. Note this covers multiple deliverables. 
+                    <div class="gallery">
+                        <div class="gallery-item">
+                            <img src="nn_images/part4/next_result1.png" class="large">
+                            <div class="caption">1 </div>
+                        </div>
+    
+                        <div class="gallery-item">
+                            <img src="nn_images/part4/next_result2.png" class="large">
+                            <div class="caption">2</div>
+                        </div>
+                    </div>
+
+                    <p><strong>Logistic Loss</strong></p> 
+
+                    <div class="gallery">
+                        <div class="gallery-item">
+                            <img src="nn_images/part4/logistic_result1.png" class="large">
+                            <div class="caption">1 </div>
+                        </div>
+    
+                        <div class="gallery-item">
+                            <img src="nn_images/part4/logistic_result2.png" class="large">
+                            <div class="caption">2</div>
+                        </div>
+                    </div>
+
+                <p>
+                    <strong>Good Performance (Using MSE Loss)</strong>
+                </p>
+                
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="nn_images/part3/correct1.png" class="medium">
+                        <div class="caption">Standard </div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/part3/correct2.png" class="medium">
+                        <div class="caption">Brightness High</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/part3/correct3.png" class="medium">
+                        <div class="caption">Extremeley Accurate</div>
+                    </div>
+                </div>
+
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="nn_images/part3/correct4.png" class="medium">
+                        <div class="caption">Straight face, extremeley accurate</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/part3/correct5.png" class="medium">
+                        <div class="caption">Front-facing, accurate.</div>
+                    </div>
+                </div>
+
+                <p>
+                    <strong>Bad Performance (Using MSE Loss)</strong>
+                </p>
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="nn_images/part4/wrong1.png" class="medium">
+                        <div class="caption">Likely due to low pixel intensities.</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/part4/wrong2.png" class="medium">
+                        <div class="caption">Blurry</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/part4/wrong3.png" class="medium">
+                        <div class="caption">Pretty Accurate, high brightness</div>
+                    </div>
+                </div>
+
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="nn_images/part4/wrong4" class="medium">
+                        <div class="caption">low pixel intensity</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/part4/wrong5.png" class="medium">
+                        <div class="caption">Not a human</div>
+                    </div>
+                </div>
+
+                
             </section>
 
             
