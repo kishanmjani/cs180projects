@@ -51,7 +51,41 @@
                     converted to grayscale, normalized to the range -0.5 to 0.5 using the formula 
                     <code>image.astype(np.float32) / 255 - 0.5</code>, and resized to 80x60 pixels.
                 </p>
-                <p> Some sample faces from the dataset with keypoints labelled </p>
+                <p> Some sample faces from the dataset with nose keypoints labelled </p>
+
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="nn_images/part1/gt1.png" class="medium">
+                        <div class="caption">Sample</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/part1/gt2.png" class="medium">
+                        <div class="caption">Sample</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/part1/gt3.png" class="medium">
+                        <div class="caption">Sample</div>
+                    </div>
+                </div> 
+
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="nn_images/part1/gt_samp.png" class="medium">
+                        <div class="caption">Sample with all keypoints</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/part1/gt6.png" class="medium">
+                        <div class="caption">Sample</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/part1/gt5.png" class="medium">
+                        <div class="caption">Sample</div>
+                    </div>
+                </div> 
             
                 <h3>Model Architecture</h3>
                 <p>
@@ -60,6 +94,13 @@
                     layers (<code>torch.nn.MaxPool2d</code>). After the convolutional layers, the network includes two fully 
                     connected layers, with a ReLU activation after the first but not the last. Below is an image describing the precise 
                     architecture. 
+
+                    <div class="gallery">
+                        <div class="gallery-item">
+                            <img src="nn_images/part1/nose_model.png" class="large">
+                            <div class="caption">Architecture used for NoseKeypointCNN</div>
+                        </div>
+                    </div> 
                 </p>
                 <p>
                     The loss function is <code>torch.nn.MSELoss</code>, and the optimizer is Adam 
@@ -72,7 +113,7 @@
                     the need for significantly many more epochs for further improvement. At the end, the training loss was <code>0.000245</code>
                     and validation loss was <code>.001123</code>. 
                 </p>
-                <img src="loss_plot.jpg" alt="Training and Validation Loss Plot">
+                <img src="nn_images/part1/tr_val_loss.png" alt="Training and Validation Loss Plot">
             
                 <h3>Results</h3>
                 <p>
@@ -81,8 +122,44 @@
                     other parts of the face (e.g., the cheekbone) are incorrectly identified as the nose tip.
                 </p>
                 <p>
-                    Below are some examples:
+                    <strong>Good Performance</strong>
                 </p>
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="nn_images/part1/good1.png" class="medium">
+                        <div class="caption">Straight face and symmetric, well-defined features.</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/part1/good2.png" class="medium">
+                        <div class="caption">Good Prediction for same reasons</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/part1/good4.png" class="medium">
+                        <div class="caption">Identical</div>
+                    </div>
+                </div>
+
+                <p>
+                    <strong>Bad Performance</strong>
+                </p>
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="nn_images/part1/bad1.png" class="medium">
+                        <div class="caption">Cheekbone interpreted as nose</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/part1/bad4.png" class="medium">
+                        <div class="caption">Facial Expression, Cheekbone Problem (contrast)</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/part1/bad3.png" class="medium">
+                        <div class="caption">Tilted face, Cheekbone Problem (contrast)</div>
+                    </div>
+                </div>
    
             </section>
             
