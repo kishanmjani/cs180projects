@@ -728,6 +728,117 @@ such as non-maximum suppression, could help accurately identify keypoints from h
                 
             </section>
 
+            <section id="bw">
+                <h2>Bells and Whistles: Zero-One Heatmaps instead of Smooth Gaussians</h2>
+                <h3>Overview</h3>
+                <p>
+                    In this part, we explore the use of zero-one heatmaps for pixelwise classification. The idea is to 
+                    replace traditional Gaussian heatmaps with rough, binary zero-one maps, where each keypoint is represented 
+                    as a single concentrated pixel. The intuition behind this approach is that the sharply focused heatmap may 
+                    offer insights into the Neural Network's learning process by emphasizing precise pixel-level correspondence.
+                </p>
+            
+
+                <h3>Data Preparation</h3>
+                <p>
+                    The dataset setup remains the same as in previous sections. Faces are cropped and resized to <code>224x224</code>, 
+                    and data augmentation techniques such as brightness and saturation adjustments, rotations, and shifts are 
+                    applied to improve model robustness. However, here are the 0-1 heatmaps visualized: 
+
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="nn_images/partbw/data1.png" class="medium">
+                        <div class="caption">Sample</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/partbw/data2.png" class="medium">
+                        <div class="caption">Sample</div>
+                    </div>
+                </div> 
+            
+                <h3>Model Architecture</h3>
+                <p>
+                    The model architecture is identical to that used in Part 4, making it easier to compare the performance of 
+                    zero-one heatmaps with traditional Gaussian heatmaps. Logistic loss is employed to optimize the pixelwise 
+                    classification task.
+                </p>
+
+                <h3>Training/Validation Loss Plot</h3>
+                <p>
+                    Below is an example of the training and validation loss plot over several epochs. Loss stabilizes, indicating 
+                    the need for significantly many more epochs for further improvement. At the end, the training loss was <code>0.000245</code>
+                    and validation loss was <code>.001123</code>. 
+                </p>
+                <img src="nn_images/partbw/zero_one_plot.png" alt="Training and Validation Loss Plot">
+            
+                <h3>Results</h3>
+                <p>
+                    Using zero-one heatmaps offers a more defined and direct correspondence between keypoints and heatmaps. This 
+                    clarity aids the training process to some extent, as the network is forced to focus on precise pixel-level 
+                    predictions. However, the results below highlight several limitations of this approach:
+                </p>
+                <ul>
+                    <li>
+                        <strong>Limited Spatial Context:</strong> Zero-one heatmaps provide little spatial context, as they lack 
+                        the spread-out representation of Gaussian heatmaps. This absence of broader image information limits 
+                        the network's ability to make robust predictions.
+                    </li>
+                    <li>
+                        <strong>Concentrated Predictions:</strong> The keypoints predicted by the network tend to cluster too 
+                        closely together. This likely occurs because the network lacks sufficient spatial layers to distribute 
+                        the impulse over a wider region, making it difficult to predict keypoints in distant parts of the image.
+                        Furthermore, the predictions always make a square shape, which indicates that the filter is not learning new information. Subsequently, 
+                        at the very least for outlier/bad predictions, the points are being distributed randomly and uniformly (in concentrated spots near keypoints)
+                    </li>
+                </ul>
+                <p>
+                    While zero-one heatmaps offer an interesting alternative, their simplicity may not fully leverage the power 
+                    of deep learning for keypoint detection. Adding more spatial layers or hybridizing zero-one heatmaps with 
+                    Gaussian-like distributions could be the way to go.
+                </p>
+                <p>
+                    <strong>Good Performance</strong>
+                </p>
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="nn_images/partbw/correct5.png" class="medium">
+                        <div class="caption">Some degree of facial outline</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/partbw/correct4.png" class="medium">
+                        <div class="caption">Okay</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/partbw/correct1.png" class="medium">
+                        <div class="caption">Decent</div>
+                    </div>
+                </div>
+
+                <p>
+                    <strong>Bad Performance</strong>
+                </p>
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="nn_images/partbw/wrong2.png" class="medium">
+                        <div class="caption">Blurry, model resorts to random distribution</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/partbw/wrong4.png" class="medium">
+                        <div class="caption">Brightness, same issues outlined above</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/part1/wrong3.png" class="medium">
+                        <div class="caption">A statue (not sharp enough facial features)</div>
+                    </div>
+                </div>
+   
+            </section>
+
             
         </main>
     </div>
