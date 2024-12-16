@@ -32,7 +32,7 @@
                 <p>
                     In this project, we use the IMM Face Database for training an initial toy model for nose tip detection. 
                     The dataset contains 240 facial images of 40 individuals, with each person having 6 images taken from 
-                    various viewpoints. Each image is annotated with 58 facial keypoints.
+                    various viewpoints. Each image is annotated with 58 facial keypoints. 
                 </p>
                 <p>
                     For training, we use all 6 images of the first 32 individuals (indexes 1-32), resulting in a total 
@@ -120,6 +120,7 @@
                 <p>
                     The loss function is <code>torch.nn.MSELoss</code>, and the optimizer is Adam 
                     (<code>torch.optim.Adam</code>) with a learning rate of <code>1e-3</code>. The network is trained for 10 to 25 epochs.
+                    <code>batch_size = 4</code> because the dataset is fairly small, and we want to prevent overfitting. 
                 </p>
 
                 <h3>Training/Validation Loss Plot</h3>
@@ -182,32 +183,122 @@
                 <h2>Part 2: Full Face Detection</h2>
                 <h3>Overview</h3>
 
-                
-
+                <p>
+                    In this section, we focus on predicting all keypoints for facial landmarks. The dataset and model 
+                    architecture have to be adapted to handle larger input image sizes and include techniques to mitigate 
+                    overfitting.
+                </p>
                 <h3>Data Preparation</h3>
+
+                <p>
+                    Similar to Part 1, the dataloader code remains largely unchanged. However, this time we work with larger 
+                    input image sizes of <code>160x120</code>. Given the small dataset, data augmentation is essential to 
+                    prevent overfitting. We apply the following augmentations:
+                </p>
+                <ul>
+                    <li>Randomly changing brightness and saturation using <code>torchvision.transforms.ColorJitter</code>.</li>
+                    <li>Random rotations between -15 and 15 degrees.</li>
+                    <li>Random shifts of up to ±10 pixels.</li>
+                </ul>
             
                 <h3>Model Architecture</h3>
 
+                <p>
+                    With larger input images, a deeper CNN is required. For this task, we design a model with 4 convolutional 
+                    layers, each followed by a ReLU activation and optionally a max-pooling layer. Based on observations from the 
+                    previous section, we use only 5x5 and 3x3 convolutional kernels.
+                </p>
+                <p>
+                    To reduce overfitting, we introduce dropout layers, ensuring that the model does not over-rely on specific 
+                    features. Additionally, a normal bias is applied to the final layer to guide predictions closer to the face, 
+                    which significantly improves validation loss. Without this adjustment, the validation loss stabilizes at a 
+                    higher magnitude. The model is trained with a batch size of 16, using the Adam optimizer (learning rate 
+                    <code>1e-3</code>) and MSE loss. Below is the architecture 
+                    <img src="nn_images/part2/all_model.png">
+                </p>
+
+                <p>
+                    Order of operations chosen: 
+                    <pre>
+                            <code> [Conv -> Relu] -> [Conv->Relu->Pool]*3 -> DP -> [FC1->Relu] -> [FC2-> Relu] -> [FC3] </code>
+                    </pre>
+                        <ul>
+                            <li>We do not use max pooling in the first layer to better preserve information across layers, helping to prevent overfitting.</li>
+                            <li>Dropout accelerates convergence during training.</li>
+                            <li>The final fully connected layer does not include a ReLU activation, as suggested.</li>
+                        </ul>
+                </p>
+
                 <h3>Training/Validation Loss Plot</h3>
+
+                <p>
+                    The training process shows promise, with validation loss oscillating and decreasing over time, though the 
+                    validation curve is somewhat non-smooth. Extending the number of training epochs could yield further 
+                    improvements.
+                </p>
             
+                <img src="nn_images/part2/tr_val_loss.png" alt="Training and Validation Loss Plot">
                 <h3>Results</h3>
 
+                <p>
+                    Overall, the model demonstrates strong facial prediction capabilities. However, certain challenges remain, 
+                    particularly with outlier features. For example:
+                </p>
+                <ul>
+                    <li>Faces with extreme tilts or contrasting lighting conditions tend to throw off the model, causing it to 
+                    misidentify keypoints (e.g., predicting a cheekbone instead of the nose).</li>
+                    <li>In these cases, the neural network struggles with rare scenarios that are underrepresented in the dataset.</li>
+                </ul>
+                <p>
+                    A key improvement would be to introduce more significant data augmentations or include additional training 
+                    data with diverse facial angles and lighting conditions. Despite these challenges, the model performs well 
+                    on many tilted faces, with failures limited to extreme cases.
+                </p>
 
                 <p>
                     Below are some examples:
                 </p>
 
-                    <div class="gallery">
-                        <div class="gallery-item">
-                            <img src="quilting_images/samples/bricks_small.jpg" class="small">
-                            <div class="caption">Initial Brick Texture (from paper)</div>
-                        </div>
+                <p>
+                    <strong>Good Performance</strong>
+                </p>
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="nn_images/part2/good1.png" class="medium">
+                        <div class="caption">With Tilt</div>
+                    </div>
 
-                        <div class="gallery-item">
-                            <img src="quilting_images/part1/random_brick.png"  class="large">
-                            <div class="caption">Generated by Random Quilting</div>
-                        </div>
-                    </div>        
+                    <div class="gallery-item">
+                        <img src="nn_images/part2/good2.png" class="medium">
+                        <div class="caption">Straightforward prediction</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/part2/good4.png" class="medium">
+                        <div class="caption">Extreme Facial Tilt, still good</div>
+                    </div>
+                </div>
+
+                <p>
+                    <strong>Bad Performance</strong>
+                </p>
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="nn_images/part2/bad1.png" class="medium">
+                        <div class="caption">Too much contrast</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/part2/bad4.png" class="medium">
+                        <div class="caption">Facial Expression, Cheekbone Problem (contrast)</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/part2/bad2.png" class="medium">
+                        <div class="caption">Facial features induce more contrast</div>
+                    </div>
+                </div>
+
             </section>
             
         </main>
