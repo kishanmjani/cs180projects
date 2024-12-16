@@ -30,19 +30,18 @@
             <section id ="only">
                 <h2>Analysing the Min-Cut Contiguous Path</h2>
 
-                    It is very interesting to observe the path taken by the min-cut in any of the overlapping blocks. 
-                    
-                    For brick, the SSD image shows that the ssd_cost is lowest at the lines between bricks i.e. noticeable edges 
-                    in the image. Thus, we observe that the min-cut path stays consistent along the dominant edges (lines between bricks), until it switches to 
-                    another edge above, which it then begins to follow. Furthermore, observe that the transition occurs in a place where 
-                    the pixel value changes gradually: both of these together ensure a good overlap. For brick, the path goes through 
-                    a portion of the brick that is evenly red-colored. 
-
-                    For text, the SSD image shows that the SSD cost is lowest where the text is. Subsequently, the path stays consistent along a line of text (the dominant edge), until it encounters a vertical white 
-                    spacing (randomly exists because of word spacing and text alignment) wide enough that it can pass through. It is clear that this ensures low ssd_cost, 
-                    and thus smooth transitions. 
-
-                    <h3> Brick Results </h3>
+                <h3>Brick Example</h3>
+                <p>
+                  In the case of <code>bricks_small.jpg</code>, the Sum of Squared Differences (SSD) map reveals that the lowest SSD cost occurs 
+                  along the lines between the bricks, which correspond to noticeable edges in the image. Consequently, the min-cut 
+                  path predominantly follows these dominant edges, i.e., the lines separating the bricks.
+                </p>
+                <p>
+                  Interestingly, the path remains consistent along these edges until it transitions to another edge above. 
+                  This transition occurs in a region where the pixel values change gradually, ensuring a seamless overlap. 
+                  Specifically, the path cuts through areas with evenly red-colored portions of the brick to
+                  maintain the visual consistency of the overlap.
+                </p>
 
                     <div class="gallery">
                         <div class="gallery-item">
@@ -60,14 +59,13 @@
                             <div class="caption">Another Example</div>
                         </div>
                     </div>  
-
+                    
                     <img src="../quilting_images/part3/hmask.png" >
-<br>
                     <img src="../quilting_images/part3/vmask.png" >
-<br>
+
                 <div class="gallery">
                     <div class="gallery-item">
-                        <img src="../quilting_images/part3/cut_brick.png"  class="medium">
+                        <img src="../quilting_images/part3/mask.png"  class="medium">
                         <div class="caption">Overall Mask</div>
                     </div>
                     <div class="gallery-item">
@@ -75,15 +73,61 @@
                         <div class="caption">Old Image</div>
                     </div>
                     <div class="../gallery-item">
-                        <img src="quilting_images/part3/new.png"  class="medium">
+                        <img src="../quilting_images/part3/new.png"  class="medium">
                         <div class="caption">New Overlapping Image</div>
                     </div>
                     <div class="../gallery-item">
-                        <img src="quilting_images/part3/path.png"  class="medium">
+                        <img src="../quilting_images/part3/path.png"  class="medium">
                         <div class="caption">Path Taken displayed on Merged Patch</div>
                     </div>
                 </div>
-                    <h3> Text Results </h3>
+
+
+                <h3>Text Example</h3>
+                <p>
+                  For <code>text.jpg</code>, the SSD map highlights that the <code>ssd_cost</code> is lowest where the text is located. 
+                  As a result, the min-cut path aligns itself along a line of text, which serves as the dominant edge.
+                </p>
+                <p>
+                  However, when the path encounters vertical white spaces—caused by word spacing or text alignment in real life—it strategically 
+                  passes through these wider gaps. This approach guarantees low <code>ssd_cost</code> and ensures smooth transitions 
+                  in the overlapping areas.
+                </p> 
+
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="../quilting_images/samples/text_small.jpg" class="small">
+                        <div class="caption">Initial Text Texture (from paper)</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="../quilting_images/part3/cut_text.png"  class="medium">
+                        <div class="caption">Generated by <code>quilt_cut</code></div>
+                    </div>
+
+                </div>  
+                
+                <img src="../quilting_images/part3/hmask1.png" >
+                <img src="../quilting_images/part3/vmask1.png" >
+                
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="../quilting_images/part3/mask1.png"  class="medium">
+                    <div class="caption">Overall Mask</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="../quilting_images/part3/old1.png"  class="medium">
+                    <div class="caption">Old Image</div>
+                </div>
+                <div class="../gallery-item">
+                    <img src="../quilting_images/part3/new1.png"  class="medium">
+                    <div class="caption">New Overlapping Image</div>
+                </div>
+                <div class="../gallery-item">
+                    <img src="../quilting_images/part3/path1.png"  class="medium">
+                    <div class="caption">Path Taken displayed on Merged Patch</div>
+                </div>
+            </div>
 
                 </section>
         </main>
