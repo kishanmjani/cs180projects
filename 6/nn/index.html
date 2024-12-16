@@ -323,98 +323,115 @@
                 <h3>Overview</h3>
 
                 <p>
-                    In this section, we focus on predicting all keypoints for facial landmarks. The dataset and model 
-                    architecture have to be adapted to handle larger input image sizes and include techniques to mitigate 
-                    overfitting.
+                    In this section, we use the iBUG Face in the Wild dataset to train a robust facial keypoints detector. 
+                    This dataset consists of 6666 images of varying sizes, each annotated with 68 facial keypoints. These 
+                    keypoints represent critical facial landmarks such as the eyes, nose, mouth, and jawline, making it an 
+                    excellent resource for facial analysis tasks.
                 </p>
                 <h3>Data Preparation</h3>
 
                 <p>
-                    Similar to Part 1, the dataloader code remains largely unchanged. However, this time we work with larger 
-                    input image sizes of <code>160x120</code>. Given the small dataset, data augmentation is essential to 
-                    prevent overfitting. We apply the following augmentations:
+                    In the iBUG dataset, faces often occupy only a small portion of the image, with the background dominating 
+                    most of the space. To address this, we crop each image to focus on the face using the provided bounding 
+                    boxes, then resize the cropped face to <code>224x224</code>. After cropping, the coordinates of the keypoints 
+                    are updated accordingly to maintain alignment with the resized face.
                 </p>
-                <ul>
-                    <li>Randomly changing brightness and saturation using <code>torchvision.transforms.ColorJitter</code>.</li>
-                    <li>Random rotations between -15 and 15 degrees.</li>
-                    <li>Random shifts of up to ±10 pixels.</li>
-                </ul>
+                <p>
+                    To improve model robustness and prevent overfitting, we apply the same data augmentation techniques as in 
+                    Part 2. Some examples (these also have predictions, but you get the point). 
+
+                    <div class="gallery">
+                        <div class="gallery-item">
+                            <img src="nn_images/part3/1000.png" class="medium">
+                            <div class="caption">Sample</div>
+                        </div>
+    
+                        <div class="gallery-item">
+                            <img src="nn_images/part3/20.png" class="medium">
+                            <div class="caption">Sample</div>
+                        </div>
+    
+                        <div class="gallery-item">
+                            <img src="nn_images/part3/434.png" class="medium">
+                            <div class="caption">Sample</div>
+                        </div>
+                    </div>
             
                 <h3>Model Architecture</h3>
 
                 <p>
-                    With larger input images, a deeper CNN is required. For this task, we design a model with 4 convolutional 
-                    layers, each followed by a ReLU activation and optionally a max-pooling layer. Based on observations from the 
-                    previous section, we use only 5x5 and 3x3 convolutional kernels.
+                    For this part, we use the standard ResNet architecture. Specifically, ResNet18 is a 
+                    good choice due to its simplicity and efficiency. Two key modifications are required for this task:
                 </p>
+                <ul>
+                    <li>The first convolutional layer is adjusted to accept a single grayscale channel instead of three RGB channels.</li>
+                    <li>The final fully connected layer outputs <code>68 * 2 = 136</code> values, corresponding to the <code>(x, y)</code> 
+                    coordinates of the 68 facial landmarks.</li>
+                </ul>
                 <p>
-                    To reduce overfitting, we introduce dropout layers, ensuring that the model does not over-rely on specific 
-                    features. Additionally, a normal bias is applied to the final layer to guide predictions closer to the face, 
-                    which significantly improves validation loss. Without this adjustment, the validation loss stabilizes at a 
-                    higher magnitude. The model is trained with a batch size of 16, using the Adam optimizer (learning rate 
-                    <code>1e-3</code>) and MSE loss. Below is the architecture 
-                    <img src="nn_images/part2/all_model.png">
+                    Training is performed with the following hyperparameters:
                 </p>
-
-                <p>
-                    Order of operations chosen: 
-                    <pre>
-                            <code> [Conv -> Relu] -> [Conv->Relu->Pool]*3 -> DP -> [FC1->Relu] -> [FC2-> Relu] -> [FC3] </code>
-                    </pre>
-                        <ul>
-                            <li>We do not use max pooling in the first layer to better preserve information across layers, helping to prevent overfitting.</li>
-                            <li>Dropout accelerates convergence during training.</li>
-                            <li>The final fully connected layer does not include a ReLU activation, as suggested.</li>
-                        </ul>
-                </p>
+                <ul>
+                    <li>Learning rate: <code>5e-3</code>, with a weight decay of <code>1e-5</code> for faster convergence.</li>
+                    <li>Batch size: <code>64</code>, to efficiently utilize the larger dataset.</li>
+                    <li>Epochs: <code>10</code>, though more training epochs could further improve results.</li>
+                </ul>
 
                 <h3>Training/Validation Loss Plot</h3>
 
                 <p>
-                    The training process shows promise, with validation loss oscillating and decreasing over time, though the 
-                    validation curve is somewhat non-smooth. Extending the number of training epochs could yield further 
-                    improvements.
+                    Training and validation loss trends indicate steady progress, though training more epochs could yield better 
+                    results. Below is a plot of training and validation loss over iterations:
                 </p>
+
             
-                <img src="nn_images/part2/tr_val_loss.png" alt="Training and Validation Loss Plot">
+                <img src="nn_images/part3/plot.png" alt="Training and Validation Loss Plot">
                 <h3>Results</h3>
 
-                <p>
-                    Overall, the model demonstrates strong facial prediction capabilities. However, certain challenges remain, 
-                    particularly with outlier features. For example:
-                </p>
-                <ul>
-                    <li>Faces with extreme tilts or contrasting lighting conditions tend to throw off the model, causing it to 
-                    misidentify keypoints (e.g., predicting a cheekbone instead of the nose).</li>
-                    <li>In these cases, the neural network struggles with rare scenarios that are underrepresented in the dataset.</li>
-                </ul>
-                <p>
-                    A key improvement would be to introduce more significant data augmentations or include additional training 
-                    data with diverse facial angles and lighting conditions. Despite these challenges, the model performs well 
-                    on many tilted faces, with failures limited to extreme cases.
-                </p>
-
-                <p>
-                    Below are some examples:
-                </p>
+                        <p>
+            The trained model performs exceptionally well, with nearly perfect keypoint predictions on most test images. 
+            However, there are some notable failure cases:
+        </p>
+        <ul>
+            <li>Faces in low-brightness conditions often result in less accurate predictions. Also, the model is bad at 
+                predicting keypoints for darker skin-tones. More subtle and smart data augmentations (or a more diverse dataset)
+                is likely the answer. </li>
+            <li>Blurry images and non-human faces, such as statues, also present challenges.</li>
+        </ul>
+        <p>
+            Despite these limitations, the model demonstrates strong generalization and consistently accurate predictions. 
+            Below are a few test results:
+        </p>
 
                 <p>
                     <strong>Good Performance</strong>
                 </p>
                 <div class="gallery">
                     <div class="gallery-item">
-                        <img src="nn_images/part2/good1.png" class="medium">
+                        <img src="nn_images/part3/correct1.png" class="medium">
                         <div class="caption">With Tilt</div>
                     </div>
 
                     <div class="gallery-item">
-                        <img src="nn_images/part2/good2.png" class="medium">
+                        <img src="nn_images/part3/correct2.png" class="medium">
                         <div class="caption">Straightforward prediction</div>
                     </div>
 
                     <div class="gallery-item">
-                        <img src="nn_images/part2/good4.png" class="medium">
+                        <img src="nn_images/part3/correct3.png" class="medium">
                         <div class="caption">Extreme Facial Tilt, still good</div>
+                    </div>
+                </div>
+
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="nn_images/part3/correct4.png" class="medium">
+                        <div class="caption">With Tilt</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/part3/correct5.png" class="medium">
+                        <div class="caption">Straightforward prediction</div>
                     </div>
                 </div>
 
@@ -423,20 +440,64 @@
                 </p>
                 <div class="gallery">
                     <div class="gallery-item">
-                        <img src="nn_images/part2/bad1.png" class="medium">
+                        <img src="nn_images/part3/wrong1.png" class="medium">
+                        <div class="caption">With Tilt</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/part3/wrong2.png" class="medium">
+                        <div class="caption">Straightforward prediction</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/part3/wrong3.png" class="medium">
+                        <div class="caption">Extreme Facial Tilt, still good</div>
+                    </div>
+                </div>
+
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="nn_images/part3/wrong4.png" class="medium">
+                        <div class="caption">With Tilt</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/part3/wrong5.png" class="medium">
+                        <div class="caption">Straightforward prediction</div>
+                    </div>
+                </div>
+
+                <h3> Testing Set </h3>
+                Now for a few images that the model was not trained on: 
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="nn_images/part3/test1.png" class="medium">
                         <div class="caption">Too much contrast</div>
                     </div>
 
                     <div class="gallery-item">
-                        <img src="nn_images/part2/bad4.png" class="medium">
+                        <img src="nn_images/part3/test2.png" class="medium">
                         <div class="caption">Facial Expression, Cheekbone Problem (contrast)</div>
                     </div>
 
                     <div class="gallery-item">
-                        <img src="nn_images/part2/bad2.png" class="medium">
+                        <img src="nn_images/part3/test3.png" class="medium">
                         <div class="caption">Facial features induce more contrast</div>
                     </div>
                 </div>
+
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="nn_images/part2/test4.png" class="medium">
+                        <div class="caption">Too much contrast</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="nn_images/part2/test5.png" class="medium">
+                        <div class="caption">Facial Expression, Cheekbone Problem (contrast)</div>
+                    </div>
+                </div>
+                
 
             </section>
             
