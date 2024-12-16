@@ -539,11 +539,62 @@
                 <h2>Bells and Whistles: Face in Toast (Image Quilting + Laplacian Blending)</h2>
                 <h3> Overview </h3>
                 <p>
-                    Here we try to do blending and quilting. Results are mostly disappointing. We fix
-                    trying to place the face of Feynman in Toast. Optimal parameters found were as follows: 
-                    for quilting, we use <code>out_size = 600, patch_size = 20, overlap = 5, tol = 3</code>. For 
-                    blending, we use <code> depth = 4, sigma = 2, skip = 2</code>. Here \( 0.20 \le \alpha \le 0.45 \)
-                    usually suffices for naive texture transfer. 
+                    <p>
+                        In this section, we explore the use of blending and quilting techniques for texture transfer. 
+                        Our goal was to fix the challenge of placing Feynman's face onto a toast texture. While the results 
+                        are mostly disappointing, some promising directions were identified. Below are the optimal parameters 
+                        used during experimentation:
+                    </p>
+                    <ul>
+                        <li><strong>Quilting:</strong> <code>out_size = 600, patch_size = 20, overlap = 5, tol = 3</code></li>
+                        <li><strong>Blending:</strong> <code>depth = 4, sigma = 2, skip = 2</code></li>
+                        <li><strong>Alpha Range:</strong> \( 0.20 \le \alpha \le 0.45 \), suitable for naive texture transfer.</li>
+                    </ul>
+                
+                    <ol>
+                        <li>
+                            <p>
+                                The most promising result was achieved using naive texture transfer combined with Laplacian 
+                                blending and a mask at the end. This method shows the potential to produce better results, 
+                                though limitations in the Project 2 (Laplacian Blending) code made the outcomes less satisfactory. 
+                                I think averaging the brightness and color contrast of the source and target images could 
+                                significantly enhance blending.
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                Texture transfer with patch-wise blending worked surprisingly well for reconstructing Feynman's face 
+                                while removing texture oddities. However, the block seams remained too visible. This issue arises because 
+                                the blending process lightens the overlapping patch while darkening the non-overlapping regions, leaving 
+                                a noticeable disparity.
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                To address the visible seams, a 2D Gaussian blur was applied to the overlapping borders. While this reduced 
+                                seam visibility, it resulted in noticeably thicker and still distinguishable seam regions. This suggests 
+                                that while blurring helps with smoothing, it may require more sophisticated techniques to truly integrate 
+                                the patches seamlessly.
+                            </p>
+                        </li>
+                    </ol>
+                
+                    <p>
+                        Based on the results, the following improvements can likely be made:
+                    </p>
+                    <ul>
+                        <li><strong>Brightness and Contrast Adjustment:</strong> Prior to blending, equalizing the brightness and 
+                        contrast of the source and target images may create a more cohesive blend.</li>
+                        <li><strong>Advanced Seam Blending:</strong> Explore methods like multiscale blending or adaptive masking 
+                        to better integrate overlapping regions and reduce visible seams.</li>
+                        <li><strong>Iterative Refinement:</strong> Experiment with iterative approaches to progressively refine 
+                        the blend, starting with coarse adjustments and moving to finer details.</li>
+                        <li><strong>This is more just a thought, but I think Fourier Transform Methods as in the class could be particularly
+                            helpful in implementing texture transfer. This is because as seen with minimizing SSD, we can rephrase image quilting 
+                            as an edge alignment problem. This can be resolved by decomposing into high and low frequencies. 
+                        </strong></li>
+                    </ul>
+            
                     
                 </p>
                 <h3> Texture Transfer Standard </h3>
