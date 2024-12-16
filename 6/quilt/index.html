@@ -458,7 +458,45 @@
                 </p>
                 <h3> Results </h3>
                 <p> 
-                    Below we show texture transfer. 
+                    <p>
+                        In implementing <code>texture_transfer</code>, careful tuning of parameters was essential for achieving 
+                        realistic results:
+                    </p>
+                    <ol>
+                        <li>
+                            <strong>Output Size and Patch Parameters:</strong><br>
+                            <code>out_size</code> was set to 600, with <code>patch_size</code> values of 25 or 15 and 
+                            corresponding <code>overlap</code> values of 5 or 3, respectively. 
+                            <ul>
+                                <li>Increasing overlap often made the textures appear unnatural.</li>
+                                <li>Using larger patches (<code>patch_size</code>) highlighted seams, while smaller patches required 
+                                more computation and occasionally resulted in unrealistic textures.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Alpha:</strong><br>
+                            The blending weight <code>alpha</code> was set to 0.2, which worked well for smoothing overlapping regions. 
+                        </li>
+                        <li>
+                            <strong>Tolerance:</strong><br>
+                            <code>tol</code> was set to 2, allowing little variability in patch selection. While higher <code>tol</code> 
+                            values introduced greater texture variety, they occasionally produced unwanted variability that disrupted 
+                            the desired image (e.g., selecting unsuitable patches for the target structure). This is because there are likely 
+                            few patches that work well. 
+                        </li>
+                    </ol>
+                
+                    <p>
+                        Texture transfer was generally more effective with target images containing fewer edges, as fewer constraints 
+                        made the synthesis process simpler. However, an absence of edges also reduced contrast, making it harder to 
+                        recreate features. For example, the blend of water and Newton has few edge details.
+                    </p>
+                    <p>
+                        On the other hand, blends with distinct edges performed better, though the implementation often made 
+                        the patch blocks more visible. This suggests that an iterative approach—starting with larger patches 
+                        and progressively refining with smaller patches—could significantly improve results. Similarly, incorporating 
+                        advanced blending techniques could further reduce visible seams, as explored in the "Bells & Whistles" section.
+                    </p>
 
                     <div class="gallery">
                         <div class="gallery-item">
