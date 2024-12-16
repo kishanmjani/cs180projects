@@ -97,6 +97,12 @@ h3 {
     object-fit: cover; /* Ensures the image maintains its aspect ratio */
 }
 
+.gallery img.medium {
+    width: 200px;
+    height: 200px;
+    object-fit: cover; /* Ensures the image maintains its aspect ratio */
+}
+
 .gallery img.large {
     width: 350px;
     height: 350px;
