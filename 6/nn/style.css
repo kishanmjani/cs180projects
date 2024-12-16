@@ -109,6 +109,12 @@ h3 {
     object-fit: cover; /* Ensures the image maintains its aspect ratio */
 }
 
+.gallery img.wide {
+    width: 200px;
+    height: 350px;
+    object-fit: cover; /* Ensures the image maintains its aspect ratio */
+}
+
 .caption {
     margin-top: 0.5rem;
     font-size: 0.875rem; /* Slightly smaller font size for captions */
