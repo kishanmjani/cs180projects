@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CNN</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
+        integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP"
+        crossorigin="anonymous"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Final Project 2: Facial Keypoint Detection using Convolutional Neural Nets</h1>
+        <p>Kishan Jani</p>
+    </header>
+
+    <div class="container">
+
+        <!-- Contents -->
+        <main>
+            <section id="part 1">
+                <h2>Part 1: Nose Tip Detection</h2>
+                <h3>Overview</h3>
+                <p>
+                    In this project, we use the IMM Face Database for training an initial toy model for nose tip detection. 
+                    The dataset contains 240 facial images of 40 individuals, with each person having 6 images taken from 
+                    various viewpoints. Each image is annotated with 58 facial keypoints.
+                </p>
+                <p>
+                    For training, we use all 6 images of the first 32 individuals (indexes 1-32), resulting in a total 
+                    of 192 training images. The remaining 8 individuals (indexes 33-40) provide 48 images for validation. 
+                </p>
+                <p>
+                    The nose detection task is cast as a pixel coordinate regression problem. Each input is a grayscale 
+                    image, and the output is the nose tip position represented as normalized coordinates <code>(x, y)</code>, 
+                    ranging from 0 to 1.
+                </p>
+            </section>
+            
+            <section>
+                <h3>Data Preparation</h3>
+                <p>
+                    To load and preprocess the images, we use the <code>torch.utils.data.DataLoader</code>. Each image is 
+                    converted to grayscale, normalized to the range -0.5 to 0.5 using the formula 
+                    <code>image.astype(np.float32) / 255 - 0.5</code>, and resized to 80x60 pixels.
+                </p>
+                <p> Some sample faces from the dataset with keypoints labelled </p>
+
+                
+            </section>
+            
+            <section>
+                <h3>Model Architecture</h3>
+                <p>
+                    The model is a convolutional neural network (CNN) built using <code>torch.nn.Module</code>. The architecture 
+                    consists of convolutional layers (<code>torch.nn.Conv2d</code>) followed by ReLU activations and max-pooling 
+                    layers (<code>torch.nn.MaxPool2d</code>). After the convolutional layers, the network includes two fully 
+                    connected layers, with a ReLU activation after the first but not the last. Below is an image describing the precise 
+                    architecture. 
+                </p>
+                <p>
+                    The loss function is <code>torch.nn.MSELoss</code>, and the optimizer is Adam 
+                    (<code>torch.optim.Adam</code>) with a learning rate of <code>1e-3</code>. The network is trained for 10 to 25 epochs.
+                </p>
+            </section>
+            
+            <section>
+                <h3>Training/Validation Loss Plot</h3>
+                <p>
+                    Below is an example of the training and validation loss plot over several epochs. Loss stabilizes, indicating 
+                    the need for significantly many more epochs for further improvement.
+                </p>
+                <img src="loss_plot.jpg" alt="Training and Validation Loss Plot">
+            </section>
+            
+            <section>
+                <h3>Results</h3>
+                <p>
+                    The model performs well for faces with straightforward orientation and neutral expressions. However, it struggles 
+                    with images containing strong lighting contrasts, unusual facial expressions, or tilted faces. In some cases, 
+                    other parts of the face (e.g., the cheekbone) are incorrectly identified as the nose tip.
+                </p>
+                <p>
+                    Below are some examples:
+                </p>
+            
+        </body>
+        </html>
+
+                    <div class="gallery">
+                        <div class="gallery-item">
+                            <img src="quilting_images/samples/bricks_small.jpg" class="small">
+                            <div class="caption">Initial Brick Texture (from paper)</div>
+                        </div>
+
+                        <div class="gallery-item">
+                            <img src="quilting_images/part1/random_brick.png"  class="large">
+                            <div class="caption">Generated by Random Quilting</div>
+                        </div>
+                    </div>        
+            </section>
+ 
+
+
+
+            
+        </main>
+    </div>
+
+</body>
+
+</html>
