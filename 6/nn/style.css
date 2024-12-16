@@ -110,8 +110,8 @@ h3 {
 }
 
 .gallery img.wide {
-    width: 200px;
-    height: 350px;
+    width: 400px;
+    height: 550px;
     object-fit: cover; /* Ensures the image maintains its aspect ratio */
 }
 
